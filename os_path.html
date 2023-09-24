@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>License &#8212; Data Science in Practice</title>
+    <title>Using the os.path module &#8212; Data Science in Practice</title>
   
   
   
@@ -62,8 +62,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'license';</script>
-    <link rel="canonical" href="https://lisds.github.io/textbook/license.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'os_path';</script>
+    <link rel="canonical" href="https://lisds.github.io/textbook/os_path.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -222,6 +222,73 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/textbook/main?urlpath=tree/os_path.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/textbook&urlpath=tree/textbook/os_path.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -247,7 +314,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/edit/main/license.md" target="_blank"
+      <li><a href="https://github.com/lisds/textbook/edit/main/os_path.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -264,7 +331,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Flicense.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Fos_path.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -294,7 +361,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/license.md" target="_blank"
+      <li><a href="_sources/os_path.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -304,7 +371,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.Rmd</span>
 </a>
 </li>
       
@@ -363,9 +430,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -376,19 +441,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>License</h1>
+    <h1>Using the os.path module</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-otherwise-specified-license">Not-otherwise-specified license</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -398,14 +455,148 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">#</a></h1>
-<section id="not-otherwise-specified-license">
-<h2>Not-otherwise-specified license<a class="headerlink" href="#not-otherwise-specified-license" title="Permalink to this heading">#</a></h2>
-<p>When not specified otherwise, the material for this course is licensed under
-the CC-BY 4.0 license, available at
-<a class="reference external" href="https://creativecommons.org/licenses/by/4.0">https://creativecommons.org/licenses/by/4.0</a>.</p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="using-the-os-path-module">
+<h1>Using the <code class="docutils literal notranslate"><span class="pre">os.path</span></code> module<a class="headerlink" href="#using-the-os-path-module" title="Permalink to this heading">#</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">os.path</span></code> module is one of two ways of manipulating and using file
+paths in Python.  See the <a class="reference internal" href="path_manipulation.html"><span class="doc std std-doc">path manipulation</span></a> page
+for more discussion, and <a class="reference internal" href="pathlib.html"><span class="doc std std-doc">pathlib</span></a> page for a tutorial on the
+alternative <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> approach.</p>
+<p>The primary documentation for <code class="docutils literal notranslate"><span class="pre">os.path</span></code> is
+<a class="reference external" href="https://docs.python.org/3/library/os.path.html">https://docs.python.org/3/library/os.path.html</a></p>
+<p>This page covers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">os.path</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dirname,</span> <span class="pre">basename,</span> <span class="pre">join,</span> <span class="pre">splitext,</span> <span class="pre">abspath</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In IPython, you can tab complete on <code class="docutils literal notranslate"><span class="pre">os.path</span></code> to list the functions and
+attributes there.</p>
+<p>The first function we will use from <code class="docutils literal notranslate"><span class="pre">os.path</span></code> is <code class="docutils literal notranslate"><span class="pre">dirname</span></code>.  To avoid
+typing <code class="docutils literal notranslate"><span class="pre">os.path</span></code> all the time, we import <code class="docutils literal notranslate"><span class="pre">os.path</span></code> with the shortened name
+<code class="docutils literal notranslate"><span class="pre">op</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="n">op</span><span class="o">.</span><span class="n">dirname</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function posixpath.dirname(p)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">dirname</span></code> function gives the directory name from a full file path. It
+works correctly for Unix paths on Unix machines, and Windows paths on Windows
+machines:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Unix</span>
+<span class="n">op</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s1">&#39;/a/full/path/then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/a/full/path&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>You’ll see something like this as output if you run something similar on
+Windows.  So <code class="docutils literal notranslate"><span class="pre">op.dirname('c:\\a\\full\\path\\then_filename.txt')</span> </code> will give:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;c:</span><span class="se">\\</span><span class="s1">a</span><span class="se">\\</span><span class="s1">full</span><span class="se">\\</span><span class="s1">path&#39;</span>
+</pre></div>
+</div>
+<p>Notice that, on Windows, you need to use double backslashes, because the
+backslash in a Python string is a way of <em>escaping</em> a character — meaning, to
+specify you mean exactly that character.  Double backslash has the meaning
+“Yes, I do mean exactly backslash for the next character”.</p>
+<p><code class="docutils literal notranslate"><span class="pre">dirname</span></code> also works for relative paths,  A relative path where the starting
+directory is relative to the current directory, rather than absolute, in terms
+of the root of the file system:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Unix</span>
+<span class="n">op</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="s1">&#39;relative/path/then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;relative/path&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">basename</span></code> to get the filename rather than the directory name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Unix</span>
+<span class="n">op</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="s1">&#39;/a/full/path/then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;then_filename.txt&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sometimes you want to join one or more directory names with a filename to get
+a path.   Windows and Unix have different characters to separate directories
+in a path.  Windows uses the backslash: <code class="docutils literal notranslate"><span class="pre">\</span></code>, Unix uses a forward slash:
+<code class="docutils literal notranslate"><span class="pre">/</span></code>. If your code will run on Windows and Unix, you need to take care that
+you get the right character joining your paths.  This is what <code class="docutils literal notranslate"><span class="pre">os.path.join</span></code>
+does:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># On Unix</span>
+<span class="n">op</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;relative&#39;</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="s1">&#39;then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;relative/path/then_filename.txt&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>This also works on Windows.  <code class="docutils literal notranslate"><span class="pre">op.join('relative',</span> <span class="pre">'path',</span> <span class="pre">'then_filename.txt')</span></code> gives output <code class="docutils literal notranslate"><span class="pre">'relative\\path\\then_filename.txt'</span></code>.</p>
+<p>To convert a relative to an absolute path, use <code class="docutils literal notranslate"><span class="pre">abspath</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the current working directory</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">op</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;relative/path/then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/home/runner/work/dsip/dsip/relative/path/then_filename.txt&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">splitext</span></code> to split a path into: the path + filename; and the file
+extension:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">op</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="s1">&#39;relative/path/then_filename.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&#39;relative/path/then_filename&#39;, &#39;.txt&#39;)
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -444,20 +635,6 @@ the CC-BY 4.0 license, available at
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-otherwise-specified-license">Not-otherwise-specified license</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

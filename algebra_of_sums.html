@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>License &#8212; Data Science in Practice</title>
+    <title>Some algebra with summation &#8212; Data Science in Practice</title>
   
   
   
@@ -62,11 +62,15 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'license';</script>
-    <link rel="canonical" href="https://lisds.github.io/textbook/license.html" />
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'algebra_of_sums';</script>
+    <link rel="canonical" href="https://lisds.github.io/textbook/algebra_of_sums.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The problem with data" href="data_work.html" />
+    <link rel="prev" title="Lambda functions" href="lambda_functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -165,8 +169,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Some algebra with summation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
 <ul class="nav bd-sidenav">
@@ -247,7 +251,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/edit/main/license.md" target="_blank"
+      <li><a href="https://github.com/lisds/textbook/edit/main/algebra_of_sums.md" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -264,7 +268,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Flicense.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Falgebra_of_sums.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -294,7 +298,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/license.md" target="_blank"
+      <li><a href="_sources/algebra_of_sums.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -376,7 +380,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>License</h1>
+    <h1>Some algebra with summation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,7 +390,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-otherwise-specified-license">Not-otherwise-specified license</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algebra-of-sums">Algebra of sums</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addition-inside-sum">Addition inside sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplying-by-constant-inside-sum">Multiplying by constant inside sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-constant-value">Sum of constant value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-reading">More reading</a></li>
 </ul>
             </nav>
         </div>
@@ -398,13 +408,67 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="license">
-<h1>License<a class="headerlink" href="#license" title="Permalink to this heading">#</a></h1>
-<section id="not-otherwise-specified-license">
-<h2>Not-otherwise-specified license<a class="headerlink" href="#not-otherwise-specified-license" title="Permalink to this heading">#</a></h2>
-<p>When not specified otherwise, the material for this course is licensed under
-the CC-BY 4.0 license, available at
-<a class="reference external" href="https://creativecommons.org/licenses/by/4.0">https://creativecommons.org/licenses/by/4.0</a>.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="some-algebra-with-summation">
+<h1>Some algebra with summation<a class="headerlink" href="#some-algebra-with-summation" title="Permalink to this heading">#</a></h1>
+<p>We use the symbol <span class="math notranslate nohighlight">\(\Sigma\)</span> for
+<a class="reference external" href="https://en.wikipedia.org/wiki/Summation">summation</a>.</p>
+<p>Say we have a series of four values <span class="math notranslate nohighlight">\(x_1, x_2, x_3, x_4\)</span>.</p>
+<p>We can write the sum <span class="math notranslate nohighlight">\(x_1 + x_2 + x_3 + x_4\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\Sigma_{i=1}^{4} x_i\]</div>
+<p>You can read this summation as “the sum of values <span class="math notranslate nohighlight">\(x\)</span> subscript
+<span class="math notranslate nohighlight">\(i\)</span> from <span class="math notranslate nohighlight">\(i=1\)</span> through <span class="math notranslate nohighlight">\(i=4\)</span>”.</p>
+<p>So:</p>
+<div class="math notranslate nohighlight">
+\[
+\Sigma_{i=1}^{4} x_i = x_1 + x_2 + x_3 + x_4
+\]</div>
+<p>When the indices of the summation are obvious, they may quietly
+disappear. For example, it may be obvious that we are summing
+over all <span class="math notranslate nohighlight">\(i = 1, 2, 3, 4\)</span>, in which case we could write the
+<span class="math notranslate nohighlight">\(Sigma\)</span> with or without the indices:</p>
+<div class="math notranslate nohighlight">
+\[\Sigma_{i=1}^{4} x_i = \Sigma x_i\]</div>
+<section id="algebra-of-sums">
+<h2>Algebra of sums<a class="headerlink" href="#algebra-of-sums" title="Permalink to this heading">#</a></h2>
+<section id="addition-inside-sum">
+<h3>Addition inside sum<a class="headerlink" href="#addition-inside-sum" title="Permalink to this heading">#</a></h3>
+<p>Say we have two series of numbers <span class="math notranslate nohighlight">\(x_1, x_2 cdots x_n\)</span> and <span class="math notranslate nohighlight">\(y_1,
+y_2 cdots y_n\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Sigma_{i=1}^n (x_i + y_i) = \\
+(x_1 + y_1) + (x_2 + y_2) + \cdots (x_n + y_n) = \\
+(x_1 + x_2 + \cdots x_n) + (y_1 + y_2 + \cdots y_n) = \\
+\Sigma_{i=1}^n x_i + \Sigma_{i=1}^n y_i
+\end{aligned}\end{split}\]</div>
+</section>
+<section id="multiplying-by-constant-inside-sum">
+<h3>Multiplying by constant inside sum<a class="headerlink" href="#multiplying-by-constant-inside-sum" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Sigma c x_i = \\
+c x_1 + c x_2 + \cdots c x_n = \\
+c (x_1 + x_2 + \cdots x_n) = \\
+c \Sigma x_i
+\end{aligned}\end{split}\]</div>
+</section>
+<section id="sum-of-constant-value">
+<h3>Sum of constant value<a class="headerlink" href="#sum-of-constant-value" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\Sigma_{i=1}^n c = n c
+\]</div>
+</section>
+</section>
+<section id="more-reading">
+<h2>More reading<a class="headerlink" href="#more-reading" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.psychstat.missouristate.edu/IntroBook3/sbk10.htm">A basic tutorial on summation with
+tests</a>;</p></li>
+<li><p>A list of <a class="reference external" href="https://en.wikipedia.org/wiki/Summation#Identities">summation
+identities</a></p></li>
+</ul>
 </section>
 </section>
 
@@ -438,6 +502,24 @@ the CC-BY 4.0 license, available at
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="lambda_functions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lambda functions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data_work.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The problem with data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -453,7 +535,13 @@ the CC-BY 4.0 license, available at
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-otherwise-specified-license">Not-otherwise-specified license</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#algebra-of-sums">Algebra of sums</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#addition-inside-sum">Addition inside sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplying-by-constant-inside-sum">Multiplying by constant inside sum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-of-constant-value">Sum of constant value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-reading">More reading</a></li>
 </ul>
   </nav></div>
 
