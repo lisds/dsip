@@ -232,7 +232,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/lisds/textbook/main?urlpath=tree/lambda_functions.Rmd" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/lisds/textbook/main?urlpath=lab/tree/lambda_functions.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -250,7 +250,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/textbook&urlpath=tree/textbook/lambda_functions.Rmd&branch=main" target="_blank"
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/textbook&urlpath=lab/tree/textbook/lambda_functions.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -432,7 +432,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -448,6 +450,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-than-one-argument">More than one argument</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -654,9 +664,18 @@ Name: Temperature, dtype: float64
 </div>
 </div>
 <p>Notice the structure of the <code class="docutils literal notranslate"><span class="pre">lambda</span></code> expression.</p>
-<p>First we have <code class="docutils literal notranslate"><span class="pre">lambda</span></code>.</p>
-<p>Then we have the <em>argument name</em> or names, in our case <code class="docutils literal notranslate"><span class="pre">c</span></code>.  This is the name that the function argument will get when we call the function.   For example, when we call <code class="docutils literal notranslate"><span class="pre">c2f_func(0)</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code> will get the value 0.</p>
-<p>Next we have a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> to signal that the function body follows.  For a <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, the function body must be an expression.  Remember, an expression is code that returns a value.</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">lambda</span></code> then</p></li>
+<li><p>the argument(s) to the new function, here <code class="docutils literal notranslate"><span class="pre">c</span></code>, then</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">:</span></code> then</p></li>
+<li><p>a single expression, here <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">*</span> <span class="pre">1.8</span> <span class="pre">+</span> <span class="pre">32</span></code>.</p></li>
+</ol>
+<p>After <code class="docutils literal notranslate"><span class="pre">lambda</span></code> we have the <em>argument name</em> or names, in our case <code class="docutils literal notranslate"><span class="pre">c</span></code>.  This
+is the name that the function argument will get when we call the function.
+For example, when we call <code class="docutils literal notranslate"><span class="pre">c2f_func(0)</span></code>, <code class="docutils literal notranslate"><span class="pre">c</span></code> will get the value 0.</p>
+<p>The colon <code class="docutils literal notranslate"><span class="pre">:</span></code> signals that the function body follows.  For a <code class="docutils literal notranslate"><span class="pre">lambda</span></code>, the
+function body must be an expression.  Remember, an expression is code that
+returns a value.</p>
 <p>In our case, the expression is <code class="docutils literal notranslate"><span class="pre">c</span> <span class="pre">*</span> <span class="pre">1.8</span> <span class="pre">+</span> <span class="pre">32</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -677,7 +696,8 @@ Name: Temperature, dtype: float64
 </div>
 </div>
 </div>
-<p>Why would we use this <code class="docutils literal notranslate"><span class="pre">lambda</span></code> shortcut?   Just because it is a shortcut.   We could write our whole conversion like this:</p>
+<p>Why would we use this <code class="docutils literal notranslate"><span class="pre">lambda</span></code> shortcut?   Just because it is a shortcut.
+We could write our whole conversion like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">temperatures</span><span class="p">[</span><span class="s1">&#39;Temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span> <span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span>
@@ -720,31 +740,25 @@ Name: Temperature, dtype: float64
 </div>
 </div>
 </div>
-<p>In fact, a lambda function can have more than one argument.  In that case you name the arguments before the colon, and then use them in the function expression:</p>
+<section id="more-than-one-argument">
+<h2>More than one argument<a class="headerlink" href="#more-than-one-argument" title="Permalink to this heading">#</a></h2>
+<p>The lambda function above has a single argument, and this is typical of
+lambda functions that you might use with Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code>.  But, in general,
+lambda functions can have more than one argument.</p>
+<p>For example, consider the case where you wanted to allow the function to
+work with degrees in Celsius, or degrees in Kelvin.  You may remember that
+one degree on the Celsius scale is the same as one degree on the Kelvin
+scale — but Celsius has 0 at the melting point of water, and Kelvin sets
+0 at absolute 0.  Therefore 0 degrees in Celsius is 273.15 degrees in
+Kelvin.</p>
+<p>We can take this into account in our function, but adding a second argument,
+which gives the temperature for zero in the given scale.</p>
+<p>For example, to converting 10 degrees in Celsius to Fahrenheit we multiply
+by 1.8 and add the number of Fahrenheit degrees for 0 Celsius.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arguments are c and z, where z is the value in Fahrenheit</span>
-<span class="c1"># at zero centigrade.</span>
-<span class="n">c2f_two</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">z</span> <span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="n">z</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_two</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.0
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_two</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 10 degrees Celsius to Fahrenheit</span>
+<span class="mi">10</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="mi">32</span>
 </pre></div>
 </div>
 </div>
@@ -754,7 +768,81 @@ Name: Temperature, dtype: float64
 </div>
 </div>
 </div>
-<p>We can’t as easily use these two-argument lambdas for Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code> functions, because apply functions only accept one argument, by default.</p>
+<p>Converting 10 degrees in Kelvin to Fahrenheit involves multiplying by 1.8
+and add the number of Fahrenheit degrees for 0 Kelvin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zero_k_in_f</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">-</span> <span class="mf">273.15</span> <span class="o">*</span> <span class="mf">1.8</span>
+<span class="n">zero_k_in_f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-459.66999999999996
+</pre></div>
+</div>
+</div>
+</div>
+<p>Therefore, to convert from Kelvin to Fahrenheit</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 10 degrees Kelvin to Fahrenheit</span>
+<span class="mi">10</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="n">zero_k_in_f</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-441.66999999999996
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use a second argument to our lambda to take this into account, which
+is the Fahrenheit value for 0 in (Celsius or Kelvin).</p>
+<p>To use two (or more) arguments to a lambda, you name the arguments before
+the colon, and then use them in the function expression.</p>
+<p>Here is a more general lambda, taking two arguments, the first for the
+degrees in (Celsius or Kelvin), the second for the Fahrenheit value of 0 on
+the relevant scale: 32 for Celsius, <code class="docutils literal notranslate"><span class="pre">32</span> <span class="pre">-</span> <span class="pre">273.15</span> <span class="pre">*</span> <span class="pre">1.8</span> <span class="pre">=</span>&#160; <span class="pre">-459.67</span></code> for
+Kelvin.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arguments are c and z, where z is the value in Fahrenheit</span>
+<span class="c1"># at zero on the given scale (Celsius or Kelvin).</span>
+<span class="n">c2f_again</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">z</span> <span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="n">z</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the two-argument function to convert from Celsius to Fahrenheit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_again</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use the two-argument function to convert from Kelvin to Fahrenheit:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_again</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mf">459.67</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-441.67
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can’t as easily use these two-argument lambdas for Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code>
+functions, because apply functions only accept one argument, by default.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -811,6 +899,20 @@ Name: Temperature, dtype: float64
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#more-than-one-argument">More than one argument</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
