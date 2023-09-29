@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Kind-of True &#8212; Data Science in Practice</title>
+    <title>Dictionaries &#8212; Data Science in Practice</title>
   
   
   
@@ -62,11 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'truthiness';</script>
-    <link rel="canonical" href="https://lisds.github.io/textbook/truthiness.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dictionaries';</script>
+    <link rel="canonical" href="https://lisds.github.io/textbook/dictionaries.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Some algebra with summation" href="algebra_of_sums.html" />
+    <link rel="prev" title="Lambda functions" href="lambda_functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,11 +161,11 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dictionaries</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
 <ul class="nav bd-sidenav">
@@ -223,6 +225,73 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/textbook/main?urlpath=lab/tree/dictionaries.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/textbook&urlpath=lab/tree/textbook/dictionaries.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -248,7 +317,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/edit/main/truthiness.Rmd" target="_blank"
+      <li><a href="https://github.com/lisds/textbook/edit/main/dictionaries.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -265,7 +334,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Ftruthiness.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Fdictionaries.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -295,7 +364,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/truthiness.Rmd" target="_blank"
+      <li><a href="_sources/dictionaries.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -375,7 +444,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Kind-of True</h1>
+    <h1>Dictionaries</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -389,74 +458,195 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="kind-of-true">
-<h1>Kind-of True<a class="headerlink" href="#kind-of-true" title="Permalink to this heading">#</a></h1>
-<p>See: <a class="reference external" href="https://www.humaneer.org/python3/truthiness-in-python/">truthiness in
-Python</a>
-and Python <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#truth">truth value
-testing</a>.</p>
-<p>There are several places where you will find Python applying a
-test of True that is more general than simply <code class="docutils literal notranslate"><span class="pre">val</span> <span class="pre">==</span> <span class="pre">True</span></code>.</p>
-<p>One example is in <code class="docutils literal notranslate"><span class="pre">if</span></code> statements:</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="dictionaries">
+<h1>Dictionaries<a class="headerlink" href="#dictionaries" title="Permalink to this heading">#</a></h1>
+<p>Dictionaries are <em>mappings</em>.  They give the relationships between things.</p>
+<p>This will be clearer with an example.</p>
+<p>Let’s say we are interested in the English Premier League (EPL).</p>
+<p>In particular, we are interested in wage bills of each team.  And we are particularly interested in teams outside London, suspecting that teams in London have to spend more in wages, because London is such an expensive city.</p>
+<p>We consult the data on <a class="reference external" href="https://www.spotrac.com/epl/payroll/2022">2022-2023 EPL wages</a>, and the <a class="reference external" href="https://en.wikipedia.org/wiki/2022%E2%80%9323_Premier_League">EPL league table</a> and we find these values:</p>
+<ul class="simple">
+<li><p>Manchester City came first in the League, and spent an estimated £185,240,000 on wages.</p></li>
+<li><p>Manchester United came third in the League, and spent an estimated £212,135,000 on wages.</p></li>
+<li><p>Liverpool came fifth, and spent £160,868,000.</p></li>
+</ul>
+<p>We want a way to store the correspondence (or <em>mapping</em>) between the name of team and their wage bill.  If we have the team name, we want to be able to fetch the corresponding wage bill.</p>
+<p>One way of doing this is a basic Python data type called a <em>dictionary</em>.</p>
+<p>Here is an empty dictionary:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="o">=</span> <span class="s1">&#39;a string&#39;</span>  <span class="c1"># A not-empty string is True for truth testing</span>
-<span class="k">if</span> <span class="n">val</span><span class="p">:</span>
-     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Truth testing of &quot;val&quot; returned True&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">wages</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Truth testing of &quot;val&quot; returned True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{}
 </pre></div>
 </div>
 </div>
 </div>
-<p>Here the <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">val:</span></code> clause applies Python [truth value testing]
-to <code class="docutils literal notranslate"><span class="pre">'a</span> <span class="pre">string'</span></code>, and returns True. This is because the truth
-value testing algorithm returns True from an not-empty string,
-and False from an empty string:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">another_val</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-<span class="k">if</span> <span class="n">another_val</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No need for a message, we will not get here&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>You can see the results of truth value testing using <code class="docutils literal notranslate"><span class="pre">bool()</span></code>
-in Python. For example:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on True&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="kc">True</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on False&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="kc">False</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on not-empty list&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">([</span><span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;elements&#39;</span><span class="p">]))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on empty list&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">([]))</span>
-<span class="c1"># Bool on any number other than zero evaluates as True</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on 10&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on -1&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on 0&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
-<span class="c1"># None tests as False</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bool on None&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">wages</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bool on True True
-Bool on False False
-Bool on not-empty list True
-Bool on empty list False
-Bool on 10 True
-Bool on -1 True
-Bool on 0 False
-Bool on None False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict
 </pre></div>
 </div>
 </div>
 </div>
-<p>Examples of situations in which Python uses truth value testing
-are <code class="docutils literal notranslate"><span class="pre">if</span></code> statements; <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">statements</span></code> and <a class="reference internal" href="assert.html"><span class="doc">assert statements</span></a>.</p>
+<p>We can fill this dictionary by entering pairs of values.  The pair is in the form of a <em>key</em> and a <em>value</em>.   To start with, let us put the key and value into their own variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;Manchester City&#39;</span>
+<span class="n">value</span> <span class="o">=</span> <span class="mi">185_240_000</span>
+<span class="n">value</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>185240000
+</pre></div>
+</div>
+</div>
+</div>
+<p>By the way, notice the underscores in <code class="docutils literal notranslate"><span class="pre">185_240_000</span></code>.  These are just for decoration, to make it easier for us humans to read the number we typed in.  Notice that Python still reads this number as if it had no underscores.  The underscores look nice where they are, because they delimit the thousands and millions, but Python just ignores them; you can put them anywhere you want:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">18_52_4000_0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>185240000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now back to the key and the value.   We enter this pair into the dictionary like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="n">wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 185240000}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the dictionary is now no longer empty.  It has one <em>entry</em>, where the entry consists of our key and our value.  This entry says:</p>
+<blockquote>
+<div><p>if you ask “Manchester City”, I’ll answer 185240000</p>
+</div></blockquote>
+<p>That is, if you give the dictionary the key “Manchester City” it will return the corresponding value 18524000.</p>
+<p>You <em>give</em> the dictionary the key by <em>indexing</em>.  Indexing occurs where we follow the value (here <code class="docutils literal notranslate"><span class="pre">wages</span></code>) by square brackets <code class="docutils literal notranslate"><span class="pre">[]</span></code>.  Inside the square brackets we put the key for which we want the value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Indexing into the dictionary with a key gives </span>
+<span class="c1"># the corresponding value.</span>
+<span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Manchester City&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>185240000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let us enter the other key value pairs:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Manchester United&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">212_135_000</span> 
+<span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Liverpool&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">160_868_000</span>
+<span class="n">wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 185240000,
+ &#39;Manchester United&#39;: 212135000,
+ &#39;Liverpool&#39;: 160868000}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the dictionary has three entries now.  Each entry is the pair of <em>key</em> (the team name) and <em>value</em> (the corresponding wage bill.</p>
+<p>We can fetch the wage bills corresponding to each team, using the team name:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Manchester United&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>212135000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Liverpool&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>160868000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we first created an empty dictionary, and filled in the three elements with assignment statements like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="p">[</span><span class="s1">&#39;Manchester United&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">212135000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also create dictionaries directly with key, value pairs, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creating the dictionary and adding the key, value pairs.</span>
+<span class="n">wages_again</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Manchester City&#39;</span><span class="p">:</span> <span class="mi">185_240_000</span><span class="p">,</span>
+               <span class="s1">&#39;Manchester United&#39;</span><span class="p">:</span> <span class="mi">212_135_000</span><span class="p">,</span>
+               <span class="s1">&#39;Liverpool&#39;</span><span class="p">:</span> <span class="mi">160_868_000</span><span class="p">}</span>
+<span class="n">wages_again</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 185240000,
+ &#39;Manchester United&#39;: 212135000,
+ &#39;Liverpool&#39;: 160868000}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the syntax for the value on the left hand side that creates the
+dictionary.  There is:</p>
+<ul class="simple">
+<li><p>An open curly bracket <code class="docutils literal notranslate"><span class="pre">{</span></code> followed by none or more of:</p>
+<ul>
+<li><p>Key value pairs, written as:</p>
+<ul>
+<li><p>The key then</p></li>
+<li><p>colon <code class="docutils literal notranslate"><span class="pre">:</span></code></p></li>
+<li><p>the value then</p></li>
+<li><p>a comma (if more key value pairs follow).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>A closing curly bracket <code class="docutils literal notranslate"><span class="pre">}</span></code>.</p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
@@ -489,6 +679,24 @@ are <code class="docutils literal notranslate"><span class="pre">if</span></code
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="lambda_functions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lambda functions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="algebra_of_sums.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Some algebra with summation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
