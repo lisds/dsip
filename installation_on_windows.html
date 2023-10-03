@@ -400,6 +400,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-extra-step">An extra step</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-finish">To finish</a></li>
 </ul>
             </nav>
@@ -529,6 +530,17 @@ administrator Powershell prompt, and pressing Enter:</p>
 </pre></div>
 </div>
 </section>
+<section id="an-extra-step">
+<h2>An extra step<a class="headerlink" href="#an-extra-step" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;import site; print(site.USER_BASE + &quot;/Scripts&quot;)&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span>
+     <span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;$env:PATH:$HOME\AppData\Roaming\Python\Python311\Scripts&quot;</span><span class="p">,</span>
+     <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">EnvironmentVariableTarget</span><span class="p">]::</span><span class="n">User</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="to-finish">
 <h2>To finish<a class="headerlink" href="#to-finish" title="Permalink to this heading">#</a></h2>
 <p>Close the Powershell.  All done.</p>
@@ -593,6 +605,7 @@ administrator Powershell prompt, and pressing Enter:</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-extra-step">An extra step</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-finish">To finish</a></li>
 </ul>
   </nav></div>
