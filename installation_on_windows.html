@@ -532,10 +532,20 @@ administrator Powershell prompt, and pressing Enter:</p>
 </section>
 <section id="an-extra-step">
 <h2>An extra step<a class="headerlink" href="#an-extra-step" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">site_path</span><span class="o">=</span><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import site; print(site.USER_BASE + &#39;\Scripts&#39;)&quot;</span>
+<p>You need to make sure that your new commands, installed in the installation step, are available at the terminal.</p>
+<p>To do this, you need to find the directory in which the new commands are
+stored.  You can do this from your Powershell terminal.</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Find the directory with the new commands.</span>
+<span class="nv">$site_path</span><span class="p">=</span><span class="n">python3</span> <span class="n">-c</span> <span class="s2">&quot;import site; print(site.USER_BASE + &#39;\Python311\Scripts&#39;)&quot;</span>
+<span class="nb">echo </span><span class="nv">$site_path</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Environment</span><span class="p">]::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;$env:PATH:$site_path&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">System</span><span class="o">.</span><span class="n">EnvironmentVariableTarget</span><span class="p">]::</span><span class="n">User</span><span class="p">)</span>
+<p>You should add this directory to the list of directories that Windows
+searches for new programs.  This list of directories is called the “PATH”.</p>
+<p>You can do this via the GUI.</p>
+<p>Here is how to add</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$user_path=[Environment]::SetEnvironmentVariable(&quot;PATH&quot;, &quot;User&quot;)
+[Environment]::SetEnvironmentVariable(&quot;PATH&quot;, &quot;$user_path:$site_path&quot;, [System.EnvironmentVariableTarget]::User)
 </pre></div>
 </div>
 </section>
