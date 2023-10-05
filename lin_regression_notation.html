@@ -1,0 +1,2560 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Notation for linear regression models &#8212; Data Science in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lin_regression_notation';</script>
+    <link rel="canonical" href="https://lisds.github.io/textbook/lin_regression_notation.html" />
+    <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dsfe_logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/dsfe_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_work.html">The problem with data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The tools</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing on your computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the-problem-with-notebooks.html">The joys and sorrows of notebooks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/textbook/main?urlpath=lab/tree/lin_regression_notation.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/textbook&urlpath=lab/tree/textbook/lin_regression_notation.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lisds/textbook" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/textbook/edit/main/lin_regression_notation.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/textbook/issues/new?title=Issue%20on%20page%20%2Flin_regression_notation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/lin_regression_notation.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Notation for linear regression models</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Notation for linear regression models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-a-good-job">Doing a good job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictors-outcomes-x-y-slope-and-intercept">Predictors, outcomes - x, y, slope and intercept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-values-and-errors">Fitted values and errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-notation">Mathematical notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notation-for-fitted-values">Notation for fitted values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approximation-and-errors">Approximation and errors</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">Putting it all together</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="notation-for-linear-regression-models">
+<h1>Notation for linear regression models<a class="headerlink" href="#notation-for-linear-regression-models" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import numerical and plotting libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="c1"># Load library to display values in notebook.</span>
+<span class="kn">from</span> <span class="nn">jupyprint</span> <span class="kn">import</span> <span class="n">jupyprint</span><span class="p">,</span> <span class="n">arraytex</span>
+<span class="c1"># only show 6 decimals when printing</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">sps</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This page starts with the model for simple linear regression, that you have already
+seen in the <a class="reference external" href="https://lisds.github.io/textbook/mean-slopes/finding_lines.html">regression page</a>.</p>
+<p>Our purpose is to introduce the <em>mathematical notation</em> for linear regression models.
+Whilst a subset of readers might be excited by this proposition, to others
+the subject might sound complicated and unnecessary. We would like to demonstrate
+why this is not the case.</p>
+<p>This mathematical notation frequently appears in research papers and in other sources
+about regression analysis, and it is important to understand it. This notation
+makes it easy to describe different regression models in a concise way, which is
+useful for assessing which model best fits your data. It will also allow you to
+communicate easily with other data scientists about the models you are fitting.
+By teaching this notation via python code which you already understand, we aim to
+make the notation clear and digestible.</p>
+<p><em>Note</em>: it is very likely this page will be challenging. Do not worry if you do
+not understand some of the notation the first time you see it. In fact, we would
+be surprised if you did. You may need to revisit certain sections several times -
+but please rest assured that with perserverance things will make sense.</p>
+<p>We believe that it is easier to understand statistical techniques when you know clearly
+what their purpose is - when you would use them, and why. With this in mind we will now
+briefly explain the purpose of statistical modelling, of which linear regression is one type.</p>
+<p>The typical situation in data science is this: we would like to answer a question about
+how the world works. This question typically regards a set of <strong>observational units</strong> -
+these might be people, city districts, cows, rivers, continents, molecules etc. Each <em>single</em>
+observational unit has characteristics which vary when we compare <em>different</em> observational units
+(we call these characteristics <strong>variables</strong>).</p>
+<p>For instance, if our research question was “are people who are taller generally
+heavier?” then our observational units are <em>people</em>, and the variables we are interested
+in are <em>height</em> and <em>weight</em>. Our dataset would be a collection of measurements
+of these variables from a specific group of people. Each individual person in our dataset
+has a height and a weight, and these values vary when we compare across different people. (We
+can refer to each individual’s height or weight as a <em>score</em> on that variable - typically, each observational
+unit has a score on each variable in the dataset).</p>
+<p>Once we have our dataset, regression modelling has two key purposes:</p>
+<ul class="simple">
+<li><p>description: precisely quantifying the relationships between the variables in our dataset (in other words, describing the relationships numerically). This is also called <em>fitting a model</em>.</p></li>
+<li><p>prediction: using our model’s description of the relationships between the variables in our dataset to make predictions about <em>new</em> datasets which contain different observational units with the same variables</p></li>
+</ul>
+<p>For instance, a finance company might fit a model to a dataset containing information
+about customer characteristics and whether or not each customer defaulted on loan repayments.
+This model gives a mathematical <em>description</em> of the relationships between the variables in
+the dataset (e.g. customer characteristics, like age, income, job type, etc.), and whether or
+not they defaulted on loan repayments. The company might then use this model to make
+<em>predictions</em> about new customers, to estimate how likely they are to default on loan
+repayments in the future, given their score on these variables.</p>
+<p>Now we are armed with some more context about the purpose of linear regression, we will introduce the mathematical notation via a historical social science dataset, to which we now turn our attention.</p>
+<section id="doing-a-good-job">
+<h2>Doing a good job<a class="headerlink" href="#doing-a-good-job" title="Permalink to this heading">#</a></h2>
+<p>Duncan <span id="id1">[<a class="reference internal" href="#id18" title="Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, Occupations and social status, pages 109–161. Free Press, New York, 1961.">Dun61</a>]</span> combined information from the 1950 U.S.
+Census with data collected by the National Opinion Research Centre (NORC). The
+Census data contained information about different occupations, such as the
+percentage of people working in that occupation who earned over a certain
+amount per year. The NORC data was from a survey which asked participants to
+rate how prestigious they considered each occupation.</p>
+<p>Here are descriptions of the variables in the dataset, which covers 45 occupations (adapted from <a class="reference external" href="https://rdrr.io/cran/carData/man/Duncan.html">here</a>):</p>
+<p><code class="docutils literal notranslate"><span class="pre">name</span></code> - the name of the occupation, from the 1950 US Census</p>
+<p><code class="docutils literal notranslate"><span class="pre">type</span></code>- type of occupation, with the following categories <code class="docutils literal notranslate"><span class="pre">prof</span></code>,
+professional and managerial; <code class="docutils literal notranslate"><span class="pre">wc</span></code>, white-collar; <code class="docutils literal notranslate"><span class="pre">bc</span></code>, blue-collar. (E.g. how the
+occupation was classified in the 1950 US Census)</p>
+<p><code class="docutils literal notranslate"><span class="pre">income</span></code> - percentage of census respondents within the occupation who
+earned 3,500 dollars or more per year (about 36,000 US dollars in 2017)</p>
+<p><code class="docutils literal notranslate"><span class="pre">education</span></code> - percentage of census respondents within the occupation who were high school
+graduates</p>
+<p><code class="docutils literal notranslate"><span class="pre">prestige</span></code> - percentage of respondents in the NORC survey who rated the occupation
+as “good” or better in prestige</p>
+<p>Here is the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read in the data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Duncan_Occupational_Prestige.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># show the data</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>type</th>
+      <th>income</th>
+      <th>education</th>
+      <th>prestige</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>accountant</td>
+      <td>prof</td>
+      <td>62</td>
+      <td>86</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pilot</td>
+      <td>prof</td>
+      <td>72</td>
+      <td>76</td>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>architect</td>
+      <td>prof</td>
+      <td>75</td>
+      <td>92</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>author</td>
+      <td>prof</td>
+      <td>55</td>
+      <td>90</td>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>chemist</td>
+      <td>prof</td>
+      <td>64</td>
+      <td>86</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>minister</td>
+      <td>prof</td>
+      <td>21</td>
+      <td>84</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>professor</td>
+      <td>prof</td>
+      <td>64</td>
+      <td>93</td>
+      <td>93</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>dentist</td>
+      <td>prof</td>
+      <td>80</td>
+      <td>100</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>reporter</td>
+      <td>wc</td>
+      <td>67</td>
+      <td>87</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>engineer</td>
+      <td>prof</td>
+      <td>72</td>
+      <td>86</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>undertaker</td>
+      <td>prof</td>
+      <td>42</td>
+      <td>74</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>lawyer</td>
+      <td>prof</td>
+      <td>76</td>
+      <td>98</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>physician</td>
+      <td>prof</td>
+      <td>76</td>
+      <td>97</td>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>welfare.worker</td>
+      <td>prof</td>
+      <td>41</td>
+      <td>84</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>teacher</td>
+      <td>prof</td>
+      <td>48</td>
+      <td>91</td>
+      <td>73</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>conductor</td>
+      <td>wc</td>
+      <td>76</td>
+      <td>34</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>contractor</td>
+      <td>prof</td>
+      <td>53</td>
+      <td>45</td>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>factory.owner</td>
+      <td>prof</td>
+      <td>60</td>
+      <td>56</td>
+      <td>81</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>store.manager</td>
+      <td>prof</td>
+      <td>42</td>
+      <td>44</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>banker</td>
+      <td>prof</td>
+      <td>78</td>
+      <td>82</td>
+      <td>92</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>bookkeeper</td>
+      <td>wc</td>
+      <td>29</td>
+      <td>72</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>mail.carrier</td>
+      <td>wc</td>
+      <td>48</td>
+      <td>55</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>insurance.agent</td>
+      <td>wc</td>
+      <td>55</td>
+      <td>71</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>store.clerk</td>
+      <td>wc</td>
+      <td>29</td>
+      <td>50</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>carpenter</td>
+      <td>bc</td>
+      <td>21</td>
+      <td>23</td>
+      <td>33</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>electrician</td>
+      <td>bc</td>
+      <td>47</td>
+      <td>39</td>
+      <td>53</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>RR.engineer</td>
+      <td>bc</td>
+      <td>81</td>
+      <td>28</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>machinist</td>
+      <td>bc</td>
+      <td>36</td>
+      <td>32</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>auto.repairman</td>
+      <td>bc</td>
+      <td>22</td>
+      <td>22</td>
+      <td>26</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>plumber</td>
+      <td>bc</td>
+      <td>44</td>
+      <td>25</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>gas.stn.attendant</td>
+      <td>bc</td>
+      <td>15</td>
+      <td>29</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>coal.miner</td>
+      <td>bc</td>
+      <td>7</td>
+      <td>7</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>streetcar.motorman</td>
+      <td>bc</td>
+      <td>42</td>
+      <td>26</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>taxi.driver</td>
+      <td>bc</td>
+      <td>9</td>
+      <td>19</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>truck.driver</td>
+      <td>bc</td>
+      <td>21</td>
+      <td>15</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>machine.operator</td>
+      <td>bc</td>
+      <td>21</td>
+      <td>20</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>barber</td>
+      <td>bc</td>
+      <td>16</td>
+      <td>26</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>bartender</td>
+      <td>bc</td>
+      <td>16</td>
+      <td>28</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>shoe.shiner</td>
+      <td>bc</td>
+      <td>9</td>
+      <td>17</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>cook</td>
+      <td>bc</td>
+      <td>14</td>
+      <td>22</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>soda.clerk</td>
+      <td>bc</td>
+      <td>12</td>
+      <td>30</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>watchman</td>
+      <td>bc</td>
+      <td>17</td>
+      <td>25</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>janitor</td>
+      <td>bc</td>
+      <td>7</td>
+      <td>20</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>policeman</td>
+      <td>bc</td>
+      <td>34</td>
+      <td>47</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>waiter</td>
+      <td>bc</td>
+      <td>8</td>
+      <td>32</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For this data, the observational units are occupations. Each occupation
+has a value associated with it on each of the variables in the dataset.</p>
+<p>Duncan’s original purpose with this data was to use linear regression
+to <em>describe</em> the predictive relationship between <code class="docutils literal notranslate"><span class="pre">income</span></code>, <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">prestige</span></code>
+(and in fact Duncan carried out the regression using a <a class="reference external" href="https://socialsciences.mcmaster.ca/jfox/Courses/R/ICPSR/Duncan.Rmd">mechanical calculator</a>,
+which fortunately we do not have to do!). Duncan then used the model to
+make <em>predictions</em> about the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> scores of occupations for which no
+prestige data was available.</p>
+<p>To keep examples on this page readable and easier to visualize, we are
+going to use only the first 15 observations from this dataset (though everything
+we say applies to the larger dataset). The code cell below selects the first
+15 observations from the larger dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the first 15 rows</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="c1"># show the smaller dataset</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>type</th>
+      <th>income</th>
+      <th>education</th>
+      <th>prestige</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>accountant</td>
+      <td>prof</td>
+      <td>62</td>
+      <td>86</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pilot</td>
+      <td>prof</td>
+      <td>72</td>
+      <td>76</td>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>architect</td>
+      <td>prof</td>
+      <td>75</td>
+      <td>92</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>author</td>
+      <td>prof</td>
+      <td>55</td>
+      <td>90</td>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>chemist</td>
+      <td>prof</td>
+      <td>64</td>
+      <td>86</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>minister</td>
+      <td>prof</td>
+      <td>21</td>
+      <td>84</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>professor</td>
+      <td>prof</td>
+      <td>64</td>
+      <td>93</td>
+      <td>93</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>dentist</td>
+      <td>prof</td>
+      <td>80</td>
+      <td>100</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>reporter</td>
+      <td>wc</td>
+      <td>67</td>
+      <td>87</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>engineer</td>
+      <td>prof</td>
+      <td>72</td>
+      <td>86</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>undertaker</td>
+      <td>prof</td>
+      <td>42</td>
+      <td>74</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>lawyer</td>
+      <td>prof</td>
+      <td>76</td>
+      <td>98</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>physician</td>
+      <td>prof</td>
+      <td>76</td>
+      <td>97</td>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>welfare.worker</td>
+      <td>prof</td>
+      <td>41</td>
+      <td>84</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>teacher</td>
+      <td>prof</td>
+      <td>48</td>
+      <td>91</td>
+      <td>73</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>For our purposes, we will look at the relationship between <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">prestige</span></code>.
+Let’s store the values from the dataframe as separate variables, to save
+some typing. We will store the values as numpy arrays:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># store the education values as a variable</span>
+<span class="n">education</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;education&#39;</span><span class="p">])</span>
+
+<span class="c1"># show the values</span>
+<span class="n">education</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 86,  76,  92,  90,  86,  84,  93, 100,  87,  86,  74,  98,  97,
+        84,  91])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># store the prestige values as a variable </span>
+<span class="n">prestige</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;prestige&#39;</span><span class="p">])</span>
+
+<span class="c1"># show the values</span>
+<span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here is a plot of the two variables, with <code class="docutils literal notranslate"><span class="pre">education</span></code> on the x-axis and
+<code class="docutils literal notranslate"><span class="pre">prestige</span></code> on the y-axis.  We could say that this plot depicts <code class="docutils literal notranslate"><span class="pre">prestige</span></code> <em>as
+a function of</em> <code class="docutils literal notranslate"><span class="pre">education</span></code>, where <code class="docutils literal notranslate"><span class="pre">education</span></code> is on the x-axis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot `prestige` as a function of `education`</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">prestige</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prestige&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/cb359a7c66bdafd98ce73a4a045548f798fe57a53741ad3e5b90a3f5319b940f.png" src="_images/cb359a7c66bdafd98ce73a4a045548f798fe57a53741ad3e5b90a3f5319b940f.png" />
+</div>
+</div>
+<p>Each point on this scatterplot represents one occupation: the x and y coordinates
+of the point are given by that occupation’s <code class="docutils literal notranslate"><span class="pre">education</span></code> score and <code class="docutils literal notranslate"><span class="pre">prestige</span></code> score.</p>
+<p>We will call the sequence of 15 <code class="docutils literal notranslate"><span class="pre">education</span></code> scores the <code class="docutils literal notranslate"><span class="pre">education</span></code>
+<em>vector</em>.  A vector is a sequence of values — in this case, the sequence of 15
+<code class="docutils literal notranslate"><span class="pre">education</span></code> scores, one for each occupation.  In Numpy terms, a vector is a one-dimensional array.  Similarly, we have a <code class="docutils literal notranslate"><span class="pre">prestige</span></code>
+vector of 15 values.</p>
+<p>You can think of “vector” as a mathematical term - we can represent a vector in
+python in various ways. In the dataframe above, each vector is represented as a pandas column,
+but when we stored them as separate variables, we represented each vector as a numpy array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the education vector</span>
+<span class="n">education</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 86,  76,  92,  90,  86,  84,  93, 100,  87,  86,  74,  98,  97,
+        84,  91])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the prestige vector </span>
+<span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># both vectors in the dataframe</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;education&#39;</span><span class="p">,</span> <span class="s1">&#39;prestige&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>education</th>
+      <th>prestige</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>86</td>
+      <td>82</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>76</td>
+      <td>83</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>92</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>90</td>
+      <td>76</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>86</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>84</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>93</td>
+      <td>93</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>100</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>87</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>86</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>74</td>
+      <td>57</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>98</td>
+      <td>89</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>97</td>
+      <td>97</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>84</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>91</td>
+      <td>73</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="predictors-outcomes-x-y-slope-and-intercept">
+<h2>Predictors, outcomes - x, y, slope and intercept<a class="headerlink" href="#predictors-outcomes-x-y-slope-and-intercept" title="Permalink to this heading">#</a></h2>
+<p>Typically in regression modelling we treat one variable as the
+<em>outcome variable</em> - which means we ask how it changes <em>as a function of</em>
+the other variable(s) in the dataset. Just to clarify, “changes” here refers to
+comparisons between different observational units. In the current dataset
+our observational units are occupations. For example, we might use <code class="docutils literal notranslate"><span class="pre">prestige</span></code> as our outcome variable, and ask how it changes <em>as a function of</em> the <code class="docutils literal notranslate"><span class="pre">education</span></code> scores.</p>
+<p><em>Predictor variables</em> are variables with which we seek to explain patterns
+in the outcome variable. In the present case we are treating <code class="docutils literal notranslate"><span class="pre">education</span></code> as
+our predictor variable. We are asking how <code class="docutils literal notranslate"><span class="pre">prestige</span></code> (our outcome variable* varies as a function of <code class="docutils literal notranslate"><span class="pre">education</span></code> (our predictor variable).  We might suspect,
+for instance, that occupations scoring higher on <code class="docutils literal notranslate"><span class="pre">education</span></code> are more prestigious.</p>
+<p>The three graphs below illustrate this concept, in the
+context of linear regression, using some simulated data. You can think
+of this as showing you some potential ways the relationship between our
+predictor (<code class="docutils literal notranslate"><span class="pre">education</span></code>) and our outcome (<code class="docutils literal notranslate"><span class="pre">prestige</span></code>) <em>could</em> look:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the illustration below</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Make random numbers predictable.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">y_strong_neg</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.6</span> <span class="o">*</span> <span class="n">education</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">education</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_strong_neg</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;simulated data&#39;</span><span class="p">)</span>
+<span class="n">lin1</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_strong_neg</span><span class="p">)</span>
+<span class="n">education_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">education</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">education</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education_x</span><span class="p">,</span> <span class="n">lin1</span><span class="o">.</span><span class="n">intercept</span> <span class="o">+</span> <span class="n">lin1</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span><span class="n">education_x</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Education&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Prestige&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Strong Negative </span><span class="se">\n</span><span class="s1"> Linear Relationship&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">y_rand</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">education</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_rand</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;simulated data&#39;</span><span class="p">)</span>
+<span class="n">lin2</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_rand</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education_x</span><span class="p">,</span> <span class="n">lin2</span><span class="o">.</span><span class="n">intercept</span> <span class="o">+</span> <span class="n">lin2</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span><span class="n">education_x</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;darkred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Education&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Prestige&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Very Weak Linear Relationship </span><span class="se">\n</span><span class="s1"> (Random Association)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">y_strong_pos</span> <span class="o">=</span> <span class="n">education</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">education</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_strong_pos</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;simulated data&#39;</span> <span class="p">)</span>
+<span class="n">lin3</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">education</span><span class="p">,</span> <span class="n">y_strong_pos</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">education_x</span><span class="p">,</span> <span class="n">lin3</span><span class="o">.</span><span class="n">intercept</span> <span class="o">+</span> <span class="n">lin3</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span><span class="n">education_x</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;darkred&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;linear regression line&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Education&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Prestige&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Strong Positive </span><span class="se">\n</span><span class="s1"> Linear Relationship&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/81595fe134226366b6b2ed083b0e5ff7c0793cb5a81594b9b1d7201383963b4b.png" src="_images/81595fe134226366b6b2ed083b0e5ff7c0793cb5a81594b9b1d7201383963b4b.png" />
+</div>
+</div>
+<p>On each graph, the predictor variable (<code class="docutils literal notranslate"><span class="pre">education</span></code>) is on the x-axis, and the linear regression line (in dark red) summarizes how the outcome variable (<code class="docutils literal notranslate"><span class="pre">prestige</span></code>, on the y-axis) changes as a function of the predictor variable.</p>
+<p>If the relationship between the predictor variable and the outcome variable is <em>strong</em>,
+then the values of the outcome variable change a lot between low and high values of the predictor variable.
+In this case the linear regression line will be <em>steep</em>.</p>
+<p>If the relationship between the predictor variable and the outcome variable is <em>weak</em>,
+then the values of the outcome variable are very similar between low and high values of the predictor variable.
+In this case the linear regression line will be <em>flat</em>. E.g. the scores on the predictor variable, do
+not give you much information about the scores on the outcome variable. High scores on the predictor variable
+are equally likely to co-occur with high or low scores on the outcome variable.</p>
+<p>We are calling the <code class="docutils literal notranslate"><span class="pre">education</span></code> vector a <em>predictor variable</em>, but other names for a
+predicting vector are <em>regressor</em>, <em>covariate</em>, <em>explanatory variable</em>,
+<em>independent variable</em>, <em>exogenous variable</em>, <em>feature</em> or <code class="docutils literal notranslate"><span class="pre">x</span></code> variable. (They all mean the same thing,
+and people from different disciplines typically use different terms, depending
+on the conventions of their discipline, so it’s important to be aware of the
+different terminology).</p>
+<p>We are calling the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector an <em>outcome variable</em> but other terms we could use
+include <em>predicted variable</em>, <em>response variable</em>, <em>regressand</em>, <em>dependent variable</em>, <em>endogenous
+variable</em> or the <code class="docutils literal notranslate"><span class="pre">y</span></code> variable. (Again, people from different disciplines typically use different terms,
+but they mean the same thing).</p>
+<p>We can use the mathematical notation <span class="math notranslate nohighlight">\(\vec{x}\)</span> to refer to a predicting vector.  The arrow over
+the top of <span class="math notranslate nohighlight">\(\vec{x}\)</span> reminds us that <span class="math notranslate nohighlight">\(\vec{x}\)</span> refers to a vector (array, sequence)
+of values, rather than a single value.</p>
+<p>We can use the mathematical notation <span class="math notranslate nohighlight">\(\vec{y}\)</span> to refer
+to an outcome vector (which, again is a  vector (array, sequence) of values, rather than a single value).</p>
+<p>Earlier we said we were plotting <code class="docutils literal notranslate"><span class="pre">prestige</span></code> <em>as a function of</em> <code class="docutils literal notranslate"><span class="pre">education</span></code>. Linear regression
+involves a more specific version of this concept. When we use linear regression, we
+are modelling our outcome vector <span class="math notranslate nohighlight">\(\vec{y}\)</span> <em>as a <strong>linear</strong> function of</em> our predictor vector <span class="math notranslate nohighlight">\(\vec{x}\)</span>.  Linear means that we will predict our <span class="math notranslate nohighlight">\(\vec{y}\)</span> variables with a straight line and our <span class="math notranslate nohighlight">\(\vec{x}\)</span> values.</p>
+<p>So if we use linear regression, with <code class="docutils literal notranslate"><span class="pre">education</span></code> as our predictor variable, and <code class="docutils literal notranslate"><span class="pre">prestige</span></code>
+as our outcome variable, then we are modelling <code class="docutils literal notranslate"><span class="pre">prestige</span></code> <em>as a <strong>linear</strong> function of</em> <code class="docutils literal notranslate"><span class="pre">education</span></code>.</p>
+<p>Remember, we can define any straight line with a slope - call this <span class="math notranslate nohighlight">\(b\)</span> - and an intercept - call this <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<p>We can express the idea of straight-line (linear) prediction in vector notation with:</p>
+<p><span class="math notranslate nohighlight">\( \vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} \)</span></p>
+<p>Read this as “the <span class="math notranslate nohighlight">\(y\)</span> vector is a linear function of the <span class="math notranslate nohighlight">\(x\)</span> vector plus the intercept (<span class="math notranslate nohighlight">\(c\)</span>) and the error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>”.</p>
+<p>For this formula, <span class="math notranslate nohighlight">\(\vec{y} = b \vec{x} + \text{c}\)</span> is called the <em>systematic component</em> - it
+describes the linear relationship between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>. <span class="math notranslate nohighlight">\(b\)</span> is a single value
+(called the <em>slope</em>) which describes the strength of the relationship - because high values for <span class="math notranslate nohighlight">\(b\)</span> mean a steep slope. The values in the predictor vector
+<span class="math notranslate nohighlight">\(\vec{x}\)</span> are multiplied by <span class="math notranslate nohighlight">\(b\)</span> - if the linear relationship between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>
+is <em>strong</em> then the value of <span class="math notranslate nohighlight">\(b\)</span> will be <em>large</em>; if the linear relationship between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>
+is <em>weak</em> then the value of <span class="math notranslate nohighlight">\(b\)</span> will be <em>small</em>.</p>
+<p><em>Note</em>: <span class="math notranslate nohighlight">\(b \vec{x} \)</span> is read as “<span class="math notranslate nohighlight">\(b\)</span> multiplied by <span class="math notranslate nohighlight">\(\vec{x}\)</span>”. By convention, we don’t
+normally write the multiplication symbol (we assume that if no other symbol is there,
+then the values / vectors should be multiplied). But if we did want to write the multiplication explicitly, we could write <span class="math notranslate nohighlight">\(b * \vec{x} \)</span>.</p>
+<p>The intercept <span class="math notranslate nohighlight">\(c\)</span> (also called the <em>constant</em>) allows the line we fit to be more flexible than
+it would be if we don’t include an intercept. Essentially, without an intercept in the model, then
+any line we fit has to run through the origin (the point at <span class="math notranslate nohighlight">\(x = 0, y = 0\)</span>), which is very
+restrictive - without the intercept we can only fit a small subset of the possible lines which exist - and
+these may not fit the data we have very well. Have a look at <a class="reference external" href="https://uob-ds.github.io/cfd2021/mean-slopes/Lines_Slopes_and_Intercepts_-_Refresher.html">this page</a> for more about the intercept and the origin.</p>
+<p>The error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span> describes the “noise” in the data - residual variation which
+is not explained by the systematic component. A good way to think of it is this: the systematic component
+describes the line which best fits the data. Unless the model is perfect, the datapoints themselves are very unlikely to
+fall perfectly on this line - the error vector contains the distance that each point is from the
+best-fitting line. Resultantly, the error vector will contain the same number of values as the
+predictor vector and the outcome vector (in this case, 15 values). (This concept is much easier to
+appreciate graphically, as we will see in a moment).</p>
+<p>Remember, in this case <span class="math notranslate nohighlight">\(\vec{x}\)</span> is our <code class="docutils literal notranslate"><span class="pre">education</span></code> vector (predictor), and <span class="math notranslate nohighlight">\(\vec{y}\)</span> is our <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector (outcome). Just to emphasise that <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span> contain our data, the code cell below uses some fancy printing functions to show you the equations above, but will show our actual data values in <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>, in place of the symbols. This means that the actual values within the <code class="docutils literal notranslate"><span class="pre">education</span></code> vector and the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector are shown, alongside the notation for the <span class="math notranslate nohighlight">\(b\)</span> value, the intercept <span class="math notranslate nohighlight">\(c\)</span>, and the error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just prints the mathematical notation below this cell</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Here is the our model ($ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = b </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">text</span><span class="si">{c}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon} $), showing the actual values within the `education` and `prestige` vectors:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = b * </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> + c +&quot;</span> <span class="o">+</span><span class="s2">&quot; </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon}$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p>Here is the our model ($ \vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} $), showing the actual values within the <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vectors:</p>
+<p>$\begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix} = b * \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix} + c + \vec{\varepsilon}$</p>
+</div>
+</div>
+<p>Just to convince you that these values are from the <code class="docutils literal notranslate"><span class="pre">education</span></code> vector and the <code class="docutils literal notranslate"><span class="pre">prestige</span></code>
+vector, here are both vectors, in their numpy array form (have a look at the values,
+and compare these to the values in the vectors shown in the mathematical notation above this cell):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the prestige vector (again)</span>
+<span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the education vector (again)</span>
+<span class="n">education</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 86,  76,  92,  90,  86,  84,  93, 100,  87,  86,  74,  98,  97,
+        84,  91])
+</pre></div>
+</div>
+</div>
+</div>
+<p>So just to recap, our linear regression model can be expressed in vector notation as:</p>
+<p><span class="math notranslate nohighlight">\( \vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} \)</span></p>
+<p>Where:</p>
+<p><span class="math notranslate nohighlight">\(\vec{y}\)</span> is our outcome vector, in this case <code class="docutils literal notranslate"><span class="pre">prestige</span></code></p>
+<p><span class="math notranslate nohighlight">\(\vec{x}\)</span> is our predictor vector, in this case <code class="docutils literal notranslate"><span class="pre">education</span></code></p>
+<p>If we wish, we can write the model equation using the names of our vectors rather than the vector notation:</p>
+<p><code class="docutils literal notranslate"><span class="pre">prestige</span></code> <span class="math notranslate nohighlight">\( = b \)</span> <code class="docutils literal notranslate"><span class="pre">education</span></code> <span class="math notranslate nohighlight">\(+\)</span> <span class="math notranslate nohighlight">\(  \text{c} + \vec{\varepsilon} \)</span></p>
+<p><span class="math notranslate nohighlight">\(b\)</span> is a value (called the “slope”) which summarizes the strength of the (linear) predictive relationship between our predictor vector and our outcome vector. Each value in the predictor vector gets <em>multiplied</em> by <span class="math notranslate nohighlight">\(b\)</span></p>
+<p><span class="math notranslate nohighlight">\(\text{c}\)</span> is the intercept, which gives a greater flexibility in the lines we can fit (it means they do not have to pass through the origin, which would really limit our modelling ability)</p>
+<p><span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span> is the error vector, which contains the distance between each datapoint and the line of best fit</p>
+<p>The talk of “predictve relationships” and “error” all might sound somewhat abstract, so let’s explore
+what the terms mean graphically.</p>
+<p>The cell below defines a function which generates some simulated <code class="docutils literal notranslate"><span class="pre">prestige</span></code> scores. It
+does this by letting you set the value of <span class="math notranslate nohighlight">\(b\)</span> and control the size of the errors in the error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>. This lets you “play god” and control the strength of the predictive relationship between <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">prestige</span></code>, as well as  the amount of error (or “noise”) in the data. Run the cell to define the function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about the details of this function, it is just to generate the illustrative plot</span>
+<span class="k">def</span> <span class="nf">linear_data_generator</span><span class="p">(</span><span class="n">b_value</span><span class="p">,</span> <span class="n">error_size</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate simulated data with a linear relationship.&quot;&quot;&quot;</span>
+
+    <span class="c1"># the education values as the x values</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">education</span>
+    
+    <span class="c1"># generate the error vector</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">error_size</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="c1"># generate the y vector</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">b_value</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">e</span>
+
+    <span class="c1"># plot the simulated data</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Simulated Data&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Education&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Simulated Prestige Values&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;b_value = </span><span class="si">{</span><span class="n">b_value</span><span class="si">}</span><span class="s1">,</span><span class="se">\n</span><span class="s1"> error_size = </span><span class="si">{</span><span class="n">error_size</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you are using this page interactively, then try varying the values of <span class="math notranslate nohighlight">\(b\)</span> and
+<span class="math notranslate nohighlight">\(\varepsilon\)</span> (which in the code are called <code class="docutils literal notranslate"><span class="pre">b_value</span></code> and <code class="docutils literal notranslate"><span class="pre">error_size</span></code>),
+to see what effect they have.</p>
+<p>Initially, we have set <code class="docutils literal notranslate"><span class="pre">error_size</span></code> to equal 0. This means there is no
+noise in the data, and the relationship between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>
+is perfectly described by <span class="math notranslate nohighlight">\(b\)</span>. You can see that this means the points
+fall perfectly on a straight line:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate some simulated data to investigate the effect of the b value</span>
+<span class="c1"># and smaller/larger error values</span>
+<span class="n">linear_data_generator</span><span class="p">(</span><span class="n">b_value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">error_size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/703809118529897369116582e74bd517de69a94505c9a024c7a8feb69dd390e5.png" src="_images/703809118529897369116582e74bd517de69a94505c9a024c7a8feb69dd390e5.png" />
+</div>
+</div>
+<p>We would almost never observe such a perfect predictive relationship in real life.
+It would mean that all of the variation in the outcome variable would be perfectly captured
+by the systematic component (<span class="math notranslate nohighlight">\(\vec{y} = b \vec{x} + \text{c} \)</span>) if we  were to fit a linear
+regression model to the data.</p>
+<p>We can see that if we make the error term larger, as in the cell below, then the points
+are now spread much more randomly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate some more simulated data to investigate the effect of the b value</span>
+<span class="c1"># and smaller/larger error values</span>
+<span class="n">linear_data_generator</span><span class="p">(</span><span class="n">b_value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">error_size</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a7435cd9022f6c557fe804152c7e2e085cf93246ba8416ad8a75680fbc2905a0.png" src="_images/a7435cd9022f6c557fe804152c7e2e085cf93246ba8416ad8a75680fbc2905a0.png" />
+</div>
+</div>
+<p><em>Note: these plots are just to illustrate the effect of the <span class="math notranslate nohighlight">\(b\)</span> value and the concept
+of errors. Negative prestige scores are not possible, in the actual data.</em></p>
+<p>As mentioned above, you can think of <span class="math notranslate nohighlight">\(b\)</span> as describing the strength of the systematic, linear
+relationship between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>. And you can think of <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>
+as describing the variation left in the data that is not accounted for by
+<span class="math notranslate nohighlight">\(b\)</span>.</p>
+<p>The task of linear regression is to find the values of <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> which give the
+best summary of the linear predictive relationship between our predictor variable
+and our outcome variable. “Best” here is judged by finding the smallest sum of the
+squared error values (i.e. the values in the error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>).</p>
+<p>Let’s perform a linear regression on Duncan’s occupational prestige data, to show
+the concepts behind the notation we’ve just outlined.</p>
+<p>Just to remind us, let’s give the name <code class="docutils literal notranslate"><span class="pre">x</span></code> to the array (vector) of predicting <code class="docutils literal notranslate"><span class="pre">education</span></code> values (<span class="math notranslate nohighlight">\(\vec{x}\)</span>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">education</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s give the name <code class="docutils literal notranslate"><span class="pre">y</span></code> to our outcome vector (<span class="math notranslate nohighlight">\(\vec{y}\)</span>, the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to calculate the best (minimal sum of the squared errors) line that relates
+the <code class="docutils literal notranslate"><span class="pre">education</span></code> (<code class="docutils literal notranslate"><span class="pre">x</span></code>) scores to the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> (<code class="docutils literal notranslate"><span class="pre">y</span></code>) scores.</p>
+<p>We could use <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize</span></code> for this, but here we will  quickly fit a linear regression model to these vectors using the <code class="docutils literal notranslate"><span class="pre">linregress</span></code> function
+from the <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit a linear regression model, using scipy</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=1.0058545962950014, intercept=-8.383432366305456, rvalue=0.5267822840376757, pvalue=0.043636178697705225, stderr=0.4501439537539412, intercept_stderr=39.8621893783399)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s call the slope of the line <code class="docutils literal notranslate"><span class="pre">b</span></code> and the intercept <code class="docutils literal notranslate"><span class="pre">c</span></code> (C for Constant).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># store the slope (b) and the intercept (c) as separate variables</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">slope</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">intercept</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the value of b, from the Duncan data</span>
+<span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0058545962950014
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the value of the intercept, from the Duncan data</span>
+<span class="n">c</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-8.383432366305456
+</pre></div>
+</div>
+</div>
+</div>
+<p>These values (of <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span>) are called the <em>parameter estimates</em> of our linear regression model. To recap, the <em>slope</em> <span class="math notranslate nohighlight">\(b\)</span> describes the strength and direction of the linear predictive relationship between <code class="docutils literal notranslate"><span class="pre">education</span></code> and <code class="docutils literal notranslate"><span class="pre">prestige</span></code>, and the <em>intercept</em> <span class="math notranslate nohighlight">\(c\)</span> describes  where our linear regression line crosses the y axis (as mentioned above, including the intercept lets us model a greater variety of linear trends).</p>
+<p><span class="math notranslate nohighlight">\(b\)</span> can be interpreted as the expected change in <code class="docutils literal notranslate"><span class="pre">prestige</span></code> if we compared two observational units which
+differed only by 1 point of <code class="docutils literal notranslate"><span class="pre">education</span></code>.</p>
+<p>So, based on the linear relationship in the data, if the scores of two occupations differ by 1 point of <code class="docutils literal notranslate"><span class="pre">education</span></code>, we would expect the difference in their <code class="docutils literal notranslate"><span class="pre">prestige</span></code> scores to be 1.006 points. (“Points” is a generic term, the meaning in this context is shown below):</p>
+<p><code class="docutils literal notranslate"><span class="pre">education</span></code> - percentage of census respondents in the occupation who were high school graduates (each “point” is a percentage point)</p>
+<p><code class="docutils literal notranslate"><span class="pre">prestige</span></code> - percentage of respondents in the NORC survey who rated the occupation as “good” or better in prestige (each “point” is a percentage point)</p>
+</section>
+<section id="fitted-values-and-errors">
+<h2>Fitted values and errors<a class="headerlink" href="#fitted-values-and-errors" title="Permalink to this heading">#</a></h2>
+<p>Obtaining the parameter estimates is called <em>fitting</em> a regression model. The parameter estimates then give us <em>fitted values</em>. There are a few ways to think about the fitted values. The fitted values are the values generated
+by the systematic component of our model (<span class="math notranslate nohighlight">\(\vec{y} = b \vec{x} + \text{c}\)</span>). As such they all fall on a straight line,
+and give us a summary of the linear trend in the data. You can think of them as our summary of the linear trend, when
+we ignore the noise in the actual data. Again, these concepts are easier to understand graphically. The graph below shows the original data (in blue) alongside the fitted values (in red):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it is just a convenience function to plot the data</span>
+<span class="k">def</span> <span class="nf">make_scatter</span><span class="p">(</span><span class="n">with_errors</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">show</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Actual values ($y$)&#39;</span><span class="p">)</span>
+    <span class="c1"># plot the predicted values</span>
+    <span class="n">fitted</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fitted</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fitted values from linear regression ($\hat</span><span class="si">{y}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">with_errors</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># plot the distance between predicted and actual, for all points.</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="p">[</span><span class="n">fitted</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]],</span> <span class="s1">&#39;k:&#39;</span><span class="p">)</span>
+        <span class="c1"># the following code line is just to trick Matplotlib into making a new</span>
+        <span class="c1"># a single legend entry for the dotted lines.</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="s1">&#39;k:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Errors ($ </span><span class="se">\\</span><span class="s1">varepsilon $)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Education&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prestige&#39;</span><span class="p">)</span>
+    <span class="c1"># show the legend</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+    <span class="k">if</span> <span class="n">show</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># generate the plot    </span>
+<span class="n">make_scatter</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/367898749524a74256fa1152126f921cb36af4ad683ba845e2e9b1e709cdb891.png" src="_images/367898749524a74256fa1152126f921cb36af4ad683ba845e2e9b1e709cdb891.png" />
+</div>
+</div>
+<p>Remember, our <em>fitted</em> values are given by multiplying the <code class="docutils literal notranslate"><span class="pre">x</span></code>
+(<code class="docutils literal notranslate"><span class="pre">education</span></code>) values by <code class="docutils literal notranslate"><span class="pre">b</span></code> (the slope) and then adding <code class="docutils literal notranslate"><span class="pre">c</span></code> (the intercept).  In
+Numpy that looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+<span class="n">fitted</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([78.120063, 68.061517, 84.15519 , 82.143481, 78.120063, 76.108354,
+       85.161045, 92.202027, 79.125918, 78.120063, 66.049808, 90.190318,
+       89.184463, 76.108354, 83.149336])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Typically, we use the “hat” notation to refer to the fitted values. So the
+vector of fitted values we would denote with <span class="math notranslate nohighlight">\(\vec{\hat{y}}\)</span>. The <span class="math notranslate nohighlight">\(\hat{ }\)</span> over the <span class="math notranslate nohighlight">\(y\)</span>
+is called the “hat”.</p>
+<p>Because our fitted values give us a summary of the linear predictive relationship
+between <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>, minus the noise/randomness in the actual data, we
+can write the equation for the fitted values as:</p>
+<p><span class="math notranslate nohighlight">\(\vec{\hat{y}} = b \vec{x} + \text{c}\)</span></p>
+<p>This is the same as the equation for our full model, but without the error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\( \vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} \)</span></p>
+<p>The <em>errors</em> are the differences between the <em>fitted</em> and <em>actual</em> (<code class="docutils literal notranslate"><span class="pre">y</span></code>) values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">errors</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">fitted</span>
+<span class="n">errors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  3.879937,  14.938483,   5.84481 ,  -6.143481,  11.879937,
+        10.891646,   7.838955,  -2.202027, -27.125918,   9.879937,
+        -9.049808,  -1.190318,   7.815537, -17.108354, -10.149336])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dashed lines in the plot below represent the <em>errors</em>.  The values in the <code class="docutils literal notranslate"><span class="pre">errors</span></code> vector
+above represent the (positive and negative) lengths of these dashed lines.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the data and fitted values (showing the errors)</span>
+<span class="n">make_scatter</span><span class="p">(</span><span class="n">with_errors</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" src="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" />
+</div>
+</div>
+<p>“Fitting” a linear regression involves finding the parameter estimates (values of <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span>) which give fitted values that yield the smallest sum of the squared error values.  The error values are the values in <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span>, or, equivalently, the black dashed lines on the graph above).</p>
+<p>Now is a good opportunity to pause, and compare the mathematical notation for the linear regression model
+with the graph above, to make sure you can relate the two perspectives (the mathematical perspective and
+the graphical perspective):</p>
+<p>Here is the equation for the fitted values (these are the red points on the graph above):</p>
+<p><span class="math notranslate nohighlight">\(\vec{\hat{y}} = b \vec{x} + \text{c}\)</span></p>
+<p>And here is the equation for the full model (these are the blue points on the graph above):</p>
+<p><span class="math notranslate nohighlight">\( \vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} \)</span></p>
+</section>
+<section id="mathematical-notation">
+<h2>Mathematical notation<a class="headerlink" href="#mathematical-notation" title="Permalink to this heading">#</a></h2>
+<p>Our next step is to write the values in <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span> more generally and more formally in
+mathematical symbols, so we can think about <em>any</em> vector (sequence) of x values
+<span class="math notranslate nohighlight">\(\vec{x}\)</span>, and any sequence (vector) of matching y values <span class="math notranslate nohighlight">\(\vec{y}\)</span>.  But to start
+with, let’s think about the actual set of values we have for <span class="math notranslate nohighlight">\(\vec{x}\)</span>.  We could
+write the actual values in mathematical notation as:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the notation below</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> = &quot;</span> <span class="o">+</span> <span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;$&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<p>$ \vec{x} = \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix}$</p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the education vector, for comparison to the notation above</span>
+<span class="n">education</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 86,  76,  92,  90,  86,  84,  93, 100,  87,  86,  74,  98,  97,
+        84,  91])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This means that <span class="math notranslate nohighlight">\(\vec{x}\)</span> is a sequence of these specific 15 values.  But we
+could write <span class="math notranslate nohighlight">\(\vec{x}\)</span> in a more general way, to be <em>any</em> 15 values, like this:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the notation below</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">x_is</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;$x_</span><span class="se">{{</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">}}</span><span class="s1">$&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> = &quot;</span> <span class="o">+</span> <span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">x_is</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">quote_strings</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">contains_latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;$&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<p>$ \vec{x} = \begin{bmatrix}{} \text{$x_{1}$} \ \text{$x_{2}$} \ \text{$x_{3}$} \ \text{$x_{4}$} \ \text{$x_{5}$} \ \text{$x_{6}$} \ \text{$x_{7}$} \ \text{$x_{8}$} \ \text{$x_{9}$} \ \text{$x_{10}$} \ \text{$x_{11}$} \ \text{$x_{12}$} \ \text{$x_{13}$} \ \text{$x_{14}$} \ \text{$x_{15}$} \ \end{bmatrix}$</p>
+</div>
+</div>
+<p>This means that <span class="math notranslate nohighlight">\(\vec{x}\)</span> consists of 15 numbers, <span class="math notranslate nohighlight">\(x_1, x_2 ..., x_{15}\)</span>, where
+<span class="math notranslate nohighlight">\(x_1\)</span> can be any number, <span class="math notranslate nohighlight">\(x_2\)</span> can be any number, and so on.</p>
+<p><span class="math notranslate nohighlight">\(x_1\)</span> is the value for the first occupation, <span class="math notranslate nohighlight">\(x_2\)</span> is the value for the second occupation, etc.</p>
+<p>Here’s another way of looking at the relationship of the values in our
+particular case, and their notation:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the dataframe below</span>
+<span class="n">df_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;1-based index&#39;</span><span class="p">)</span>
+<span class="n">x_notation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="sa">r</span><span class="s1">&#39;$\vec</span><span class="si">{x}</span><span class="s1">$ values&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+     <span class="sa">f</span><span class="s1">&#39;$x$ value notation&#39;</span><span class="p">:</span> 
+     <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;$</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">$&#39;</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x_is</span><span class="p">]</span>
+    <span class="p">},</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">df_index</span>
+<span class="p">)</span>
+<span class="n">x_notation</span> 
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>$\vec{x}$ values</th>
+      <th>$x$ value notation</th>
+    </tr>
+    <tr>
+      <th>1-based index</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>86</td>
+      <td>$$x_{1}$$</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>76</td>
+      <td>$$x_{2}$$</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>92</td>
+      <td>$$x_{3}$$</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>90</td>
+      <td>$$x_{4}$$</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>86</td>
+      <td>$$x_{5}$$</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>84</td>
+      <td>$$x_{6}$$</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>93</td>
+      <td>$$x_{7}$$</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100</td>
+      <td>$$x_{8}$$</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>87</td>
+      <td>$$x_{9}$$</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>86</td>
+      <td>$$x_{10}$$</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>74</td>
+      <td>$$x_{11}$$</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>98</td>
+      <td>$$x_{12}$$</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>97</td>
+      <td>$$x_{13}$$</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>84</td>
+      <td>$$x_{14}$$</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>91</td>
+      <td>$$x_{15}$$</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>You can see that the values in the “<span class="math notranslate nohighlight">\(\vec{x}\)</span> values” column, are the
+values in our predictor vector <code class="docutils literal notranslate"><span class="pre">education</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the education values</span>
+<span class="n">education</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 86,  76,  92,  90,  86,  84,  93, 100,  87,  86,  74,  98,  97,
+        84,  91])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The values in the “<span class="math notranslate nohighlight">\(x\)</span> value notation” column show the general vector
+notation for these values (this notation applies to other <span class="math notranslate nohighlight">\(\vec{x}\)</span> vectors
+as well e.g. those from other datasets).</p>
+<p>We can make <span class="math notranslate nohighlight">\(\vec{x}\)</span> be even more general, by writing it like this:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{x} = \begin{bmatrix}
+           x_{1} \\
+           x_{2} \\
+           \vdots \\
+           x_{n}
+         \end{bmatrix}
+\end{split}\]</div>
+<p>This means that <span class="math notranslate nohighlight">\(\vec{x}\)</span> is a sequence of any <span class="math notranslate nohighlight">\(n\)</span> numbers, where <span class="math notranslate nohighlight">\(n\)</span> can be any
+whole number, such as 1, 2, 3 …</p>
+<p><span class="math notranslate nohighlight">\(n\)</span> is the total number of datapoints,
+in our specific case, <span class="math notranslate nohighlight">\(n = 15\)</span>, because we have 15 datapoints.</p>
+<p>(This looks more
+complex than it is, the small numbers to the bottom right of the symbols (1, 2, 3 … <span class="math notranslate nohighlight">\(n\)</span>)
+essentially just count the number of datapoints - these counters are called <em>subscripts</em>).</p>
+<p>Similarly, for our <code class="docutils literal notranslate"><span class="pre">prestige</span></code> (<span class="math notranslate nohighlight">\(\vec{y}\)</span>) values, we can write:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the notation below</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = &quot;</span> <span class="o">+</span> <span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;$&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<p>$ \vec{y} = \begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix}$</p>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the prestige vector, for comparison to the notation above</span>
+<span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this code, it just generates the dataframe below</span>
+<span class="n">y_notation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="p">{</span><span class="sa">r</span><span class="s1">&#39;$\vec</span><span class="si">{y}</span><span class="s1">$ values&#39;</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span>
+     <span class="sa">f</span><span class="s1">&#39;$y$ value notation&#39;</span><span class="p">:</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;$y_</span><span class="se">{{</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">}}</span><span class="s1">$&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span>
+    <span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">df_index</span><span class="p">)</span>
+<span class="n">y_notation</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>$\vec{y}$ values</th>
+      <th>$y$ value notation</th>
+    </tr>
+    <tr>
+      <th>1-based index</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>82</td>
+      <td>$y_{1}$</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>83</td>
+      <td>$y_{2}$</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>90</td>
+      <td>$y_{3}$</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>76</td>
+      <td>$y_{4}$</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>90</td>
+      <td>$y_{5}$</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>87</td>
+      <td>$y_{6}$</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>93</td>
+      <td>$y_{7}$</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>90</td>
+      <td>$y_{8}$</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>52</td>
+      <td>$y_{9}$</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>88</td>
+      <td>$y_{10}$</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>57</td>
+      <td>$y_{11}$</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>89</td>
+      <td>$y_{12}$</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>97</td>
+      <td>$y_{13}$</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>59</td>
+      <td>$y_{14}$</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>73</td>
+      <td>$y_{15}$</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Again, you can see that the values in the “<span class="math notranslate nohighlight">\(\vec{y}\)</span> values” column, are the
+values in our outcome vector <code class="docutils literal notranslate"><span class="pre">prestige</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># show the prestige vector</span>
+<span class="n">prestige</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, the values in the “<span class="math notranslate nohighlight">\(y\)</span> value notation” column show the general vector
+notation for these values (this notation applies to other <span class="math notranslate nohighlight">\(\vec{y}\)</span> vectors
+as well).</p>
+<p>More generally we can write <span class="math notranslate nohighlight">\(\vec{y}\)</span> as a vector of any <span class="math notranslate nohighlight">\(n\)</span> numbers:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{y} = \begin{bmatrix}
+           y_{1} \\
+           y_{2} \\
+           \vdots \\
+           y_{n}
+         \end{bmatrix}
+\end{split}\]</div>
+</section>
+<section id="notation-for-fitted-values">
+<h2>Notation for fitted values<a class="headerlink" href="#notation-for-fitted-values" title="Permalink to this heading">#</a></h2>
+<p>If we have <span class="math notranslate nohighlight">\(n\)</span> values in <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span> then we have <span class="math notranslate nohighlight">\(n\)</span> <em>fitted</em> values.</p>
+<p>In our case we have 15 values (<span class="math notranslate nohighlight">\(n = 15\)</span>) in <span class="math notranslate nohighlight">\(\vec{x}\)</span> and <span class="math notranslate nohighlight">\(\vec{y}\)</span>, so we have 15 <em>fitted</em> values.</p>
+<p>We write the fitted value for the first occupation as <span class="math notranslate nohighlight">\(\hat{y}_1\)</span>, that for the
+second as <span class="math notranslate nohighlight">\(\hat{y}_2\)</span>, and so on:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{\hat{y}} = \begin{bmatrix}
+           \hat{y}_{1} \\
+           \hat{y}_{2} \\
+           \vdots \\
+           \hat{y}_{n}
+         \end{bmatrix}
+\end{split}\]</div>
+<p>You can read the <span class="math notranslate nohighlight">\(\hat{ }\)</span> over the <span class="math notranslate nohighlight">\(y\)</span> as “fitted”, so <span class="math notranslate nohighlight">\(\hat{y}_1\)</span> is our
+fitted value for <span class="math notranslate nohighlight">\(y_1\)</span>. Remember, the fitted values are generated from the
+parameter estimates which minimize the sum of the squared error.</p>
+<p>Our regression model says each fitted value comes about by multiplying the
+corresponding <span class="math notranslate nohighlight">\(x\)</span> value by <span class="math notranslate nohighlight">\(b\)</span> (the slope) and then adding <span class="math notranslate nohighlight">\(c\)</span> (the intercept).</p>
+<p>So, the fitted values are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{y}_1 = b x_1 + c \\
+\hat{y}_2 = b x_2 + c \\
+... \\
+\hat{y}_n = b x_n + c
+\end{split}\]</div>
+<p>More compactly:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{\hat{y}}  = \begin{bmatrix}
+           b x_1 + c \\
+           b x_2 + c \\
+           \vdots \\
+           b x_n + c
+         \end{bmatrix}
+\end{split}\]</div>
+<p>We often use <span class="math notranslate nohighlight">\(i\)</span> as a general <em>index</em> into the vectors.  So, instead of
+writing:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{y}_1 = b x_1 + c \\
+\hat{y}_2 = b x_2 + c \\
+... \\
+\hat{y}_n = b x_n + c
+\end{split}\]</div>
+<p>we use <span class="math notranslate nohighlight">\(i\)</span> to mean any whole number from 1 through <span class="math notranslate nohighlight">\(n\)</span>, and so:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{y}_i = b x_i + c \\
+\text{for } i \in [ 1, 2, ... n]
+\end{split}\]</div>
+<p>For the second line above, read <span class="math notranslate nohighlight">\(\in\)</span> as “in”, and the whole line as “For <span class="math notranslate nohighlight">\(i\)</span>
+in 1 through <span class="math notranslate nohighlight">\(n\)</span>”, or as “Where <span class="math notranslate nohighlight">\(i\)</span> can take any value from 1 through <span class="math notranslate nohighlight">\(n\)</span>
+inclusive”. (Remember, <span class="math notranslate nohighlight">\(n\)</span> is the total number of observational units in our dataset).</p>
+<p>We mean here, that for any whole number <span class="math notranslate nohighlight">\(i\)</span> from 1 through <span class="math notranslate nohighlight">\(n\)</span>, the fitted
+value <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> (e.g. <span class="math notranslate nohighlight">\(\hat{y}_3\)</span>, where <span class="math notranslate nohighlight">\(i=3\)</span>) is given by <span class="math notranslate nohighlight">\(b\)</span> times the
+corresponding <span class="math notranslate nohighlight">\(x\)</span> value (<span class="math notranslate nohighlight">\(x_3\)</span> where <span class="math notranslate nohighlight">\(i=3\)</span>) plus <span class="math notranslate nohighlight">\(c\)</span>.</p>
+<p>The error vector <span class="math notranslate nohighlight">\(\vec{\varepsilon}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{\varepsilon}=
+\begin{bmatrix}
+           \varepsilon_1 \\
+           \varepsilon_2 \\
+           \vdots \\
+           \varepsilon_n
+         \end{bmatrix}
+\end{split}\]</div>
+<p>For our linear model, the errors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{\varepsilon}= \begin{bmatrix}
+           y_1 - \hat{y}_1 \\
+           y_2 - \hat{y}_2 \\
+           \vdots \\
+           y_n - \hat{y}_n
+         \end{bmatrix}         = 
+         \begin{bmatrix}
+           y_1 - (b x_1 + c)\\
+           y_2 - (b x_2 + c) \\
+           \vdots \\
+           y_n - (b x_n + c)
+         \end{bmatrix}         
+\end{split}\]</div>
+<p>Again, we could write this same idea with the general index <span class="math notranslate nohighlight">\(i\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[
+\varepsilon_i = y_i - (b x_i + c)
+\]</div>
+<p>Putting all of this together, we can express the formula for our linear regression model (<span class="math notranslate nohighlight">\(\vec{y} = b \vec{x} + \text{c} + \vec{\varepsilon} \)</span>) using the generalized mathematical form of the vectors as:</p>
+<p><span class="math notranslate nohighlight">\(\begin{bmatrix}{} \text{\)</span>y_{1}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{2}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{3}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{4}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{5}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{6}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{7}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{8}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{9}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{10}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{11}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{12}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{13}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{14}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>y_{15}<span class="math notranslate nohighlight">\(} \\ \end{bmatrix} = b * \begin{bmatrix}{} \text{\)</span>x_{1}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{2}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{3}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{4}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{5}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{6}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{7}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{8}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{9}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{10}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{11}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{12}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{13}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{14}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{15}<span class="math notranslate nohighlight">\(} \\ \end{bmatrix} + c + \begin{bmatrix}{} \text{\)</span>\varepsilon_{1}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{2}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{3}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{4}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{5}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{6}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{7}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{8}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{9}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{10}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{11}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{12}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{13}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{14}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\varepsilon_{15}<span class="math notranslate nohighlight">\(} \\ \end{bmatrix}\)</span></p>
+<p>And the formula for our fitted values (<span class="math notranslate nohighlight">\(\hat{y}_i = b x_i + c\)</span>) can be expressed using the generalized mathematical form of the vectors as:</p>
+<p><span class="math notranslate nohighlight">\(\begin{bmatrix}{} \text{\)</span>\hat{y_{1}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{2}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{3}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{4}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{5}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{6}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{7}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{8}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{9}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{10}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{11}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{12}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{13}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{14}}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>\hat{y_{15}}<span class="math notranslate nohighlight">\(} \\ \end{bmatrix} = b * \begin{bmatrix}{} \text{\)</span>x_{1}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{2}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{3}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{4}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{5}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{6}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{7}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{8}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{9}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{10}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{11}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{12}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{13}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{14}<span class="math notranslate nohighlight">\(} \\ \text{\)</span>x_{15}<span class="math notranslate nohighlight">\(} \\ \end{bmatrix} + c\)</span></p>
+<p>Again, here is a good point to pause to check you can relate the mathematical notation perspective to the graphical perspective, which is shown again below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">make_scatter</span><span class="p">(</span><span class="n">with_errors</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" src="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" />
+</div>
+</div>
+</section>
+<section id="approximation-and-errors">
+<h2>Approximation and errors<a class="headerlink" href="#approximation-and-errors" title="Permalink to this heading">#</a></h2>
+<p>Our straight line model says that the <span class="math notranslate nohighlight">\(y_i\)</span> values are approximately predicted
+by the fitted values <span class="math notranslate nohighlight">\(\hat{y}_i = b x_i + c\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+y_i \approx bx_i + c
+\]</div>
+<p>Read <span class="math notranslate nohighlight">\(\approx\)</span> above as <em>approximately equal to</em>.</p>
+<p>With the <span class="math notranslate nohighlight">\(\approx\)</span>, we are accepting that we will not succeed in explaining our
+prestige values exactly. We can rephrase this by saying that each
+observation is equal to the predicted value (from the formula above) plus the
+remaining error for each observation:</p>
+<div class="math notranslate nohighlight">
+\[
+y_i = bx_i + c + \varepsilon_i
+\]</div>
+<p>Of course this must be true for our calculated errors because we calculated
+them with:</p>
+<div class="math notranslate nohighlight">
+\[
+\varepsilon_i = y_i - (b x_i + c)
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">errors</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="putting-it-all-together">
+<h1>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this heading">#</a></h1>
+<p>On this page, we have introduced the mathematical notation for linear regression models. We have
+spoken about the key purposes of (linear) regression models (description and prediction).
+We have performed a linear regression on Duncan’s occupational prestige data. We modelled <code class="docutils literal notranslate"><span class="pre">prestige</span></code>
+as a linear function of <code class="docutils literal notranslate"><span class="pre">education</span></code> - our observational units were occupations.</p>
+<p>The cell below will print out a walkthrough of everything we have done on this page.
+It will shown the mathematical notation, and then will show the values within our
+vectors, and the values of our parameter estimates, in place of the symbols, within the same notation.</p>
+<p><em>Note</em>: here we will write the multiplication symbol (<span class="math notranslate nohighlight">\(*\)</span>) for clarity, but you will see that most writers
+omit the multiplicaton sign in the mathematical notation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># do not worry about this (thorny!) code, it just generates the walkthrough below</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Here is the mathematical notation for our linear regression model:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = b * </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">text</span><span class="si">{c}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon} $&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;The full model, showing the general form of the vectors (i.e. not specific to this dataset), can be written as:&quot;</span><span class="p">)</span>
+<span class="n">x_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">x_is</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">quote_strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">False</span><span class="p">,</span><span class="w"> </span><span class="n">contains_latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">y_is</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;$y_</span><span class="se">{{</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="se">}}</span><span class="s1">$&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+<span class="n">y_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">y_is</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">quote_strings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">False</span><span class="p">,</span><span class="w"> </span><span class="n">contains_latex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">e_string</span> <span class="o">=</span> <span class="n">y_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;y_&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">varepsilon_&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">y_string</span><span class="si">}</span><span class="s2"> = b * </span><span class="si">{</span><span class="n">x_string</span><span class="si">}</span><span class="s2"> + c + </span><span class="si">{</span><span class="n">e_string</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2">$ is our `education` vector:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;`education` = $ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> = &quot;</span> <span class="o">+</span> <span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;$&quot;</span> <span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2">$ is our `prestige` vector:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;`prestige` = $ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = &quot;</span> <span class="o">+</span> <span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;$&quot;</span> <span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Here is our model ($ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = b * </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">text</span><span class="si">{c}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon} $), showing the actual values within the `education` vector and the `prestige` vector:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = b * </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> + c +&quot;</span> <span class="o">+</span><span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">e_string</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;We used linear regression to obtain the values of $b$ and $c$ which minimize the sum of the squared error values (i.e. the values in the error vector $</span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon}$):&quot;</span><span class="p">)</span>
+<span class="n">make_scatter</span><span class="p">(</span><span class="n">with_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This gave us the parameter estimates </span><span class="se">\n</span><span class="s2">$b$ = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> and </span><span class="se">\n</span><span class="s2">$c$ = </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;These parameter estimates give us our fitted values. Here is the compact equation for our fitted values $\hat</span><span class="si">{y}</span><span class="s2">$:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">hat</span><span class="si">{y}</span><span class="s2">} = b * </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">text</span><span class="si">{c}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;And here is the vector form of the same general equation:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{bmatrix}{}</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{1}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{2}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{3}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{4}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{5}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{6}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{7}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{8}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{9}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{10}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{11}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{12}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{13}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{14}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{15}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">end</span><span class="si">{bmatrix}</span><span class="s2"> = b * </span><span class="se">\\</span><span class="s2">begin</span><span class="si">{bmatrix}{}</span><span class="s2"> x_</span><span class="si">{1}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{2}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{3}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{4}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{5}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{6}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{7}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{8}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{9}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{10}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{11}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{12}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{13}</span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{14}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> x_</span><span class="si">{15}</span><span class="s2"> </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">end</span><span class="si">{bmatrix}</span><span class="s2"> + c$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Here is the same compact equation for the fitted values $\hat</span><span class="si">{y}</span><span class="s2">$, with our actual parameter estimates shown, in place of their symbols:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">hat</span><span class="si">{y}</span><span class="s2">} =$&quot;</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span> <span class="o">+</span><span class="s2">&quot;* $</span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2">$&quot;</span><span class="o">+</span><span class="s2">&quot; $+$ &quot;</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Here is the same equation, with our parameter estimates shown AND the values within each vector shown:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">fitted</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;The error vector $</span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon}$ is our actual $y$ values minus our fitted $\hat</span><span class="si">{y}</span><span class="s2">$ values. Here is the general, compact form of the equation for the error vector:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon} = </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> - </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">hat</span><span class="si">{y}</span><span class="s2">} $&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;And here is the general form of the same equation, showing the general vectors:&quot;</span><span class="p">)</span>
+<span class="n">hat_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{bmatrix}{}</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{1}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{2}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{3}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{4}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{5}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{6}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{7}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{8}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{9}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{10}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{11}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{12}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{13}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{14}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hat{y_</span><span class="si">{15}</span><span class="s2">} </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">end</span><span class="si">{bmatrix}</span><span class="s2">&quot;</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">e_string</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">y_string</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">hat_string</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;Which with our actual data and fitted values is:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$ </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">fitted</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> $&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;So our full model ($ </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{y}</span><span class="s2"> = b * </span><span class="se">\\</span><span class="s2">vec</span><span class="si">{x}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">text</span><span class="si">{c}</span><span class="s2"> + </span><span class="se">\\</span><span class="s2">vec{</span><span class="se">\\</span><span class="s2">varepsilon} $), showing all values within all the vectors is:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = b * </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> + c + </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You can see that this conforms with the general mathematical notation:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">y_string</span><span class="si">}</span><span class="s2"> = b * </span><span class="si">{</span><span class="n">x_string</span><span class="si">}</span><span class="s2"> + c + </span><span class="si">{</span><span class="n">e_string</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="s2">&quot;And here is our full model, showing all values within all the vectors AND the values of our parameter estimates:&quot;</span><span class="p">)</span>
+<span class="n">jupyprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">prestige</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">b</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> * </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">education</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">arraytex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p>Here is the mathematical notation for our linear regression model:</p>
+<p>$ \vec{y} = b * \vec{x} + \text{c} + \vec{\varepsilon} $</p>
+<p>The full model, showing the general form of the vectors (i.e. not specific to this dataset), can be written as:</p>
+<p>$\begin{bmatrix}{} \text{$y_{1}$} \ \text{$y_{2}$} \ \text{$y_{3}$} \ \text{$y_{4}$} \ \text{$y_{5}$} \ \text{$y_{6}$} \ \text{$y_{7}$} \ \text{$y_{8}$} \ \text{$y_{9}$} \ \text{$y_{10}$} \ \text{$y_{11}$} \ \text{$y_{12}$} \ \text{$y_{13}$} \ \text{$y_{14}$} \ \text{$y_{15}$} \ \end{bmatrix} = b * \begin{bmatrix}{} \text{$x_{1}$} \ \text{$x_{2}$} \ \text{$x_{3}$} \ \text{$x_{4}$} \ \text{$x_{5}$} \ \text{$x_{6}$} \ \text{$x_{7}$} \ \text{$x_{8}$} \ \text{$x_{9}$} \ \text{$x_{10}$} \ \text{$x_{11}$} \ \text{$x_{12}$} \ \text{$x_{13}$} \ \text{$x_{14}$} \ \text{$x_{15}$} \ \end{bmatrix} + c + \begin{bmatrix}{} \text{$\varepsilon_{1}$} \ \text{$\varepsilon_{2}$} \ \text{$\varepsilon_{3}$} \ \text{$\varepsilon_{4}$} \ \text{$\varepsilon_{5}$} \ \text{$\varepsilon_{6}$} \ \text{$\varepsilon_{7}$} \ \text{$\varepsilon_{8}$} \ \text{$\varepsilon_{9}$} \ \text{$\varepsilon_{10}$} \ \text{$\varepsilon_{11}$} \ \text{$\varepsilon_{12}$} \ \text{$\varepsilon_{13}$} \ \text{$\varepsilon_{14}$} \ \text{$\varepsilon_{15}$} \ \end{bmatrix}$</p>
+<p>$\vec{x}$ is our <code class="docutils literal notranslate"><span class="pre">education</span></code> vector:</p>
+<p><code class="docutils literal notranslate"><span class="pre">education</span></code> = $ \vec{x} = \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix}$</p>
+<p>$\vec{y}$ is our <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector:</p>
+<p><code class="docutils literal notranslate"><span class="pre">prestige</span></code> = $ \vec{y} = \begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix}$</p>
+<p>Here is our model ($ \vec{y} = b * \vec{x} + \text{c} + \vec{\varepsilon} $), showing the actual values within the <code class="docutils literal notranslate"><span class="pre">education</span></code> vector and the <code class="docutils literal notranslate"><span class="pre">prestige</span></code> vector:</p>
+<p>$\begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix} = b * \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix} + c + \begin{bmatrix}{} \text{$\varepsilon_{1}$} \ \text{$\varepsilon_{2}$} \ \text{$\varepsilon_{3}$} \ \text{$\varepsilon_{4}$} \ \text{$\varepsilon_{5}$} \ \text{$\varepsilon_{6}$} \ \text{$\varepsilon_{7}$} \ \text{$\varepsilon_{8}$} \ \text{$\varepsilon_{9}$} \ \text{$\varepsilon_{10}$} \ \text{$\varepsilon_{11}$} \ \text{$\varepsilon_{12}$} \ \text{$\varepsilon_{13}$} \ \text{$\varepsilon_{14}$} \ \text{$\varepsilon_{15}$} \ \end{bmatrix}$</p>
+<p>We used linear regression to obtain the values of $b$ and $c$ which minimize the sum of the squared error values (i.e. the values in the error vector $\vec{\varepsilon}$):</p>
+<img alt="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" src="_images/e11919928032f7b0542e056a4d6406da56d90dc8f90289f78ccc39f680753401.png" />
+<p>This gave us the parameter estimates
+$b$ = 1.006 and
+$c$ = -8.383</p>
+<p>These parameter estimates give us our fitted values. Here is the compact equation for our fitted values $\hat{y}$:</p>
+<p>$\vec{\hat{y}} = b * \vec{x} + \text{c}$</p>
+<p>And here is the vector form of the same general equation:</p>
+<p>$\begin{bmatrix}{} \hat{y_{1}} \ \hat{y_{2}} \ \hat{y_{3}} \ \hat{y_{4}} \ \hat{y_{5}} \ \hat{y_{6}} \ \hat{y_{7}} \ \hat{y_{8}} \ \hat{y_{9}} \ \hat{y_{10}} \ \hat{y_{11}} \ \hat{y_{12}} \ \hat{y_{13}} \ \hat{y_{14}} \ \hat{y_{15}} \ \end{bmatrix} = b * \begin{bmatrix}{} x_{1} \ x_{2} \ x_{3} \ x_{4} \ x_{5} \ x_{6} \ x_{7} \ x_{8} \ x_{9} \ x_{10} \ x_{11} \ x_{12} \ x_{13}\ x_{14} \ x_{15} \ \end{bmatrix} + c$</p>
+<p>Here is the same compact equation for the fitted values $\hat{y}$, with our actual parameter estimates shown, in place of their symbols:</p>
+<p>$\vec{\hat{y}} =$ 1.006 * $\vec{x}$ $+$  -8.383</p>
+<p>Here is the same equation, with our parameter estimates shown AND the values within each vector shown:</p>
+<p>$\begin{bmatrix}{} 78.12 \ 68.06 \ 84.16 \ 82.14 \ 78.12 \ 76.11 \ 85.16 \ 92.2 \ 79.13 \ 78.12 \ 66.05 \ 90.19 \ 89.18 \ 76.11 \ 83.15 \ \end{bmatrix} = 1.006 * \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix} + -8.383$</p>
+<p>The error vector $\vec{\varepsilon}$ is our actual $y$ values minus our fitted $\hat{y}$ values. Here is the general, compact form of the equation for the error vector:</p>
+<p>$\vec{\varepsilon} = \vec{y} - \vec{\hat{y}} $</p>
+<p>And here is the general form of the same equation, showing the general vectors:</p>
+<p>$\begin{bmatrix}{} \text{$\varepsilon_{1}$} \ \text{$\varepsilon_{2}$} \ \text{$\varepsilon_{3}$} \ \text{$\varepsilon_{4}$} \ \text{$\varepsilon_{5}$} \ \text{$\varepsilon_{6}$} \ \text{$\varepsilon_{7}$} \ \text{$\varepsilon_{8}$} \ \text{$\varepsilon_{9}$} \ \text{$\varepsilon_{10}$} \ \text{$\varepsilon_{11}$} \ \text{$\varepsilon_{12}$} \ \text{$\varepsilon_{13}$} \ \text{$\varepsilon_{14}$} \ \text{$\varepsilon_{15}$} \ \end{bmatrix} = \begin{bmatrix}{} \text{$y_{1}$} \ \text{$y_{2}$} \ \text{$y_{3}$} \ \text{$y_{4}$} \ \text{$y_{5}$} \ \text{$y_{6}$} \ \text{$y_{7}$} \ \text{$y_{8}$} \ \text{$y_{9}$} \ \text{$y_{10}$} \ \text{$y_{11}$} \ \text{$y_{12}$} \ \text{$y_{13}$} \ \text{$y_{14}$} \ \text{$y_{15}$} \ \end{bmatrix} - \begin{bmatrix}{} \hat{y_{1}} \ \hat{y_{2}} \ \hat{y_{3}} \ \hat{y_{4}} \ \hat{y_{5}} \ \hat{y_{6}} \ \hat{y_{7}} \ \hat{y_{8}} \ \hat{y_{9}} \ \hat{y_{10}} \ \hat{y_{11}} \ \hat{y_{12}} \ \hat{y_{13}} \ \hat{y_{14}} \ \hat{y_{15}} \ \end{bmatrix}$</p>
+<p>Which with our actual data and fitted values is:</p>
+<p>$ \begin{bmatrix}{} 3.88 \ 14.94 \ 5.84 \ -6.14 \ 11.88 \ 10.89 \ 7.84 \ -2.2 \ -27.13 \ 9.88 \ -9.05 \ -1.19 \ 7.82 \ -17.11 \ -10.15 \ \end{bmatrix} = \begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix} - \begin{bmatrix}{} 78.12 \ 68.062 \ 84.155 \ 82.143 \ 78.12 \ 76.108 \ 85.161 \ 92.202 \ 79.126 \ 78.12 \ 66.05 \ 90.19 \ 89.184 \ 76.108 \ 83.149 \ \end{bmatrix} $</p>
+<p>So our full model ($ \vec{y} = b * \vec{x} + \text{c} + \vec{\varepsilon} $), showing all values within all the vectors is:</p>
+<p>$\begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix} = b * \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix} + c + \begin{bmatrix}{} 3.88 \ 14.938 \ 5.845 \ -6.143 \ 11.88 \ 10.892 \ 7.839 \ -2.202 \ -27.126 \ 9.88 \ -9.05 \ -1.19 \ 7.816 \ -17.108 \ -10.149 \ \end{bmatrix}$</p>
+<p>You can see that this conforms with the general mathematical notation:</p>
+<p>$\begin{bmatrix}{} \text{$y_{1}$} \ \text{$y_{2}$} \ \text{$y_{3}$} \ \text{$y_{4}$} \ \text{$y_{5}$} \ \text{$y_{6}$} \ \text{$y_{7}$} \ \text{$y_{8}$} \ \text{$y_{9}$} \ \text{$y_{10}$} \ \text{$y_{11}$} \ \text{$y_{12}$} \ \text{$y_{13}$} \ \text{$y_{14}$} \ \text{$y_{15}$} \ \end{bmatrix} = b * \begin{bmatrix}{} \text{$x_{1}$} \ \text{$x_{2}$} \ \text{$x_{3}$} \ \text{$x_{4}$} \ \text{$x_{5}$} \ \text{$x_{6}$} \ \text{$x_{7}$} \ \text{$x_{8}$} \ \text{$x_{9}$} \ \text{$x_{10}$} \ \text{$x_{11}$} \ \text{$x_{12}$} \ \text{$x_{13}$} \ \text{$x_{14}$} \ \text{$x_{15}$} \ \end{bmatrix} + c + \begin{bmatrix}{} \text{$\varepsilon_{1}$} \ \text{$\varepsilon_{2}$} \ \text{$\varepsilon_{3}$} \ \text{$\varepsilon_{4}$} \ \text{$\varepsilon_{5}$} \ \text{$\varepsilon_{6}$} \ \text{$\varepsilon_{7}$} \ \text{$\varepsilon_{8}$} \ \text{$\varepsilon_{9}$} \ \text{$\varepsilon_{10}$} \ \text{$\varepsilon_{11}$} \ \text{$\varepsilon_{12}$} \ \text{$\varepsilon_{13}$} \ \text{$\varepsilon_{14}$} \ \text{$\varepsilon_{15}$} \ \end{bmatrix}$</p>
+<p>And here is our full model, showing all values within all the vectors AND the values of our parameter estimates:</p>
+<p>$\begin{bmatrix}{} 82 \ 83 \ 90 \ 76 \ 90 \ 87 \ 93 \ 90 \ 52 \ 88 \ 57 \ 89 \ 97 \ 59 \ 73 \ \end{bmatrix} = 1.006 * \begin{bmatrix}{} 86 \ 76 \ 92 \ 90 \ 86 \ 84 \ 93 \ 100 \ 87 \ 86 \ 74 \ 98 \ 97 \ 84 \ 91 \ \end{bmatrix} + -8.383 + \begin{bmatrix}{} 3.88 \ 14.938 \ 5.845 \ -6.143 \ 11.88 \ 10.892 \ 7.839 \ -2.202 \ -27.126 \ 9.88 \ -9.05 \ -1.19 \ 7.816 \ -17.108 \ -10.149 \ \end{bmatrix}$</p>
+</div>
+</div>
+<p>Each component of the mathematical notation (for all these equations) can be represented in Python (this is one of the beautiful things about code).</p>
+<p>In fact, the mathematical operations can just be thought of as a way of representing what is happening in the code (and vice versa).</p>
+<p>We’ve seen this concept already, but just for further illustration, the cell below replicates the last equation shown immediately above this cell (e.g. the equation of the full model, showing the actual data in the vectors, and our parameter estimates).</p>
+<p>Compare the values from this calculation in Python to the values in the leftmost vector
+(to the left of the equals sign) in the last equation shown above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the equation above, in python</span>
+<span class="n">b</span> <span class="o">*</span> <span class="n">education</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">errors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82., 83., 90., 76., 90., 87., 93., 90., 52., 88., 57., 89., 97.,
+       59., 73.])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This page was almost certainty challenging if this is the first time you have seen this notation (or you have encountered it previously, but have not seen it for a long time).</p>
+<p>Translating between the mathematical notation, Python operations and graphical representations of the vectors is the best way to understand the content of this page. If you feel you have not fully grasped any aspect of the page, then we suggest revisiting the content and translating between the perspectives (mathematical, code, graphical) - it can take time to internalise, but if you keep at it you will eventually understand it!</p>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<div class="docutils container" id="id2">
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Dun61</a><span class="fn-bracket">]</span></span>
+<p>Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, <em>Occupations and social status</em>, pages 109–161. Free Press, New York, 1961.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "lisds/textbook",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Notation for linear regression models</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#doing-a-good-job">Doing a good job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictors-outcomes-x-y-slope-and-intercept">Predictors, outcomes - x, y, slope and intercept</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitted-values-and-errors">Fitted values and errors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-notation">Mathematical notation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notation-for-fitted-values">Notation for fitted values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#approximation-and-errors">Approximation and errors</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">Putting it all together</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matthew Brett and Peter Rush
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
