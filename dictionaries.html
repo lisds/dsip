@@ -464,6 +464,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Keys are unique</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-keys-and-values">Iterating over keys and values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-value-pairs">Key, value pairs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keys-don-t-have-to-be-strings">Keys don’t have to be strings</a></li>
 </ul>
             </nav>
@@ -1062,6 +1063,101 @@ This value is 164000000
 </div>
 </div>
 </section>
+<section id="update">
+<h2>Update<a class="headerlink" href="#update" title="Permalink to this heading">#</a></h2>
+<p>Dictionaries have an <code class="docutils literal notranslate"><span class="pre">update()</span></code> method that pulls key, value pairs across from another dictionary:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 185240000,
+ &#39;Manchester United&#39;: 212135000,
+ &#39;Liverpool&#39;: 164000000}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_wages</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;West Bromwich Albion&#39;</span><span class="p">:</span> <span class="mi">4_716_200</span><span class="p">,</span>
+             <span class="s1">&#39;Hull City&#39;</span><span class="p">:</span> <span class="mi">520_000</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">wages</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_wages</span><span class="p">)</span>
+<span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that Jupyter / IPython does not display anything for the result.</p>
+<p>This is because the thing that came back from that operation was the value <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Python sends back that result to remind you that the <code class="docutils literal notranslate"><span class="pre">update()</span></code> is not creating a new dictionary, it is updating the original dictionary, in this case, <code class="docutils literal notranslate"><span class="pre">wages</span></code>.  Notice that <code class="docutils literal notranslate"><span class="pre">wages</span></code> now has the new keys and values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Update modified &#39;wages&#39;</span>
+<span class="n">wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 185240000,
+ &#39;Manchester United&#39;: 212135000,
+ &#39;Liverpool&#39;: 164000000,
+ &#39;West Bromwich Albion&#39;: 4716200,
+ &#39;Hull City&#39;: 520000}
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">update()</span></code> will overwrite key, value pairs that exist already in the left-hand-side dictionary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Notice new, different value for Man City.</span>
+<span class="n">more_new_wages</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Sheffield&#39;</span><span class="p">:</span> <span class="mi">15_679_600</span><span class="p">,</span>
+                  <span class="s1">&#39;Manchester City&#39;</span><span class="p">:</span> <span class="mi">100_000_000</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">more_new_wages</span><span class="p">)</span>  <span class="c1"># Returns None</span>
+<span class="c1"># wages modified</span>
+<span class="n">wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Manchester City&#39;: 100000000,
+ &#39;Manchester United&#39;: 212135000,
+ &#39;Liverpool&#39;: 164000000,
+ &#39;West Bromwich Albion&#39;: 4716200,
+ &#39;Hull City&#39;: 520000,
+ &#39;Sheffield&#39;: 15679600}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="keys-don-t-have-to-be-strings">
 <h2>Keys don’t have to be strings<a class="headerlink" href="#keys-don-t-have-to-be-strings" title="Permalink to this heading">#</a></h2>
 <p>So far we have used strings as the <code class="docutils literal notranslate"><span class="pre">dict</span></code> keys.  Strings are the most common
@@ -1088,7 +1184,19 @@ a continuous series of positions to record.  In that case one might use the
 </div>
 </div>
 </div>
-<p>Notice that the <em>keys</em> here are numbers, and the <em>values</em> are strings.</p>
+<p>Notice that the <em>keys</em> here are numbers, and the <em>values</em> are strings.  As ever, the we get the values by indexing with the corresponding key:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">by_position</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Newcastle&#39;
+</pre></div>
+</div>
+</div>
+</div>
 <p>We can use many other types as keys, but in practice you won’t need this
 feature often in your programming life; you can look up dictionaries in more
 detail when you need to.</p>
@@ -1164,6 +1272,7 @@ detail when you need to.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Keys are unique</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-keys-and-values">Iterating over keys and values</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-value-pairs">Key, value pairs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update">Update</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#keys-don-t-have-to-be-strings">Keys don’t have to be strings</a></li>
 </ul>
   </nav></div>
