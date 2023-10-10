@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Choosing an editor &#8212; Data Science in Practice</title>
+    <title>Where in 2D &#8212; Data Science in Practice</title>
   
   
   
@@ -62,11 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'choosing_editor';</script>
-    <link rel="canonical" href="https://lisds.github.io/dsip/choosing_editor.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'where_2d';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/where_2d.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2D arrays and optimization" href="image_for_optimize.html" />
+    <link rel="prev" title="Where and argmin" href="where_and_argmin.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,11 +161,11 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
-<li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Where in 2D</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays and optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
@@ -228,6 +230,73 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/where_2d.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/where_2d.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
 <div class="dropdown dropdown-source-buttons">
   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
     <i class="fab fa-github"></i>
@@ -253,7 +322,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/edit/main/choosing_editor.md" target="_blank"
+      <li><a href="https://github.com/lisds/dsip/edit/main/where_2d.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -270,7 +339,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fchoosing_editor.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fwhere_2d.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -300,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/choosing_editor.md" target="_blank"
+      <li><a href="_sources/where_2d.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -310,7 +379,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.Rmd</span>
 </a>
 </li>
       
@@ -382,7 +451,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Choosing an editor</h1>
+    <h1>Where in 2D</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -392,18 +461,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-time-to-choose">Take time to choose</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-options">What are the options?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-version-of-visual-studio-code">Some version of Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vim">Vim</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycharm">PyCharm</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sublime-text">Sublime Text</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#emacs">Emacs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spyder">Spyder</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-option-for-windows">Another option for Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suggestions">Suggestions?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-can-have-two-dimensions">Arrays can have two dimensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revision-using-where-on-one-dimensional-arrays">Revision - using where on one-dimensional arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-dimensional-case">The two-dimensional case</a></li>
 </ul>
             </nav>
         </div>
@@ -415,177 +475,185 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="choosing-an-editor">
-<span id="choosing-editor"></span><h1>Choosing an editor<a class="headerlink" href="#choosing-an-editor" title="Permalink to this heading">#</a></h1>
-<blockquote>
-<div><p><em>Use a Single Editor Well</em></p>
-<p>The editor should be an extension of your hand; make sure your editor is
-configurable, extensible, and programmable.</p>
-<p class="attribution">-From: "The pragmatic programmer" </p>
-</div></blockquote>
-<p>Being efficient means being able to use your tools well.  If you are fluent in
-using your editor, you will be able think better.  You will do better work more
-quickly and you will make fewer mistakes.</p>
-<p>This is particularly so for a text file editor.  Bear in mind that you will
-likely spend many hundreds of hours using this editor for various parts of
-your work over the rest of your career.  Be careful with your choice, and
-consider investing time to learn an editor well.</p>
-<p>If you do learn your text editor well, you will find yourself using it for
-many different tasks, including editing code, documents and configuration
-files.</p>
-<p>Programmers are a strange bunch of people who are extremely intolerant of
-tools that waste their time or energy.  Take their impatience seriously when
-you consider choosing your editor.  No programmer would use Windows Notepad
-for writing code, and that is for a very good reason.</p>
-<section id="take-time-to-choose">
-<h2>Take time to choose<a class="headerlink" href="#take-time-to-choose" title="Permalink to this heading">#</a></h2>
-<p>Choosing an editor is an important, even fateful decision.  You choose an
-editor in order to invest in it; if you choose wisely, your will find your
-investment repaid, handsomely, and daily.  Choose carefully, and choose for the
-long haul.</p>
-<p>Please be careful that you do not underestimate this task.  It is tempting to
-choose an editor “for now”, but, whichever editor you choose, there is a good
-chance you will still be using it in a few years.  If you choose the wrong
-editor, you will find that you have lost a great deal of learning time, when
-you have to change later, and you will curse yourself, with reason.  Be free
-from future self-recrimination, and choose deliberately, now, for the long
-haul.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="where-in-2d">
+<h1>Where in 2D<a class="headerlink" href="#where-in-2d" title="Permalink to this heading">#</a></h1>
+<p>This follows from <a class="reference internal" href="where_and_argmin.html"><span class="doc std std-doc">where and argmin</span></a>.</p>
+<p>That page covers how <code class="docutils literal notranslate"><span class="pre">np.where</span></code> and <code class="docutils literal notranslate"><span class="pre">np.argmin</span></code> work for one-dimensional
+arrays.</p>
+<p>This page covers what happens for <code class="docutils literal notranslate"><span class="pre">np.where</span></code> with arrays of two dimensions and
+more.</p>
+<section id="arrays-can-have-two-dimensions">
+<h2>Arrays can have two dimensions<a class="headerlink" href="#arrays-can-have-two-dimensions" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>So far we have only seen one-dimensional arrays.</p>
+<p>A <em>vector</em> is another term for a one-dimensional array.</p>
+<p>Here’s a one-dimensional array (vector):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_one_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">99</span><span class="p">])</span>
+<span class="n">arr_one_d</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 2, 99, -1,  4, 99])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the <code class="docutils literal notranslate"><span class="pre">shape</span></code> of the array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_one_d</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>You can also think of this one-dimensional array as a single <em>row</em>.</p>
+<p>In fact you can have arrays with more than one row, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_two_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">13</span><span class="p">]])</span>
+<span class="n">arr_two_d</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[  1,   2,   3,  -2,  -3],
+       [ 10,  11,  12,  -3, -13]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the <code class="docutils literal notranslate"><span class="pre">shape</span></code>.  This array has 2 rows, each with 5 columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_two_d</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember, we can ask for a single element from a one-dimensional array, using <em>indexing</em> with an integer between square brackets. The integer gives the <em>position</em> (or offset) of the element we want.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_one_d</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99
+</pre></div>
+</div>
+</div>
+</div>
+<p>With a two-dimensional array, we need to specify the row <em>and</em> column of the element we want:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_two_d</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-13
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first value between the brackets is the row position, and the second is the column position.</p>
 </section>
-<section id="what-are-the-options">
-<h2>What are the options?<a class="headerlink" href="#what-are-the-options" title="Permalink to this heading">#</a></h2>
-<p>There are various surveys on the editors that Python developers use.  Some
-recent examples are:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.jetbrains.com/lp/python-developers-survey-2020/">The Jetbrains 2020
-Python developer
-survey</a>
-(though note, this survey was by the makers of one of the editors,
-PyCharm).</p></li>
-<li><p><a class="reference external" href="https://insights.stackoverflow.com/survey/2021#section-most-popular-technologies-integrated-development-environment">The 2021 StackOverflow developer
-survey</a>
-(though note, this is for developers in all languages).</p></li>
-<li><p><a class="reference external" href="https://asterisk.dynevor.org/editor-dominance.html">A discussion of recent
-trends</a>.</p></li>
-</ul>
-<p>From these, and from our own experience talking to other people with lots of
-experience writing Python code, we believe your practical long-term options
-are the following.  The editors are in the order from the Jetbrains survey
-above, but with the position of PyCharm estimated from the StackOverflow
-survey, on the basis that the JetBrains survey results are likely to be biased
-to PyCharm users).</p>
-<ul class="simple">
-<li><p>A version of <a class="reference external" href="https://code.visualstudio.com">Visual studio code</a>.  More on
-what we mean by “a version” below.</p></li>
-<li><p><a class="reference external" href="https://www.vim.org">Vim</a></p></li>
-<li><p><a class="reference external" href="https://www.jetbrains.com/pycharm">PyCharm</a></p></li>
-<li><p><a class="reference external" href="https://www.sublimetext.com">Sublime text</a></p></li>
-<li><p><a class="reference external" href="https://emacs.org">Emacs</a></p></li>
-<li><p><a class="reference external" href="https://www.spyder-ide.org">Spyder</a></p></li>
-</ul>
+<section id="revision-using-where-on-one-dimensional-arrays">
+<h2>Revision - using where on one-dimensional arrays<a class="headerlink" href="#revision-using-where-on-one-dimensional-arrays" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">np.where</span></code> gets the indices of the True values in a Boolean array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A Boolean array.</span>
+<span class="n">equal_to_99</span> <span class="o">=</span> <span class="n">arr_one_d</span> <span class="o">==</span> <span class="mi">99</span>
+<span class="n">equal_to_99</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False,  True, False, False,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Indices of the True values.</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">equal_to_99</span><span class="p">)</span>
+<span class="n">indices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1, 4]),)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the returned <code class="docutils literal notranslate"><span class="pre">indices</span></code> to index into the array, using square brackets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_one_d</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([99, 99])
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-<section id="some-version-of-visual-studio-code">
-<h2>Some version of Visual Studio Code<a class="headerlink" href="#some-version-of-visual-studio-code" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://code.visualstudio.com">Visual studio code</a> is a code editor and
-integrated development environment almost entirely written by programmers at
-Microsoft.  It is entirely free to download (free as in free beer).  See below
-for more discussion about whether it truly open-source (free as in freedom).</p>
-<p>It is very popular as a Python editor, and <a class="reference external" href="https://asterisk.dynevor.org/editor-dominance.html">increasingly
-so</a>.</p>
-<p>You will find many powerful features for interacting with Python code, and, more recently and experimentally, with Jupyter Notebooks.</p>
-<p>It works well and looks good out of the box, but it is highly configurable.
-Configuration takes some getting used to, and can be fiddly, but there is a
-lot of help from others trying to do the same thing, online.</p>
-<p>There are various controversies about Visual Studio Code (or VSCode for short).</p>
-<p>Although Microsoft releases the code to build a version of VSCode on your own
-computer, the installer you download from their website contains and refers to
-to <a class="reference external" href="https://code.visualstudio.com/docs/supporting/faq#_what-does-built-on-open-source-mean">not-free, not-open-source
-components</a>,
-and it sends telemetry data to Microsoft.  See the <a class="reference external" href="https://vscodium.com">VSCodium
-site</a> for a discussion, and links to download versions
-of VSCode without these features, and so, less locked to Microsoft.</p>
-<p>Another controversy is the practical extent to which the community can
-influence the direction of development of the VSCode editor.  In practice,
-Microsoft decides the direction of the project, and drives the changes,
-because they pay the programmers that write it.  See <a class="reference external" href="https://eclipse-foundation.blog/2020/05/05/eclipse-theia-and-vs-code-differences-explained">this post for some
-discussion</a>.
-For those reasons, some people prefer to use a build of the more open <a class="reference external" href="https://theia-ide.org">Theia
-editor</a>, that uses much of machinery behind VSCode.</p>
-</section>
-<section id="vim">
-<h2>Vim<a class="headerlink" href="#vim" title="Permalink to this heading">#</a></h2>
-<p>The two most well-known and fully-featured cross-platform general text editors
-are Emacs and Vim.  These run on any platform.  More about Emacs further down
-the page.</p>
-<p>Vim is based on a classic Unix editor called
-<a class="reference external" href="https://en.wikipedia.org/wiki/Vi">vi</a>.  To quote from the <a class="reference external" href="https://www.vim.org/about.php">about
-vim</a> page:</p>
-<blockquote>
-<div><p>Vim isn’t an editor designed to hold its users’ hands. It is a tool, the use
-of which must be learned.</p>
-</div></blockquote>
-<p>To use Vim well, you have to practice using its commands, by following any one
-of several online tutorials. For example, you might try the <a class="reference external" href="http://www.openvim.com/tutorial.html">openvim
-tutorial</a> or <a class="reference external" href="https://vim-adventures.com/">Vim
-adventures</a>.  The trick is to teach your fingers
-what to do so you don’t think about it any more. This takes a long time,
-budget a week of 30 minutes a day to start to feel comfortable.</p>
-<p>If you do invest this effort, Vim is an immensely satisfying editor to use,
-because you quickly find that your fingers remember what to do.  A
-programmer’s joke about Vim is that “the cursor follows your eyes”, because
-your fingers are moving the cursor around the text without any apparent
-thought or effort on your part.</p>
-<p>It is relatively complicated to configure Vim to its full potential.  Please
-ask for help if you are interested to do this.  It is time well spent.</p>
-</section>
-<section id="pycharm">
-<h2>PyCharm<a class="headerlink" href="#pycharm" title="Permalink to this heading">#</a></h2>
-<p>We have heard good things about PyCharm, from people who know what they are
-talking about.  This is a general text editor with features that allow it to
-be used as an integrated development environment for Python.  There is a free
-“community” version and a £149 initial annual fee for the professional
-version.  The free version does have Python editing support, and support for
-other languages, but the professional edition supports more languages and
-features.  See the <a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm web site</a> and
-<a class="reference external" href="https://www.jetbrains.com/products/compare/?product=pycharm&amp;product=pycharm-ce">PyCharm feature
-comparison</a>
-for more detail.</p>
-<section id="sublime-text">
-<h3>Sublime Text<a class="headerlink" href="#sublime-text" title="Permalink to this heading">#</a></h3>
-<p>Some people really like <a class="reference external" href="https://www.sublimetext.com">Sublime text</a>.  It is
-free to try, and it appears the trial version does not expire, but if you
-continue to use it, the authors ask you to buy a license for $99.</p>
-</section>
-</section>
-<section id="emacs">
-<h2>Emacs<a class="headerlink" href="#emacs" title="Permalink to this heading">#</a></h2>
-<p>Emacs is a very powerful classic free, and open-source text editor. The great
-<a class="reference external" href="https://en.wikipedia.org/wiki/Richard_Stallman">Richard Stallman</a> wrote the
-original version. It is quicker to learn than vim, probably harder to
-configure, and configurable to an extreme degree.  A good place to start is
-the <a class="reference external" href="https://www.gnu.org/software/emacs/tour">emacs tour</a>.  About an hour of
-research and practice gets you far enough to learn how to start learning
-Emacs.</p>
-<p>As for Vim, to use it well, it needs practice.  You will need to get used to
-the keystrokes, and as for Vim, this practice is amply repaid by very fluent
-movement and editing.</p>
-<p>Emacs is hard to configure, largely because it is so powerful.  We are very
-happy to help with this if you are interested.</p>
-</section>
-<section id="spyder">
-<h2>Spyder<a class="headerlink" href="#spyder" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://www.spyder-ide.org">Spyder</a> is a code editor and integrated
-development environment that is specific to Python.  It is free, and
-open-source.  You can install it in the same way you install other Python
-packages.  It has a similar interface to, for example, the Matlab graphical
-environment, with separate windows for code, plots, variables and so on.</p>
-</section>
-<section id="another-option-for-windows">
-<h2>Another option for Windows<a class="headerlink" href="#another-option-for-windows" title="Permalink to this heading">#</a></h2>
-<p><a class="reference external" href="https://notepad-plus-plus.org">Notepad++</a> only works on Windows, but seems to be a popular choice.</p>
-</section>
-<section id="suggestions">
-<h2>Suggestions?<a class="headerlink" href="#suggestions" title="Permalink to this heading">#</a></h2>
-<p>If you have any other suggestions or recommendations, please let us know.</p>
+<section id="the-two-dimensional-case">
+<h2>The two-dimensional case<a class="headerlink" href="#the-two-dimensional-case" title="Permalink to this heading">#</a></h2>
+<p>This also works in two or more dimensions.</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.where</span></code> now returns two index arrays, one for the rows, and one for the
+columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indices2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">arr_two_d</span> <span class="o">==</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">indices2d</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0, 1]), array([4, 3]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Just as for the one-dimensional case, we can use the returned indices to index
+into the array, and get the elements.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr_two_d</span><span class="p">[</span><span class="n">indices2d</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-3, -3])
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -619,6 +687,24 @@ environment, with separate windows for code, plots, variables and so on.</p>
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="where_and_argmin.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Where and argmin</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="image_for_optimize.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2D arrays and optimization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -634,18 +720,9 @@ environment, with separate windows for code, plots, variables and so on.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#take-time-to-choose">Take time to choose</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-the-options">What are the options?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#some-version-of-visual-studio-code">Some version of Visual Studio Code</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vim">Vim</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycharm">PyCharm</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sublime-text">Sublime Text</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#emacs">Emacs</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spyder">Spyder</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#another-option-for-windows">Another option for Windows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suggestions">Suggestions?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-can-have-two-dimensions">Arrays can have two dimensions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#revision-using-where-on-one-dimensional-arrays">Revision - using where on one-dimensional arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-dimensional-case">The two-dimensional case</a></li>
 </ul>
   </nav></div>
 

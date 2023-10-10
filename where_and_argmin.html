@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Making and breaking file paths in Python &#8212; Data Science in Practice</title>
+    <title>Where and argmin &#8212; Data Science in Practice</title>
   
   
   
@@ -62,11 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'path_manipulation';</script>
-    <link rel="canonical" href="https://lisds.github.io/dsip/path_manipulation.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'where_and_argmin';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/where_and_argmin.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Where in 2D" href="where_2d.html" />
+    <link rel="prev" title="Arrays as images, images as arrays" href="arrays_and_images.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -159,10 +161,10 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Where and argmin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
 <li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays and optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
@@ -236,7 +238,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/path_manipulation.Rmd" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/where_and_argmin.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -254,7 +256,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/path_manipulation.Rmd&branch=main" target="_blank"
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/where_and_argmin.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -320,7 +322,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/edit/main/path_manipulation.Rmd" target="_blank"
+      <li><a href="https://github.com/lisds/dsip/edit/main/where_and_argmin.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -337,7 +339,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fpath_manipulation.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fwhere_and_argmin.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -367,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/path_manipulation.Rmd" target="_blank"
+      <li><a href="_sources/where_and_argmin.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -449,7 +451,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Making and breaking file paths in Python</h1>
+    <h1>Where and argmin</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -459,8 +461,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pathnames">Pathnames</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ways-of-manipulating-pathnames">Two ways of manipulating pathnames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-where">Enter “where”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-summary">Where summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#argmin-argmax">Argmin, argmax</a></li>
 </ul>
             </nav>
         </div>
@@ -472,41 +475,232 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="making-and-breaking-file-paths-in-python">
-<h1>Making and breaking file paths in Python<a class="headerlink" href="#making-and-breaking-file-paths-in-python" title="Permalink to this heading">#</a></h1>
-<section id="pathnames">
-<h2>Pathnames<a class="headerlink" href="#pathnames" title="Permalink to this heading">#</a></h2>
-<p>A pathname is a string that identifies a particular file or directory on a
-computer filesystem.</p>
-<p>For example, we can ask the pathname of the directory containing this notebook, using the <code class="docutils literal notranslate"><span class="pre">getcwd</span></code> function from the <code class="docutils literal notranslate"><span class="pre">os</span></code> module.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="where-and-argmin">
+<h1>Where and argmin<a class="headerlink" href="#where-and-argmin" title="Permalink to this heading">#</a></h1>
+<p>We sometimes want to know where a value is in an array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-
-<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>By “where” we mean, which element contains a particular value.</p>
+<p>Here is an array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">99</span><span class="p">])</span>
+<span class="n">arr</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;/home/runner/work/dsip/dsip&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 2, 99, -1,  4, 99])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you know, we can get element using their <em>index</em> in the array.  In
+Python, array indices start at zero.</p>
+<p>Here’s the value at index (position) 0:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>We might also be interested to find which positions hold particular values.</p>
+<p>In our array above, by reading, and counting positions, we can see
+that the values of 99 are in positions 1 and 4.  We can ask for these
+elements by passing a list or an array between the square brackets, to
+index the array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">positions_with_99</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">arr</span><span class="p">[</span><span class="n">positions_with_99</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([99, 99])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, we are already used to finding and then selecting elements according to various conditions, using <em>Boolean vectors</em>.</p>
+<p>Here we identify the elements that contain 99.  There is a <code class="docutils literal notranslate"><span class="pre">True</span></code> at the position where the array contains 99, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contains_99</span> <span class="o">=</span> <span class="n">arr</span> <span class="o">==</span> <span class="mi">99</span>
+<span class="n">contains_99</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False,  True, False, False,  True])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can then get the 99 values with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="n">contains_99</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([99, 99])
+</pre></div>
+</div>
+</div>
+</div>
+<section id="enter-where">
+<h2>Enter “where”<a class="headerlink" href="#enter-where" title="Permalink to this heading">#</a></h2>
+<p>Sometimes we really do need to know the index of the values that meet a certain condition.</p>
+<p>In that case, you can use the Numpy <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html">where
+function</a>.
+<code class="docutils literal notranslate"><span class="pre">where</span></code> finds the index positions of the <code class="docutils literal notranslate"><span class="pre">True</span></code> values in Boolean
+vectors.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">arr</span> <span class="o">==</span> <span class="mi">99</span><span class="p">)</span>
+<span class="n">indices</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1, 4]),)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the returned <code class="docutils literal notranslate"><span class="pre">indices</span></code> to index into the array, using square brackets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([99, 99])
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="two-ways-of-manipulating-pathnames">
-<h2>Two ways of manipulating pathnames<a class="headerlink" href="#two-ways-of-manipulating-pathnames" title="Permalink to this heading">#</a></h2>
-<p>There are two standard ways of manipulating pathnames in Python.</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="pathlib.html"><span class="doc std std-doc">The pathlib module</span></a></p></li>
-<li><p><a class="reference internal" href="os_path.html"><span class="doc std std-doc">The os.path module</span></a></p></li>
-</ul>
-<p>Of the two techniques, the <code class="docutils literal notranslate"><span class="pre">os.path</span></code> way is rather simpler, but it covers a
-smaller range of tasks.  It can also be more verbose. <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> does more, and
-can give you nice-looking, concise code, but it does rely on a particularly
-Python way of thinking.   You will see examples of both in lots of modern code,
-but we will use <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> in this textbook, because it will likely be the
-method you end up using when you are more experienced writing Python code.</p>
+<section id="where-summary">
+<h2>Where summary<a class="headerlink" href="#where-summary" title="Permalink to this heading">#</a></h2>
+<p>Numpy <code class="docutils literal notranslate"><span class="pre">where</span></code> returns the indices of <code class="docutils literal notranslate"><span class="pre">True</span></code> values in a Boolean array.</p>
+<p>You can use these indices to index into an array, and get the matching
+elements.</p>
+</section>
+<section id="argmin-argmax">
+<h2>Argmin, argmax<a class="headerlink" href="#argmin-argmax" title="Permalink to this heading">#</a></h2>
+<p>Numpy has various <em>arg-</em> functions that are a shortcut for using <code class="docutils literal notranslate"><span class="pre">where</span></code>, for
+particular cases.</p>
+<p>A typical case is where you want to know the <em>index</em> (position) of the minimum
+value in an array.</p>
+<p>Here is our array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 2, 99, -1,  4, 99])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can get the minimum value with Numpy <code class="docutils literal notranslate"><span class="pre">min</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sometimes we want to know the <em>index position</em> of the minimum value.  Numpy <code class="docutils literal notranslate"><span class="pre">argmin</span></code> returns the index of the minimum value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">min_pos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Therefore, we can get the minimum value again with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="n">min_pos</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1
+</pre></div>
+</div>
+</div>
+</div>
+<p>There is a matching <code class="docutils literal notranslate"><span class="pre">argmax</span></code> function that returns the position of the maximum value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">max_pos</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="n">max_pos</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>99
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that there are <em>two</em> values of 99 in this array, and therefore, two
+maximum values.  <code class="docutils literal notranslate"><span class="pre">np.argmax</span></code> returns the index of the <em>first</em> maximum values.
+<code class="docutils literal notranslate"><span class="pre">np.argmin</span></code> does the same, if there is more than one minimum value.</p>
 </section>
 </section>
 
@@ -540,6 +734,24 @@ method you end up using when you are more experienced writing Python code.</p>
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="arrays_and_images.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Arrays as images, images as arrays</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="where_2d.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Where in 2D</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -555,8 +767,9 @@ method you end up using when you are more experienced writing Python code.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pathnames">Pathnames</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#two-ways-of-manipulating-pathnames">Two ways of manipulating pathnames</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enter-where">Enter “where”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#where-summary">Where summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#argmin-argmax">Argmin, argmax</a></li>
 </ul>
   </nav></div>
 

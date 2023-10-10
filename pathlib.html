@@ -68,7 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Lambda functions" href="lambda_functions.html" />
-    <link rel="prev" title="Arrays as images, images as arrays" href="arrays_and_images.html" />
+    <link rel="prev" title="2D arrays and optimization" href="image_for_optimize.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -164,6 +164,9 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays and optimization</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
@@ -791,11 +794,13 @@ some files in a directory.</p>
  PosixPath(&#39;README.md&#39;),
  PosixPath(&#39;.github&#39;),
  PosixPath(&#39;lin_regression_notation.Rmd&#39;),
+ PosixPath(&#39;where_and_argmin.Rmd&#39;),
  PosixPath(&#39;installation.md&#39;),
  PosixPath(&#39;data_work.md&#39;),
  PosixPath(&#39;intro.md&#39;),
  PosixPath(&#39;_course.yml&#39;),
  PosixPath(&#39;.git&#39;),
+ PosixPath(&#39;image_for_optimize.Rmd&#39;),
  PosixPath(&#39;truthiness.Rmd&#39;),
  PosixPath(&#39;the-problem-with-notebooks.Rmd&#39;),
  PosixPath(&#39;arrays_and_images.Rmd&#39;),
@@ -803,6 +808,7 @@ some files in a directory.</p>
  PosixPath(&#39;installation_on_linux.md&#39;),
  PosixPath(&#39;mutable.Rmd&#39;),
  PosixPath(&#39;assert.Rmd&#39;),
+ PosixPath(&#39;where_2d.Rmd&#39;),
  PosixPath(&#39;algebra_of_sums.md&#39;),
  PosixPath(&#39;build_requirements.txt&#39;),
  PosixPath(&#39;path_manipulation.Rmd&#39;),
@@ -863,7 +869,7 @@ return all the Path objects, but will not do that until we ask it to.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;generator object Path.glob at 0x7f701073dac0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;generator object Path.glob at 0x7f8eb0c71900&gt;
 </pre></div>
 </div>
 </div>
@@ -934,12 +940,12 @@ deleting the file.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="arrays_and_images.html"
+       href="image_for_optimize.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Arrays as images, images as arrays</p>
+        <p class="prev-next-title">2D arrays and optimization</p>
       </div>
     </a>
     <a class="right-next"

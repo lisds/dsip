@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Numpy, arrays, and vectors &#8212; Data Science in Practice</title>
+    <title>2D arrays and optimization &#8212; Data Science in Practice</title>
   
   
   
@@ -62,15 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'numpy_and_vectors';</script>
-    <link rel="canonical" href="https://lisds.github.io/dsip/numpy_and_vectors.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'image_for_optimize';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/image_for_optimize.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Some algebra with summation" href="algebra_of_sums.html" />
-    <link rel="prev" title="Dictionaries" href="dictionaries.html" />
+    <link rel="next" title="Using the pathlib module" href="pathlib.html" />
+    <link rel="prev" title="Where in 2D" href="where_2d.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -163,19 +161,19 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
-<li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays and optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2D arrays and optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Numpy, arrays, and vectors</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
@@ -240,7 +238,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/image_for_optimize.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -258,7 +256,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/numpy_and_vectors.Rmd&branch=main" target="_blank"
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/image_for_optimize.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -324,7 +322,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/edit/main/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="https://github.com/lisds/dsip/edit/main/image_for_optimize.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -341,7 +339,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fnumpy_and_vectors.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fimage_for_optimize.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -371,7 +369,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="_sources/image_for_optimize.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -440,9 +438,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -453,19 +449,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Numpy, arrays, and vectors</h1>
+    <h1>2D arrays and optimization</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-and-lists">Arrays and lists</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -475,21 +463,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="numpy-arrays-and-vectors">
-<h1>Numpy, arrays, and vectors<a class="headerlink" href="#numpy-arrays-and-vectors" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="d-arrays-and-optimization">
+<h1>2D arrays and optimization<a class="headerlink" href="#d-arrays-and-optimization" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">sps</span>
+
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We return again to the income and prestige data from Duncan
+<span id="id1">[<a class="reference internal" href="lin_regression_notation.html#id18" title="Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, Occupations and social status, pages 109–161. Free Press, New York, 1961.">Dun61</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_15</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/Duncan_Occupational_Prestige.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_15</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Duncan_Occupational_Prestige.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">top_15</span>
 </pre></div>
 </div>
@@ -647,332 +640,165 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">])</span>
-<span class="n">x</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([62, 72, 75, 55, 64, 21, 64, 80, 67, 72, 42, 76, 76, 41, 48])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;prestige&#39;</span><span class="p">])</span>
-<span class="n">y</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot prestige (y) as a function of income (x).</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;prestige&#39;</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Income&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prestige&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f1a1c1455b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Prestige&#39;)
 </pre></div>
 </div>
-<img alt="_images/bdd68e0f61ae4172ed0a5e268cd2ce719aba4bbb3911521ec44587e7e238983d.png" src="_images/bdd68e0f61ae4172ed0a5e268cd2ce719aba4bbb3911521ec44587e7e238983d.png" />
+<img alt="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" src="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" />
 </div>
 </div>
-<p>Let’s guess a slope and intercept:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="c1"># Put 0, 0 on the plot.</span>
-<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">()</span>
-<span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_max</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">limits</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidate_slopes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">candidate_slopes</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/92d8a3c308e2d35268c2b2f3365fbfc92527c7250b5800ba495103fd92094d89.png" src="_images/92d8a3c308e2d35268c2b2f3365fbfc92527c7250b5800ba495103fd92094d89.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our guesses.</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mf">0.7</span>
-<span class="n">c</span> <span class="o">=</span> <span class="mi">30</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.        , 0.0012024 , 0.00240481, 0.00360721, 0.00480962,
+       0.00601202, 0.00721443, 0.00841683, 0.00961924, 0.01082164])
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The fitted values</span>
-<span class="n">y_hat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidate_inters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">candidate_inters</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([50.        , 50.04008016, 50.08016032, 50.12024048, 50.16032064,
+       50.2004008 , 50.24048096, 50.28056112, 50.32064128, 50.36072144])
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
-<span class="c1"># Put 0, 0 on the plot.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">limits</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/7952dcd7b0a4aa5eed64edaa6027aad1de220bf7068dfe6661e5692aa9b98119.png" src="_images/7952dcd7b0a4aa5eed64edaa6027aad1de220bf7068dfe6661e5692aa9b98119.png" />
-</div>
-</div>
-<p>Remember the notation:</p>
-<div class="math notranslate nohighlight">
-\[
-\vec{x} = [x_1, x_2, ... x_n]
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-\vec{y} = [y_1, y_2, ... y_n]
-\]</div>
-<p>The 1D array <code class="docutils literal notranslate"><span class="pre">x</span></code> is Python’s representation of <span class="math notranslate nohighlight">\(\vec{x}\)</span>, and <code class="docutils literal notranslate"><span class="pre">y</span></code> is <span class="math notranslate nohighlight">\(\vec{y}\)</span>.</p>
-<p>We calculate our fitted values <span class="math notranslate nohighlight">\(\hat{\vec{y}}\)</span> as</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\vec{y}} = b \vec{x} + c
-\]</div>
-<p><span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> are a single values (scalars).</p>
-<p>Notice the notation above.  The notation assumes that, when we multiply a vector <span class="math notranslate nohighlight">\(\vec{x}\)</span> by a scalar <span class="math notranslate nohighlight">\(b\)</span>, that has the effect of multiplying each <em>value</em> in <span class="math notranslate nohighlight">\(\vec{x}\)</span> by the scalar <span class="math notranslate nohighlight">\(b\)</span>.</p>
-<p>The result of <span class="math notranslate nohighlight">\(b \vec{x}\)</span> is another vector (we’ve called it <span class="math notranslate nohighlight">\(\hat{\vec{y}}\)</span>) that has values <span class="math notranslate nohighlight">\([b x_1, b x_2, ..., b x_n]\)</span>.</p>
-<p><a class="reference external" href="https://www.nature.com/articles/s41586-020-2649-2">Not coincidentally</a>, this is also what Numpy understands by mupltiplying the array by the scalar:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bx</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">bx</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([43.4, 50.4, 52.5, 38.5, 44.8, 14.7, 44.8, 56. , 46.9, 50.4, 29.4,
-       53.2, 53.2, 28.7, 33.6])
-</pre></div>
-</div>
-</div>
-</div>
-<p>The same goes for addition.  When we add a scalar <span class="math notranslate nohighlight">\(c\)</span> to a vector, that has the effect of adding the value <span class="math notranslate nohighlight">\(c\)</span> to each value in the vector.   So <span class="math notranslate nohighlight">\(b \vec{x} + c\)</span> is <span class="math notranslate nohighlight">\([b x_1 + c, b x_2 + c, ..., b x_n + c]\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adds c to every value of bc</span>
-<span class="n">bx</span> <span class="o">+</span> <span class="n">c</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([73.4, 80.4, 82.5, 68.5, 74.8, 44.7, 74.8, 86. , 76.9, 80.4, 59.4,
-       83.2, 83.2, 58.7, 63.6])
-</pre></div>
-</div>
-</div>
-</div>
-<p>We find the same parallels between Numpy and mathematical notation for adding and subtracting vectors.</p>
-<p>Remember we write the calculation of the errors with:</p>
-<div class="math notranslate nohighlight">
-\[
-\vec{e} = \vec{y} - \hat{\vec{y}}
-\]</div>
-<p>That is $\hat{\vec{y}} = [y_1 - \hat{y_1}, y_2 - \hat{y_2}, …, y_n</p>
-<ul class="simple">
-<li><p>\hat{y_n}]$</p></li>
-</ul>
-<p>When we subtract (or add) two vectors, the result is the <em>element by element</em>
-subtraction of the values in the vectors.</p>
-<p>This is Numpy’s idea as well.  This means we can write the mathematical
-formulation more or less directly in code:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate e vector from y and y_hat</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_hat</span>
-<span class="n">e</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  8.6,   2.6,   7.5,   7.5,  15.2,  42.3,  18.2,   4. , -24.9,
-         7.6,  -2.4,   5.8,  13.8,   0.3,   9.4])
-</pre></div>
-</div>
-</div>
-</div>
-<section id="arrays-and-lists">
-<h2>Arrays and lists<a class="headerlink" href="#arrays-and-lists" title="Permalink to this heading">#</a></h2>
-<p>You’ve learned that Numpy uses the standard mathematical logic for addition and
-multiplication of vectors.</p>
-<p>You may remember that Python Lists aren’t designed for the same purpose, and they have a <em>different logic for addition and multiplication</em>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x_as_list</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62, 72, 75, 55, 64, 21, 64, 80, 67, 72, 42, 76, 76, 41, 48]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Adding a scalar to a list causes an error:</p>
-<div class="cell tag_raises-exception docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">+</span> <span class="n">c</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">x_as_list</span> <span class="o">+</span> <span class="n">c</span>
-
-<span class="ne">TypeError</span>: can only concatenate list (not &quot;int&quot;) to list
-</pre></div>
-</div>
-</div>
-</div>
-<p>Multiplying a list by a scalar <code class="docutils literal notranslate"><span class="pre">p</span></code> <em>repeats</em> the list <span class="math notranslate nohighlight">\(p\)</span> times:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">*</span> <span class="mi">3</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Adding two lists concatenates the lists, giving a single list with the elements of the first list followed by the elements of the second:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_as_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="n">y_as_list</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmse_for_b_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Root mean squared error for slope `b` intercept `c`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y_hat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_hat</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">both</span> <span class="o">=</span> <span class="n">x_as_list</span> <span class="o">+</span> <span class="n">y_as_list</span>
-<span class="n">both</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse_for_b_c</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 82,
- 83,
- 90,
- 76,
- 90,
- 87,
- 93,
- 90,
- 52,
- 88,
- 57,
- 89,
- 97,
- 59,
- 73]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.398809477791893
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">both</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_slopes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_slopes</span><span class="p">)</span>
+<span class="n">n_inters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_inters</span><span class="p">)</span>
+<span class="n">rmses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_slopes</span><span class="p">,</span> <span class="n">n_inters</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">slope_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_slopes</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">inter_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_inters</span><span class="p">):</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">slope_no</span><span class="p">]</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">inter_no</span><span class="p">]</span>
+        <span class="n">rmses</span><span class="p">[</span><span class="n">slope_no</span><span class="p">,</span> <span class="n">inter_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">rmse_for_b_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rmses</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Slopes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Intercepts&#39;</span><span class="p">)</span>
+<span class="n">min_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">rmses</span><span class="p">)</span>
+<span class="n">min_rmse</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.244072209353158
+</pre></div>
+</div>
+<img alt="_images/f2c294dad4c0699fd0fc9850fa3ba6b6e00cacadb1f37eaf20bd4cae1e884987.png" src="_images/f2c294dad4c0699fd0fc9850fa3ba6b6e00cacadb1f37eaf20bd4cae1e884987.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row_min_inds</span><span class="p">,</span> <span class="n">col_min_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rmses</span> <span class="o">==</span> <span class="n">min_rmse</span><span class="p">)</span>
+<span class="n">row_min_inds</span><span class="p">,</span> <span class="n">col_min_inds</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([309]), array([193]))
 </pre></div>
 </div>
 </div>
 </div>
-<p>To repeat then — <em>Numpy</em> makes addition / subtraction and multiplication
-/ division work in the same way on arrays, as we expect from mathematics.  See
-<a class="reference external" href="https://en.wikipedia.org/wiki/Vector_space">vector space</a> for the gory
-details.</p>
-</section>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_slope</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">row_min_inds</span><span class="p">]</span>
+<span class="n">best_inter</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">col_min_inds</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best slope&#39;</span><span class="p">,</span> <span class="n">best_slope</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best inter&#39;</span><span class="p">,</span> <span class="n">best_inter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best slope [0.37154309]
+Best inter [57.73547094]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_res</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">lr_res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=0.37105943152454773, intercept=57.7653746770026, rvalue=0.4376748771939141, pvalue=0.10276532267999378, stderr=0.21141912223374978, intercept_stderr=13.336173440465936)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Just because we can.</span>
+<span class="n">lr_res</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.43767487719391407
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1006,20 +832,20 @@ details.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="dictionaries.html"
+       href="where_2d.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Dictionaries</p>
+        <p class="prev-next-title">Where in 2D</p>
       </div>
     </a>
     <a class="right-next"
-       href="algebra_of_sums.html"
+       href="pathlib.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Some algebra with summation</p>
+        <p class="prev-next-title">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1029,20 +855,6 @@ details.</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-and-lists">Arrays and lists</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
