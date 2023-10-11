@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2D arrays and optimization &#8212; Data Science in Practice</title>
+    <title>2D arrays, images, optimization &#8212; Data Science in Practice</title>
   
   
   
@@ -166,7 +166,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2D arrays and optimization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2D arrays, images, optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
@@ -449,7 +449,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>2D arrays and optimization</h1>
+    <h1>2D arrays, images, optimization</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -463,16 +463,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="d-arrays-and-optimization">
-<h1>2D arrays and optimization<a class="headerlink" href="#d-arrays-and-optimization" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="d-arrays-images-optimization">
+<h1>2D arrays, images, optimization<a class="headerlink" href="#d-arrays-images-optimization" title="Permalink to this heading">#</a></h1>
+<p>Here we use a 2D array to look at the search for the best (least-squares) line for a simple regression.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">sps</span>
-
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
@@ -482,7 +480,9 @@ document.write(`
 <span id="id1">[<a class="reference internal" href="lin_regression_notation.html#id18" title="Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, Occupations and social status, pages 109–161. Free Press, New York, 1961.">Dun61</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_15</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/Duncan_Occupational_Prestige.csv&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/Duncan_Occupational_Prestige.csv&#39;</span><span class="p">)</span>
+<span class="c1"># Select the first 15 rows (occupations).</span>
+<span class="n">top_15</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">top_15</span>
 </pre></div>
 </div>
@@ -638,11 +638,19 @@ document.write(`
 </table>
 </div></div></div>
 </div>
+<p>We will be doing a regression predicting <code class="docutils literal notranslate"><span class="pre">'prestige'</span></code> as a function of <code class="docutils literal notranslate"><span class="pre">'income'</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;prestige&#39;</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot these observations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Income&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Prestige&#39;</span><span class="p">)</span>
 </pre></div>
@@ -655,49 +663,40 @@ document.write(`
 <img alt="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" src="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" />
 </div>
 </div>
+<p>Start with a guess for the slope and intercept of a line to predict the
+y (<code class="docutils literal notranslate"><span class="pre">'prestige'</span></code>) values from the x (<code class="docutils literal notranslate"><span class="pre">'income'</span></code>) values.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidate_slopes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">candidate_slopes</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.        , 0.0012024 , 0.00240481, 0.00360721, 0.00480962,
-       0.00601202, 0.00721443, 0.00841683, 0.00961924, 0.01082164])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mf">0.7</span>  <span class="c1"># Guessed slope.</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># Guessed intercept.</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>To find the best least-squares slope, we first need a function to calculate the
+Root Mean Squared Error (RMSE) for a given slope and intercept, and given x and
+y vectors.</p>
+<p>We’ve chosen RMSE as the cost (or loss) function here, but we could equally
+have chosen the sum of squared errors (SSE) or the mean squared error (MSE);
+these measures go up and down together, so when we have found the slope and
+intercept minimizing the RMSE, that same slope and intercept will minimize SSE and MSE.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">candidate_inters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">candidate_inters</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([50.        , 50.04008016, 50.08016032, 50.12024048, 50.16032064,
-       50.2004008 , 50.24048096, 50.28056112, 50.32064128, 50.36072144])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmse_for_b_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">rmse_for_b_and_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Root mean squared error for slope `b` intercept `c`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">y_hat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
     <span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_hat</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">e2</span> <span class="o">=</span> <span class="n">e</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>We calculate the RMSE for our guessed slope and intercept:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse_for_b_c</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse_for_b_and_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -707,76 +706,387 @@ document.write(`
 </div>
 </div>
 </div>
+<p>Just to make sure, we calculated the RMSE again, outside the function, to make sure we’re returning the correct result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_hat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_hat</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">e</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.398809477791893
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are now going to do a <em>brute-force</em> search for the best RMSE slope an intercept.</p>
+<p>A brute-force search is where we search a wide range of slope and intercept pairs and select the pair that gives the lowest RMSE.</p>
+<p>Alternative methods are using <code class="docutils literal notranslate"><span class="pre">scipy.optimize.minimize</span></code> to select sensible
+slopes and intercepts to try for us, or to use the mathematical short-cuts of
+routines like <code class="docutils literal notranslate"><span class="pre">scipy.statistics.linregress</span></code>.  These last will work for our case
+— looking for the slope, intercept minimizing the <em>squared error</em> (or RMSE in
+our case), but we can’t use them for other calculations of the error.</p>
+<p>First we select some slopes to try, based on looking at the scatterplot above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make 250 slopes by taking equally spaced values starting at 0</span>
+<span class="c1"># and ending at 0.5.</span>
+<span class="n">candidate_slopes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+<span class="n">candidate_slopes</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.        , 0.00200803, 0.00401606, 0.0060241 , 0.00803213,
+       0.01004016, 0.01204819, 0.01405622, 0.01606426, 0.01807229])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make 250 intercepts by taking equally spaced values starting at 40</span>
+<span class="c1"># and ending at 70.</span>
+<span class="n">candidate_inters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+<span class="n">candidate_inters</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([40.        , 40.12048193, 40.24096386, 40.36144578, 40.48192771,
+       40.60240964, 40.72289157, 40.84337349, 40.96385542, 41.08433735])
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are the number of candidate slopes and intercepts.  In our case, the <code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> calls above dictate these numbers will be 250.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_slopes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_slopes</span><span class="p">)</span>
 <span class="n">n_inters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidate_inters</span><span class="p">)</span>
-<span class="n">rmses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_slopes</span><span class="p">,</span> <span class="n">n_inters</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Make a two-dimensional array to store the RMSE values corresponding to each
+slope / intercept pair.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">n_slopes</span><span class="p">,</span> <span class="n">n_inters</span><span class="p">])</span>
+<span class="n">rmses</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(250, 250)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We are next going to start using Python’s <code class="docutils literal notranslate"><span class="pre">range</span></code> to make sequences of integer values in our <code class="docutils literal notranslate"><span class="pre">for</span></code> loops.</p>
+<p>Up until now, we have been using Numpys <code class="docutils literal notranslate"><span class="pre">arange</span></code> to make sequential arrays of numbers, and feeding these into our <code class="docutils literal notranslate"><span class="pre">for</span></code> loops:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1,  2,  3,  4,  5,  6,  7,  8,  9, 10])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The old way</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we are going to switch to the more common Python idiom of using <code class="docutils literal notranslate"><span class="pre">range</span></code> in our <code class="docutils literal notranslate"><span class="pre">for</span></code> loops, instead of <code class="docutils literal notranslate"><span class="pre">np.arange</span></code>.  <code class="docutils literal notranslate"><span class="pre">range</span></code> takes the same arguments as does <code class="docutils literal notranslate"><span class="pre">np.arange</span></code> — start, stop and step — but returns a <code class="docutils literal notranslate"><span class="pre">range</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_r</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">my_r</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>range(1, 11)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">my_r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>range
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">my_r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">my_r</span></code> here is an object that refers to the sequence of numbers 1, 2, … 10
+— but does not directly contain this sequence.</p>
+<p>We can force the <code class="docutils literal notranslate"><span class="pre">range</span></code> object to create and return the corresponding numbers
+using e.g. <code class="docutils literal notranslate"><span class="pre">list</span></code>.  <code class="docutils literal notranslate"><span class="pre">list</span></code> asks the <code class="docutils literal notranslate"><span class="pre">range</span></code> object for it’s sequence, and
+<code class="docutils literal notranslate"><span class="pre">range</span></code> returns them one by one, from which <code class="docutils literal notranslate"><span class="pre">list</span></code> compiles the list.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">my_r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">range</span></code> in place of <code class="docutils literal notranslate"><span class="pre">np.arange</span></code> as the right-hand-side of <code class="docutils literal notranslate"><span class="pre">for</span></code> loops — providing the sequence from which we will fill the <em>loop variable</em>.  In the next cell, the loop variable is <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+1
+2
+3
+4
+</pre></div>
+</div>
+</div>
+</div>
+<p>Back to the problem.  We loop through each slope in turn.  For each slope value we loop through each intercept value in turn.  For the given slope and intercept, we calculate the RMSE value, and store it in corresponding location in the <code class="docutils literal notranslate"><span class="pre">rmses</span></code> array, where the row position comes from the position of the slope value, and the column position comes from the position of the intercept value.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">slope_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_slopes</span><span class="p">):</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">slope_no</span><span class="p">]</span>  <span class="c1"># Get the corresponding slope.</span>
     <span class="k">for</span> <span class="n">inter_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_inters</span><span class="p">):</span>
-        <span class="n">b</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">slope_no</span><span class="p">]</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">inter_no</span><span class="p">]</span>
-        <span class="n">rmses</span><span class="p">[</span><span class="n">slope_no</span><span class="p">,</span> <span class="n">inter_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">rmse_for_b_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">inter_no</span><span class="p">]</span>  <span class="c1"># Get the corresponding intercept.</span>
+        <span class="n">rmse</span> <span class="o">=</span> <span class="n">rmse_for_b_and_c</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c1"># Calculate RMSE.</span>
+        <span class="n">rmses</span><span class="p">[</span><span class="n">slope_no</span><span class="p">,</span> <span class="n">inter_no</span><span class="p">]</span> <span class="o">=</span> <span class="n">rmse</span>  <span class="c1"># Store in rmses array.</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>If we <code class="docutils literal notranslate"><span class="pre">plt.imshow</span></code> the <code class="docutils literal notranslate"><span class="pre">rmses</span></code> array, we see a dark valley corresponding to low
+values of RMSE for the corresponding slope, intercept pairs.  Bright areas are
+for much higher RMSEs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rmses</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Slopes&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Intercepts&#39;</span><span class="p">)</span>
-<span class="n">min_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">rmses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Index for slopes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index for intercepts&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Index for intercepts&#39;)
+</pre></div>
+</div>
+<img alt="_images/d2fc3a434ace91652360baeef5a751789c11b4e5e3801420d6a063f17d74eda3.png" src="_images/d2fc3a434ace91652360baeef5a751789c11b4e5e3801420d6a063f17d74eda3.png" />
+</div>
+</div>
+<p>Next we want to find the slope and intercept corresponding to the minimum RMSE value we found in the <code class="docutils literal notranslate"><span class="pre">rmses</span></code> array.</p>
+<p>To do this, we are going to need <code class="docutils literal notranslate"><span class="pre">np.where</span></code>.  It can tell us the location of values in terms of index position.</p>
+<p>Consider a one-dimensional array like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">an_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">an_arr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 1, 32, 99,  4,  2])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can make a Boolean array with True where the values are equal to 99, and False otherwise:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">an_arr</span> <span class="o">==</span> <span class="mi">99</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([False, False,  True, False, False])
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">np.where</span></code> calculates <em>where</em> the True value(s) are, in terms of index position.  In our case, the 99 value is at position (index) 3 in the array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">an_arr</span> <span class="o">==</span> <span class="mi">99</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([2]),)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can apply the same logic to two-dimensions.</p>
+<p>First we find the minimum RMSE value over the whole array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">rmses</span><span class="p">)</span>
 <span class="n">min_rmse</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.244072209353158
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.24410485663457
 </pre></div>
 </div>
-<img alt="_images/f2c294dad4c0699fd0fc9850fa3ba6b6e00cacadb1f37eaf20bd4cae1e884987.png" src="_images/f2c294dad4c0699fd0fc9850fa3ba6b6e00cacadb1f37eaf20bd4cae1e884987.png" />
 </div>
 </div>
+<p>Next we calculate a 2D Boolean array, of the same shape as <code class="docutils literal notranslate"><span class="pre">rmses</span></code>, but having True in the element corresponding the minimum value, and False otherwise.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">row_min_inds</span><span class="p">,</span> <span class="n">col_min_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">rmses</span> <span class="o">==</span> <span class="n">min_rmse</span><span class="p">)</span>
-<span class="n">row_min_inds</span><span class="p">,</span> <span class="n">col_min_inds</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">is_min</span> <span class="o">=</span> <span class="n">rmses</span> <span class="o">==</span> <span class="n">min_rmse</span>
+<span class="n">is_min</span><span class="p">[:</span><span class="mi">10</span><span class="p">,</span> <span class="p">:</span><span class="mi">10</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([309]), array([193]))
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False],
+       [False, False, False, False, False, False, False, False, False,
+        False]])
 </pre></div>
 </div>
 </div>
 </div>
+<p>Again, <code class="docutils literal notranslate"><span class="pre">plt.imshow</span></code> will show us the single True value as a white dot.  All the other values in this array are black (False).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_slope</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">row_min_inds</span><span class="p">]</span>
-<span class="n">best_inter</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">col_min_inds</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best slope&#39;</span><span class="p">,</span> <span class="n">best_slope</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Best inter&#39;</span><span class="p">,</span> <span class="n">best_inter</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">is_min</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Best slope [0.37154309]
-Best inter [57.73547094]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f595d2f8580&gt;
+</pre></div>
+</div>
+<img alt="_images/32bc75049057d63da2c05ca0aafe6c629c7960ae6bcd4bf1010036dc54644884.png" src="_images/32bc75049057d63da2c05ca0aafe6c629c7960ae6bcd4bf1010036dc54644884.png" />
+</div>
+</div>
+<p>Back to <code class="docutils literal notranslate"><span class="pre">np.where</span></code>.  If we call this on the <code class="docutils literal notranslate"><span class="pre">is_min</span></code> 2D Boolean array, it
+returns the row and column indices of the single True value in the array.
+Notice the use of <em>unpacking</em> to unpack the two returned arrays (row
+coordinates and column coordinates).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">min_row</span><span class="p">,</span> <span class="n">min_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_min</span><span class="p">)</span>
+<span class="n">min_row</span><span class="p">,</span> <span class="n">min_col</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([185]), array([147]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we know the row position of the minimum, we can work back to the corresponding slope value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_slope</span> <span class="o">=</span> <span class="n">candidate_slopes</span><span class="p">[</span><span class="n">min_row</span><span class="p">]</span>
+<span class="n">best_slope</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.37148594])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similarly, for the corresponding intercept value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_inter</span> <span class="o">=</span> <span class="n">candidate_inters</span><span class="p">[</span><span class="n">min_col</span><span class="p">]</span>
+<span class="n">best_inter</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([57.71084337])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s run the mathematical calculation to find the best slope and intercept.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">sps</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lr_res</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">lr_res</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">res</span>
 </pre></div>
 </div>
 </div>
@@ -786,15 +1096,28 @@ Best inter [57.73547094]
 </div>
 </div>
 </div>
+<p>Notice that the mathematical (Scipy) calculation differs slightly from our brute-force search values.  This is because our brute-force search didn’t try every possible slope and intercept value, only the values we got from our <code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> calls above.</p>
+<p>As we’d expect though, the RMSE from the Scipy’s high-precision estimate is a tiny-bit lower than our low-precision <code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> estimate:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Just because we can.</span>
-<span class="n">lr_res</span><span class="o">.</span><span class="n">slope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse_for_b_and_c</span><span class="p">(</span><span class="n">best_slope</span><span class="p">,</span> <span class="n">best_inter</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.43767487719391407
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.24410485663457
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse_for_b_and_c</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">slope</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">intercept</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.244069738260368
 </pre></div>
 </div>
 </div>
