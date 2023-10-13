@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Numpy, arrays, and vectors &#8212; Data Science in Practice</title>
+    <title>Pandas and dictionaries &#8212; Data Science in Practice</title>
   
   
   
@@ -62,15 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'numpy_and_vectors';</script>
-    <link rel="canonical" href="https://lisds.github.io/dsip/numpy_and_vectors.html" />
+    <script>DOCUMENTATION_OPTIONS.pagename = 'pandas_and_dicts';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/pandas_and_dicts.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Some algebra with summation" href="algebra_of_sums.html" />
-    <link rel="prev" title="Lambda functions" href="lambda_functions.html" />
+    <link rel="next" title="Lambda functions" href="lambda_functions.html" />
+    <link rel="prev" title="Dictionaries" href="dictionaries.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -163,7 +161,7 @@ const thebe_selector_output = ".output, .cell_output"
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
@@ -171,12 +169,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays, images, optimization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pandas_and_dicts.html">Pandas and dictionaries</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pandas and dictionaries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Numpy, arrays, and vectors</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
@@ -241,7 +239,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/pandas_and_dicts.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onBinder"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -259,7 +257,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/numpy_and_vectors.Rmd&branch=main" target="_blank"
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/pandas_and_dicts.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onJupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -325,7 +323,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/edit/main/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="https://github.com/lisds/dsip/edit/main/pandas_and_dicts.Rmd" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -342,7 +340,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fnumpy_and_vectors.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fpandas_and_dicts.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -372,7 +370,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/numpy_and_vectors.Rmd" target="_blank"
+      <li><a href="_sources/pandas_and_dicts.Rmd" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -454,7 +452,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Numpy, arrays, and vectors</h1>
+    <h1>Pandas and dictionaries</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -464,7 +462,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-and-lists">Arrays and lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-data-frames-with-arrays-and-lists">Building data frames with arrays and lists</a></li>
 </ul>
             </nav>
         </div>
@@ -476,22 +474,117 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="numpy-arrays-and-vectors">
-<h1>Numpy, arrays, and vectors<a class="headerlink" href="#numpy-arrays-and-vectors" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="pandas-and-dictionaries">
+<h1>Pandas and dictionaries<a class="headerlink" href="#pandas-and-dictionaries" title="Permalink to this heading">#</a></h1>
+<p>Dictionaries are everywhere in Pandas, if you but look a little deeper.</p>
+<p>Consider — where would it be useful to have something that associates a <em>name</em>
+(a key) with a value or sequence of values?</p>
+<p>And in fact - the idea of names mapping to values is fundamental to Pandas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
 </div>
+<section id="building-data-frames-with-arrays-and-lists">
+<h2>Building data frames with arrays and lists<a class="headerlink" href="#building-data-frames-with-arrays-and-lists" title="Permalink to this heading">#</a></h2>
+<p>Let us say you found yourself in the situation where you had a list of some
+English Premier League (EPL) teams outside London.  Maybe you have typed this
+in.  In any case, here it is:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">top_15</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/Duncan_Occupational_Prestige.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">top_15</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">teams</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Wolverhampton Wanderers&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Brighton and Hove Albion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Newcastle&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Bournemouth&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Nottingham Forest&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Aston Villa&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Everton&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>You also have the corresponding wage bills, from the <a class="reference external" href="https://www.spotrac.com/epl/payroll/2022">2022-2023 EPL
+wages</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">64_055_000</span><span class="p">,</span>
+    <span class="mi">15_679_600</span><span class="p">,</span>
+    <span class="mi">77_503_600</span><span class="p">,</span>
+    <span class="mi">43_836_000</span><span class="p">,</span>
+    <span class="mi">75_260_000</span><span class="p">,</span>
+    <span class="mi">86_060_000</span><span class="p">,</span>
+    <span class="mi">80_707_000</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And actually, you have the corresponding number of points at the end of the
+season, for each team, recorded from the <a class="reference external" href="https://en.wikipedia.org/wiki/2022%E2%80%9323_Premier_League">EPL league
+table</a>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">points</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="mi">41</span><span class="p">,</span>
+    <span class="mi">62</span><span class="p">,</span>
+    <span class="mi">71</span><span class="p">,</span>
+    <span class="mi">39</span><span class="p">,</span>
+    <span class="mi">38</span><span class="p">,</span>
+    <span class="mi">61</span><span class="p">,</span>
+    <span class="mi">36</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’d really like a data frame with these columns: ‘Team’, ‘Wages’, and ‘Points’.</p>
+<p>Luckily our task is all but done for us, once we have made the <code class="docutils literal notranslate"><span class="pre">dict</span></code> (mapping) between the names and the values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ready_for_df</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Team&#39;</span><span class="p">:</span> <span class="n">teams</span><span class="p">,</span>
+    <span class="s1">&#39;Wages&#39;</span><span class="p">:</span> <span class="n">wages</span><span class="p">,</span>
+    <span class="s1">&#39;Points&#39;</span><span class="p">:</span> <span class="n">points</span>
+<span class="p">}</span>
+<span class="n">ready_for_df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Team&#39;: [&#39;Wolverhampton Wanderers&#39;,
+  &#39;Brighton and Hove Albion&#39;,
+  &#39;Newcastle&#39;,
+  &#39;Bournemouth&#39;,
+  &#39;Nottingham Forest&#39;,
+  &#39;Aston Villa&#39;,
+  &#39;Everton&#39;],
+ &#39;Wages&#39;: [64055000,
+  15679600,
+  77503600,
+  43836000,
+  75260000,
+  86060000,
+  80707000],
+ &#39;Points&#39;: [41, 62, 71, 39, 38, 61, 36]}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Enter <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.  As usual, investigate with shift-tab in the function name in Jupyter, but one good way of using that function is to pass a dictionary that names the columns, like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ready_for_df</span><span class="p">)</span>
+<span class="n">epl</span>
 </pre></div>
 </div>
 </div>
@@ -514,133 +607,331 @@ document.write(`
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>name</th>
-      <th>type</th>
-      <th>income</th>
-      <th>education</th>
-      <th>prestige</th>
+      <th>Team</th>
+      <th>Wages</th>
+      <th>Points</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>accountant</td>
-      <td>prof</td>
-      <td>62</td>
-      <td>86</td>
-      <td>82</td>
+      <td>Wolverhampton Wanderers</td>
+      <td>64055000</td>
+      <td>41</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>pilot</td>
-      <td>prof</td>
-      <td>72</td>
-      <td>76</td>
-      <td>83</td>
+      <td>Brighton and Hove Albion</td>
+      <td>15679600</td>
+      <td>62</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>architect</td>
-      <td>prof</td>
-      <td>75</td>
-      <td>92</td>
-      <td>90</td>
+      <td>Newcastle</td>
+      <td>77503600</td>
+      <td>71</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>author</td>
-      <td>prof</td>
-      <td>55</td>
-      <td>90</td>
-      <td>76</td>
+      <td>Bournemouth</td>
+      <td>43836000</td>
+      <td>39</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>chemist</td>
-      <td>prof</td>
-      <td>64</td>
-      <td>86</td>
-      <td>90</td>
+      <td>Nottingham Forest</td>
+      <td>75260000</td>
+      <td>38</td>
     </tr>
     <tr>
       <th>5</th>
-      <td>minister</td>
-      <td>prof</td>
-      <td>21</td>
-      <td>84</td>
-      <td>87</td>
+      <td>Aston Villa</td>
+      <td>86060000</td>
+      <td>61</td>
     </tr>
     <tr>
       <th>6</th>
-      <td>professor</td>
-      <td>prof</td>
-      <td>64</td>
-      <td>93</td>
-      <td>93</td>
+      <td>Everton</td>
+      <td>80707000</td>
+      <td>36</td>
     </tr>
-    <tr>
-      <th>7</th>
-      <td>dentist</td>
-      <td>prof</td>
-      <td>80</td>
-      <td>100</td>
-      <td>90</td>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can’t help it, let’s have a look at the wages vs points for this very small sample.</p>
+<p>Remember the plot methods of the data frame.  These give us some nice features, including automatic labels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Wages&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Points&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Wages&#39;, ylabel=&#39;Points&#39;&gt;
+</pre></div>
+</div>
+<img alt="_images/825ea385a259e49e0deb483ee7e8a94cd0031aa6d19e0391efb4facd203f731d.png" src="_images/825ea385a259e49e0deb483ee7e8a94cd0031aa6d19e0391efb4facd203f731d.png" />
+</div>
+</div>
+<p>What is another mapping we might want?</p>
+<p>Well - what if we don’t like the column names of our current data frame?   We want to <em>map</em> from the <em>current</em> column name, to the <em>new</em> column name.  The mapping might look like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">renames</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Team&#39;</span><span class="p">:</span> <span class="s1">&#39;Team name&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;Wages&#39;</span><span class="p">:</span> <span class="s1">&#39;Estimated wages for year in £&#39;</span><span class="p">}</span>
+<span class="n">renames</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Team&#39;: &#39;Team name&#39;, &#39;Wages&#39;: &#39;Estimated wages for year in £&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">rename</span></code> method of the data frame to apply this mapping:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fancier_epl</span> <span class="o">=</span> <span class="n">epl</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">renames</span><span class="p">)</span>
+<span class="n">fancier_epl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Team name</th>
+      <th>Estimated wages for year in £</th>
+      <th>Points</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
-      <th>8</th>
-      <td>reporter</td>
-      <td>wc</td>
-      <td>67</td>
-      <td>87</td>
-      <td>52</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>engineer</td>
-      <td>prof</td>
-      <td>72</td>
-      <td>86</td>
-      <td>88</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>undertaker</td>
-      <td>prof</td>
-      <td>42</td>
-      <td>74</td>
-      <td>57</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>lawyer</td>
-      <td>prof</td>
-      <td>76</td>
-      <td>98</td>
-      <td>89</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>physician</td>
-      <td>prof</td>
-      <td>76</td>
-      <td>97</td>
-      <td>97</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>welfare.worker</td>
-      <td>prof</td>
+      <th>0</th>
+      <td>Wolverhampton Wanderers</td>
+      <td>64055000</td>
       <td>41</td>
-      <td>84</td>
-      <td>59</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>teacher</td>
-      <td>prof</td>
-      <td>48</td>
-      <td>91</td>
-      <td>73</td>
+      <th>1</th>
+      <td>Brighton and Hove Albion</td>
+      <td>15679600</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Newcastle</td>
+      <td>77503600</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Bournemouth</td>
+      <td>43836000</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Nottingham Forest</td>
+      <td>75260000</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Aston Villa</td>
+      <td>86060000</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Everton</td>
+      <td>80707000</td>
+      <td>36</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Notice we have just renamed the columns in the mapping.</p>
+<p>Let’s construct a dictionary from scratch with the team names and the wages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">team_wages</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">teams</span><span class="p">)):</span>
+    <span class="n">team_wages</span><span class="p">[</span><span class="n">teams</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">wages</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="n">team_wages</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Wolverhampton Wanderers&#39;: 64055000,
+ &#39;Brighton and Hove Albion&#39;: 15679600,
+ &#39;Newcastle&#39;: 77503600,
+ &#39;Bournemouth&#39;: 43836000,
+ &#39;Nottingham Forest&#39;: 75260000,
+ &#39;Aston Villa&#39;: 86060000,
+ &#39;Everton&#39;: 80707000}
+</pre></div>
+</div>
+</div>
+</div>
+<p>Remember that a dict has a default sequence that it gives you, if asked, and that is the keys:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We ask for a sequence from the keys</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">team_wages</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Wolverhampton Wanderers&#39;,
+ &#39;Brighton and Hove Albion&#39;,
+ &#39;Newcastle&#39;,
+ &#39;Bournemouth&#39;,
+ &#39;Nottingham Forest&#39;,
+ &#39;Aston Villa&#39;,
+ &#39;Everton&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The default sequence is the keys:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">team_wages</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Wolverhampton Wanderers&#39;,
+ &#39;Brighton and Hove Albion&#39;,
+ &#39;Newcastle&#39;,
+ &#39;Bournemouth&#39;,
+ &#39;Nottingham Forest&#39;,
+ &#39;Aston Villa&#39;,
+ &#39;Everton&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pandas data frames also have a default sequence that it gives if asked, and these are the column names:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">fancier_epl</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Team name&#39;, &#39;Estimated wages for year in £&#39;, &#39;Points&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Can you think of another mapping in Pandas?   How about the labels for the rows?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Map from the label 3 to the row with that label</span>
+<span class="n">fancier_epl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Team name                        Bournemouth
+Estimated wages for year in £       43836000
+Points                                    39
+Name: 3, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can make that more obvious by putting text labels on the data frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labeled_epl</span> <span class="o">=</span> <span class="n">fancier_epl</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Team name&#39;</span><span class="p">)</span>
+<span class="n">labeled_epl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Estimated wages for year in £</th>
+      <th>Points</th>
+    </tr>
+    <tr>
+      <th>Team name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Wolverhampton Wanderers</th>
+      <td>64055000</td>
+      <td>41</td>
+    </tr>
+    <tr>
+      <th>Brighton and Hove Albion</th>
+      <td>15679600</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>Newcastle</th>
+      <td>77503600</td>
+      <td>71</td>
+    </tr>
+    <tr>
+      <th>Bournemouth</th>
+      <td>43836000</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>Nottingham Forest</th>
+      <td>75260000</td>
+      <td>38</td>
+    </tr>
+    <tr>
+      <th>Aston Villa</th>
+      <td>86060000</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>Everton</th>
+      <td>80707000</td>
+      <td>36</td>
     </tr>
   </tbody>
 </table>
@@ -648,331 +939,81 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">])</span>
-<span class="n">x</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Map from label Bournemouth to the matching row.</span>
+<span class="n">labeled_epl</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Bournemouth&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([62, 72, 75, 55, 64, 21, 64, 80, 67, 72, 42, 76, 76, 41, 48])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated wages for year in £    43836000
+Points                                 39
+Name: Bournemouth, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
+<p>The mapping is particularly obvious when we have a Series:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">top_15</span><span class="p">[</span><span class="s1">&#39;prestige&#39;</span><span class="p">])</span>
-<span class="n">y</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wage_series</span> <span class="o">=</span> <span class="n">labeled_epl</span><span class="p">[</span><span class="s1">&#39;Estimated wages for year in £&#39;</span><span class="p">]</span>
+<span class="n">wage_series</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Team name
+Wolverhampton Wanderers     64055000
+Brighton and Hove Albion    15679600
+Newcastle                   77503600
+Bournemouth                 43836000
+Nottingham Forest           75260000
+Aston Villa                 86060000
+Everton                     80707000
+Name: Estimated wages for year in £, dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
+<p>The series is very dict-ey, because the labels map to values.   In fact, it is so dict-ey, that the series has a <code class="docutils literal notranslate"><span class="pre">to_dict</span></code> method to give you the equivalent dict:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot prestige (y) as a function of income (x).</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wages_as_dict</span> <span class="o">=</span> <span class="n">wage_series</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">wages_as_dict</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7fc675f035b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Wolverhampton Wanderers&#39;: 64055000,
+ &#39;Brighton and Hove Albion&#39;: 15679600,
+ &#39;Newcastle&#39;: 77503600,
+ &#39;Bournemouth&#39;: 43836000,
+ &#39;Nottingham Forest&#39;: 75260000,
+ &#39;Aston Villa&#39;: 86060000,
+ &#39;Everton&#39;: 80707000}
 </pre></div>
 </div>
-<img alt="_images/bdd68e0f61ae4172ed0a5e268cd2ce719aba4bbb3911521ec44587e7e238983d.png" src="_images/bdd68e0f61ae4172ed0a5e268cd2ce719aba4bbb3911521ec44587e7e238983d.png" />
 </div>
 </div>
-<p>Let’s guess a slope and intercept:</p>
+<p>You can map straight back to a series with the <code class="docutils literal notranslate"><span class="pre">pd.Series</span></code> constructor:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="c1"># Put 0, 0 on the plot.</span>
-<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">()</span>
-<span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_max</span><span class="p">]</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">limits</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">wages_as_dict</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/92d8a3c308e2d35268c2b2f3365fbfc92527c7250b5800ba495103fd92094d89.png" src="_images/92d8a3c308e2d35268c2b2f3365fbfc92527c7250b5800ba495103fd92094d89.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our guesses.</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mf">0.7</span>
-<span class="n">c</span> <span class="o">=</span> <span class="mi">30</span>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wolverhampton Wanderers     64055000
+Brighton and Hove Albion    15679600
+Newcastle                   77503600
+Bournemouth                 43836000
+Nottingham Forest           75260000
+Aston Villa                 86060000
+Everton                     80707000
+dtype: int64
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The fitted values</span>
-<span class="n">y_hat</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">c</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_hat</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
-<span class="c1"># Put 0, 0 on the plot.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">limits</span><span class="p">);</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/7952dcd7b0a4aa5eed64edaa6027aad1de220bf7068dfe6661e5692aa9b98119.png" src="_images/7952dcd7b0a4aa5eed64edaa6027aad1de220bf7068dfe6661e5692aa9b98119.png" />
-</div>
-</div>
-<p>Remember the notation:</p>
-<div class="math notranslate nohighlight">
-\[
-\vec{x} = [x_1, x_2, ... x_n]
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-\vec{y} = [y_1, y_2, ... y_n]
-\]</div>
-<p>The 1D array <code class="docutils literal notranslate"><span class="pre">x</span></code> is Python’s representation of <span class="math notranslate nohighlight">\(\vec{x}\)</span>, and <code class="docutils literal notranslate"><span class="pre">y</span></code> is <span class="math notranslate nohighlight">\(\vec{y}\)</span>.</p>
-<p>We calculate our fitted values <span class="math notranslate nohighlight">\(\hat{\vec{y}}\)</span> as</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\vec{y}} = b \vec{x} + c
-\]</div>
-<p><span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> are a single values (scalars).</p>
-<p>Notice the notation above.  The notation assumes that, when we multiply a vector <span class="math notranslate nohighlight">\(\vec{x}\)</span> by a scalar <span class="math notranslate nohighlight">\(b\)</span>, that has the effect of multiplying each <em>value</em> in <span class="math notranslate nohighlight">\(\vec{x}\)</span> by the scalar <span class="math notranslate nohighlight">\(b\)</span>.</p>
-<p>The result of <span class="math notranslate nohighlight">\(b \vec{x}\)</span> is another vector (we’ve called it <span class="math notranslate nohighlight">\(\hat{\vec{y}}\)</span>) that has values <span class="math notranslate nohighlight">\([b x_1, b x_2, ..., b x_n]\)</span>.</p>
-<p><a class="reference external" href="https://www.nature.com/articles/s41586-020-2649-2">Not coincidentally</a>, this is also what Numpy understands by mupltiplying the array by the scalar:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bx</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span>
-<span class="n">bx</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([43.4, 50.4, 52.5, 38.5, 44.8, 14.7, 44.8, 56. , 46.9, 50.4, 29.4,
-       53.2, 53.2, 28.7, 33.6])
-</pre></div>
-</div>
-</div>
-</div>
-<p>The same goes for addition.  When we add a scalar <span class="math notranslate nohighlight">\(c\)</span> to a vector, that has the effect of adding the value <span class="math notranslate nohighlight">\(c\)</span> to each value in the vector.   So <span class="math notranslate nohighlight">\(b \vec{x} + c\)</span> is <span class="math notranslate nohighlight">\([b x_1 + c, b x_2 + c, ..., b x_n + c]\)</span>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adds c to every value of bc</span>
-<span class="n">bx</span> <span class="o">+</span> <span class="n">c</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([73.4, 80.4, 82.5, 68.5, 74.8, 44.7, 74.8, 86. , 76.9, 80.4, 59.4,
-       83.2, 83.2, 58.7, 63.6])
-</pre></div>
-</div>
-</div>
-</div>
-<p>We find the same parallels between Numpy and mathematical notation for adding and subtracting vectors.</p>
-<p>Remember we write the calculation of the errors with:</p>
-<div class="math notranslate nohighlight">
-\[
-\vec{e} = \vec{y} - \hat{\vec{y}}
-\]</div>
-<p>That is $\hat{\vec{y}} = [y_1 - \hat{y_1}, y_2 - \hat{y_2}, …, y_n</p>
-<ul class="simple">
-<li><p>\hat{y_n}]$</p></li>
-</ul>
-<p>When we subtract (or add) two vectors, the result is the <em>element by element</em>
-subtraction of the values in the vectors.</p>
-<p>This is Numpy’s idea as well.  This means we can write the mathematical
-formulation more or less directly in code:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate e vector from y and y_hat</span>
-<span class="n">e</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_hat</span>
-<span class="n">e</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  8.6,   2.6,   7.5,   7.5,  15.2,  42.3,  18.2,   4. , -24.9,
-         7.6,  -2.4,   5.8,  13.8,   0.3,   9.4])
-</pre></div>
-</div>
-</div>
-</div>
-<section id="arrays-and-lists">
-<h2>Arrays and lists<a class="headerlink" href="#arrays-and-lists" title="Permalink to this heading">#</a></h2>
-<p>You’ve learned that Numpy uses the standard mathematical logic for addition and
-multiplication of vectors.</p>
-<p>You may remember that Python Lists aren’t designed for the same purpose, and they have a <em>different logic for addition and multiplication</em>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">x_as_list</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62, 72, 75, 55, 64, 21, 64, 80, 67, 72, 42, 76, 76, 41, 48]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Adding a scalar to a list causes an error:</p>
-<div class="cell tag_raises-exception docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">+</span> <span class="n">c</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">14</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">x_as_list</span> <span class="o">+</span> <span class="n">c</span>
-
-<span class="ne">TypeError</span>: can only concatenate list (not &quot;int&quot;) to list
-</pre></div>
-</div>
-</div>
-</div>
-<p>Multiplying a list by a scalar <code class="docutils literal notranslate"><span class="pre">p</span></code> <em>repeats</em> the list <span class="math notranslate nohighlight">\(p\)</span> times:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_as_list</span> <span class="o">*</span> <span class="mi">3</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48]
-</pre></div>
-</div>
-</div>
-</div>
-<p>Adding two lists concatenates the lists, giving a single list with the elements of the first list followed by the elements of the second:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_as_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="n">y_as_list</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[82, 83, 90, 76, 90, 87, 93, 90, 52, 88, 57, 89, 97, 59, 73]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">both</span> <span class="o">=</span> <span class="n">x_as_list</span> <span class="o">+</span> <span class="n">y_as_list</span>
-<span class="n">both</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[62,
- 72,
- 75,
- 55,
- 64,
- 21,
- 64,
- 80,
- 67,
- 72,
- 42,
- 76,
- 76,
- 41,
- 48,
- 82,
- 83,
- 90,
- 76,
- 90,
- 87,
- 93,
- 90,
- 52,
- 88,
- 57,
- 89,
- 97,
- 59,
- 73]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">both</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30
-</pre></div>
-</div>
-</div>
-</div>
-<p>To repeat then — <em>Numpy</em> makes addition / subtraction and multiplication
-/ division work in the same way on arrays, as we expect from mathematics.  See
-<a class="reference external" href="https://en.wikipedia.org/wiki/Vector_space">vector space</a> for the gory
-details.</p>
 </section>
 </section>
 
@@ -1007,20 +1048,20 @@ details.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="lambda_functions.html"
+       href="dictionaries.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lambda functions</p>
+        <p class="prev-next-title">Dictionaries</p>
       </div>
     </a>
     <a class="right-next"
-       href="algebra_of_sums.html"
+       href="lambda_functions.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Some algebra with summation</p>
+        <p class="prev-next-title">Lambda functions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1039,7 +1080,7 @@ details.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-and-lists">Arrays and lists</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#building-data-frames-with-arrays-and-lists">Building data frames with arrays and lists</a></li>
 </ul>
   </nav></div>
 
