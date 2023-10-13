@@ -752,103 +752,78 @@ Name: Temperature, dtype: float64
 <p>The lambda function above has a single argument, and this is typical of
 lambda functions that you might use with Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code>.  But, in general,
 lambda functions can have more than one argument.</p>
-<p>For example, consider the case where you wanted to allow the function to
-work with degrees in Celsius, or degrees in Kelvin.  You may remember that
-one degree on the Celsius scale is the same as one degree on the Kelvin
-scale — but Celsius has 0 at the melting point of water, and Kelvin sets
-0 at absolute 0.  Therefore 0 degrees in Celsius is 273.15 degrees in
-Kelvin.</p>
-<p>We can take this into account in our function, but adding a second argument,
-which gives the temperature for zero in the given scale.</p>
-<p>For example, to converting 10 degrees in Celsius to Fahrenheit we multiply
-by 1.8 and add the number of Fahrenheit degrees for 0 Celsius.</p>
+<p>We couldn’t think of a very good and simple example of using two arguments with a lambda, so we hope you’ll forgive us if we use a silly example.</p>
+<p>Let’s say you had a function like this:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 10 degrees Celsius to Fahrenheit</span>
-<span class="mi">10</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="mi">32</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">times_and_add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times_and_add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 2 * 4 + 10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
 </pre></div>
 </div>
 </div>
 </div>
-<p>Converting 10 degrees in Kelvin to Fahrenheit involves multiplying by 1.8
-and add the number of Fahrenheit degrees for 0 Kelvin.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zero_k_in_f</span> <span class="o">=</span> <span class="mi">32</span> <span class="o">-</span> <span class="mf">273.15</span> <span class="o">*</span> <span class="mf">1.8</span>
-<span class="n">zero_k_in_f</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times_and_add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5 * -1 + 10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-459.66999999999996
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
 </pre></div>
 </div>
 </div>
 </div>
-<p>Therefore, to convert from Kelvin to Fahrenheit</p>
+<p><code class="docutils literal notranslate"><span class="pre">times_and_add</span></code> has two arguments, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
+<p>We can write this same function as a lambda with two arguments.  Separate the names of the two arguments with a comma before the colon and the function expression:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 10 degrees Kelvin to Fahrenheit</span>
-<span class="mi">10</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="n">zero_k_in_f</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># name = lambda arg1, arg2 : expression</span>
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 2 * 4 + 10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-441.66999999999996
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>18
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can use a second argument to our lambda to take this into account, which
-is the Fahrenheit value for 0 in (Celsius or Kelvin).</p>
-<p>To use two (or more) arguments to a lambda, you name the arguments before
-the colon, and then use them in the function expression.</p>
-<p>Here is a more general lambda, taking two arguments, the first for the
-degrees in (Celsius or Kelvin), the second for the Fahrenheit value of 0 on
-the relevant scale: 32 for Celsius, <code class="docutils literal notranslate"><span class="pre">32</span> <span class="pre">-</span> <span class="pre">273.15</span> <span class="pre">*</span> <span class="pre">1.8</span> <span class="pre">=</span>&#160; <span class="pre">-459.67</span></code> for
-Kelvin.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># arguments are c and z, where z is the value in Fahrenheit</span>
-<span class="c1"># at zero on the given scale (Celsius or Kelvin).</span>
-<span class="n">c2f_again</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">c</span><span class="p">,</span> <span class="n">z</span> <span class="p">:</span> <span class="n">c</span> <span class="o">*</span> <span class="mf">1.8</span> <span class="o">+</span> <span class="n">z</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Use the two-argument function to convert from Celsius to Fahrenheit:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_again</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">func</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 5 * -1 + 10</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5
 </pre></div>
 </div>
 </div>
 </div>
-<p>Use the two-argument function to convert from Kelvin to Fahrenheit:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c2f_again</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mf">459.67</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-441.67
-</pre></div>
-</div>
-</div>
-</div>
-<p>We can’t as easily use these two-argument lambdas for Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code>
-functions, because apply functions only accept one argument, by default.</p>
+<p>We can’t as easily use these two-argument lambdas for Pandas <code class="docutils literal notranslate"><span class="pre">apply</span></code> functions,
+because apply functions only accept one argument, by default, but it can be
+done.  See the arguments to the <code class="docutils literal notranslate"><span class="pre">apply</span></code> method for the tools you will need if
+you do want to do this.</p>
 </section>
 </section>
 
