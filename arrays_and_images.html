@@ -176,6 +176,12 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_multiple_predictors.html">Linear regression notation for models with multiple predictors</a></li>
+
+
+
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
 <ul class="nav bd-sidenav">
@@ -520,7 +526,7 @@ the number of <em>columns</em>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8df3f6c5e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f58a4b2f370&gt;
 </pre></div>
 </div>
 <img alt="_images/4069e58a8e71ff556644c33166a0501e7d790a6b2ec6b153c7042a4786b7ba4c.png" src="_images/4069e58a8e71ff556644c33166a0501e7d790a6b2ec6b153c7042a4786b7ba4c.png" />
@@ -540,7 +546,7 @@ to show the colormap:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f8df0d85610&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f58a49e6f70&gt;
 </pre></div>
 </div>
 <img alt="_images/31d9e7a1af0004d3450fcb6381a59af1a7420c18b92d66f9f8118b71fab5f4c6.png" src="_images/31d9e7a1af0004d3450fcb6381a59af1a7420c18b92d66f9f8118b71fab5f4c6.png" />
@@ -556,7 +562,7 @@ to show the colormap:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f8df0cde790&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f58a49a5f70&gt;
 </pre></div>
 </div>
 <img alt="_images/260cb9351dc38035aabe9a8a7e8fa471035d78be827419418e8cf5dbd2f91bd8.png" src="_images/260cb9351dc38035aabe9a8a7e8fa471035d78be827419418e8cf5dbd2f91bd8.png" />
@@ -584,7 +590,7 @@ for the <em>rest of this session</em>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f8df0c29940&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f58a49f0cd0&gt;
 </pre></div>
 </div>
 <img alt="_images/260cb9351dc38035aabe9a8a7e8fa471035d78be827419418e8cf5dbd2f91bd8.png" src="_images/260cb9351dc38035aabe9a8a7e8fa471035d78be827419418e8cf5dbd2f91bd8.png" />
@@ -651,7 +657,7 @@ for the <code class="docutils literal notranslate"><span class="pre">x</span></c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8df0b59790&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f58a47b9f40&gt;]
 </pre></div>
 </div>
 <img alt="_images/a808e6bd388eee111be19c6947ad98893a16480dc0df328afce5a862d0a026ad.png" src="_images/a808e6bd388eee111be19c6947ad98893a16480dc0df328afce5a862d0a026ad.png" />
@@ -670,7 +676,7 @@ assume we mean the x values to be <code class="docutils literal notranslate"><sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8df0ad7b50&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f58a473d8e0&gt;]
 </pre></div>
 </div>
 <img alt="_images/a808e6bd388eee111be19c6947ad98893a16480dc0df328afce5a862d0a026ad.png" src="_images/a808e6bd388eee111be19c6947ad98893a16480dc0df328afce5a862d0a026ad.png" />
@@ -707,7 +713,7 @@ of flipping the rows and columns (in 2D):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8df0aa49a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f58a47d2640&gt;
 </pre></div>
 </div>
 <img alt="_images/5acc3ffa75dc5d8377df2de6de63693460d3ef44d97e845fcae52c2d17ecb813.png" src="_images/5acc3ffa75dc5d8377df2de6de63693460d3ef44d97e845fcae52c2d17ecb813.png" />
@@ -854,7 +860,7 @@ many bins you want with the <code class="docutils literal notranslate"><span cla
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8df08bc4c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f58a4524460&gt;
 </pre></div>
 </div>
 <img alt="_images/7f7629cc69a377457fe37d95fe756f78aedaa26ca6b2ef9e538f4cf02512001c.png" src="_images/7f7629cc69a377457fe37d95fe756f78aedaa26ca6b2ef9e538f4cf02512001c.png" />
@@ -925,7 +931,7 @@ binarizing the image at a threshold (of 50 in this case):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8df082cca0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f58a4492e80&gt;
 </pre></div>
 </div>
 <img alt="_images/77c87396be0f8aac6bf692fd243b7f550b26b32011c021f912b559a30678d35e.png" src="_images/77c87396be0f8aac6bf692fd243b7f550b26b32011c021f912b559a30678d35e.png" />
@@ -943,7 +949,7 @@ that we want to the top 4 rows, and the last 5 columns:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8df07a3580&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f58a44059a0&gt;
 </pre></div>
 </div>
 <img alt="_images/26ef8498d0f941de7a26b59ebdb14e13b9ea9082bd7f1ff806ae21c618e9068c.png" src="_images/26ef8498d0f941de7a26b59ebdb14e13b9ea9082bd7f1ff806ae21c618e9068c.png" />
