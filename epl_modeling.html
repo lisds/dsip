@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Attack or defense? &#8212; Data Science in Practice</title>
+    <title>Attack or defense? An example of multiple regression &#8212; Data Science in Practice</title>
   
   
   
@@ -69,6 +69,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The problem with data" href="data_work.html" />
+    <link rel="prev" title="Linear regression notation for models with multiple predictors" href="lin_regression_multiple_predictors.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,7 +175,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
@@ -182,6 +184,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 
 
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Attack or defense?  An example of multiple regression</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
 <ul class="nav bd-sidenav">
@@ -458,7 +461,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Attack or defense?</h1>
+    <h1>Attack or defense?  An example of multiple regression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -480,8 +483,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="attack-or-defense">
-<h1>Attack or defense?<a class="headerlink" href="#attack-or-defense" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="attack-or-defense-an-example-of-multiple-regression">
+<h1>Attack or defense?  An example of multiple regression<a class="headerlink" href="#attack-or-defense-an-example-of-multiple-regression" title="Permalink to this heading">#</a></h1>
 <p>What should you pay for, if you want to win the English Premier League?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1007,7 +1010,7 @@ we’re investigating, along with the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7f097acc67c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7fd14cba5700&gt;
 </pre></div>
 </div>
 </div>
@@ -1022,7 +1025,7 @@ model to calculate the least-squares parameters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7f097b070670&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7fd14cbbf8e0&gt;
 </pre></div>
 </div>
 </div>
@@ -1051,7 +1054,7 @@ display of the parameters and other calculations from the fit.</p>
   <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th>  <td>0.00128</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:45:47</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
+  <th>Time:</th>                 <td>23:03:54</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   188.7</td>
@@ -1272,7 +1275,7 @@ display of the parameters and other calculations from the fit.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f097ab25cd0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd113dac310&gt;
 </pre></div>
 </div>
 <img alt="_images/98d1e91612bf5a283986b98b39b043f1e9874b57c48a1f98238991009c52e74f.png" src="_images/98d1e91612bf5a283986b98b39b043f1e9874b57c48a1f98238991009c52e74f.png" />
@@ -1302,7 +1305,7 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th> <td>0.000185</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:45:47</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
+  <th>Time:</th>                 <td>23:03:55</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   184.6</td>
@@ -1365,7 +1368,7 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th>  <td>0.00787</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:45:47</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
+  <th>Time:</th>                 <td>23:03:55</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   192.5</td>
@@ -1542,7 +1545,7 @@ function.  We found that both <code class="docutils literal notranslate"><span c
   <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th> <td>0.000270</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:45:47</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
+  <th>Time:</th>                 <td>23:03:55</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   183.3</td>
@@ -2128,31 +2131,31 @@ dtype: float64
 <div class="output text_html"><table class="simpletable">
 <caption>OLS Regression Results</caption>
 <tr>
-  <th>Dep. Variable:</th>     <td>without_defense</td> <th>  R-squared:         </th>  <td>  -0.000</td> 
+  <th>Dep. Variable:</th>     <td>without_defense</td> <th>  R-squared:         </th> <td>   0.000</td>
 </tr>
 <tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th>  <td>  -0.056</td> 
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>  -0.056</td>
 </tr>
 <tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>-3.959e-15</td>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   0.000</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th>   <td>  1.00</td>  
+  <th>Date:</th>             <td>Fri, 20 Oct 2023</td> <th>  Prob (F-statistic):</th>  <td>  1.00</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:45:47</td>     <th>  Log-Likelihood:    </th>  <td> -88.626</td> 
+  <th>Time:</th>                 <td>23:03:55</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
-  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th>  <td>   181.3</td> 
+  <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   181.3</td>
 </tr>
 <tr>
-  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th>  <td>   183.2</td> 
+  <th>Df Residuals:</th>          <td>    18</td>      <th>  BIC:               </th> <td>   183.2</td>
 </tr>
 <tr>
-  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>      <td> </td>    
+  <th>Df Model:</th>              <td>     1</td>      <th>                     </th>     <td> </td>   
 </tr>
 <tr>
-  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>      <td> </td>    
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
 </tr>
 </table>
 <table class="simpletable">
@@ -2160,10 +2163,10 @@ dtype: float64
       <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
 </tr>
 <tr>
-  <th>Intercept</th> <td>-3.553e-15</td> <td>    8.071</td> <td> -4.4e-16</td> <td> 1.000</td> <td>  -16.956</td> <td>   16.956</td>
+  <th>Intercept</th> <td>-1.288e-14</td> <td>    8.071</td> <td> -1.6e-15</td> <td> 1.000</td> <td>  -16.956</td> <td>   16.956</td>
 </tr>
 <tr>
-  <th>forward</th>   <td> -1.03e-18</td> <td>    0.000</td> <td>-5.48e-15</td> <td> 1.000</td> <td>   -0.000</td> <td>    0.000</td>
+  <th>forward</th>   <td>-1.335e-18</td> <td>    0.000</td> <td>-7.11e-15</td> <td> 1.000</td> <td>   -0.000</td> <td>    0.000</td>
 </tr>
 </table>
 <table class="simpletable">
@@ -2181,7 +2184,9 @@ dtype: float64
 </tr>
 </table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.<br/>[2] The condition number is large, 7.23e+04. This might indicate that there are<br/>strong multicollinearity or other numerical problems.</div></div>
 </div>
-<p>It appears that this two-stage procedure gives a similar result to the one we saw before — once we have accounted for spending on defense, spending on forwards is no longer important, in these models.</p>
+<p>It appears that this two-stage procedure gives a similar result to the one we
+saw before — once we have accounted for spending on defense, spending on
+forwards is no longer important, in these models.</p>
 </section>
 </section>
 
@@ -2215,6 +2220,24 @@ dtype: float64
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="lin_regression_multiple_predictors.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Linear regression notation for models with multiple predictors</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="data_work.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The problem with data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
