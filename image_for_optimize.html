@@ -19,12 +19,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -148,13 +148,14 @@ const thebe_selector_output = ".output, .cell_output"
   
   
   
+  
     
     
       
     
     
-    <img src="_static/dsfe_logo.png" class="logo__image only-light" alt="Logo image"/>
-    <script>document.write(`<img src="_static/dsfe_logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+    <img src="_static/dsfe_logo.png" class="logo__image only-light" alt="Data Science in Practice - Home"/>
+    <script>document.write(`<img src="_static/dsfe_logo.png" class="logo__image only-dark" alt="Data Science in Practice - Home"/>`);</script>
   
   
 </a></div>
@@ -177,11 +178,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
-
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_multiple_predictors.html">Linear regression notation for models with multiple predictors</a></li>
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="epl_modeling.html">Attack or defense?  An example of multiple regression</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
@@ -446,7 +445,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -462,6 +463,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -485,7 +494,7 @@ document.write(`
 </div>
 </div>
 <p>We return again to the income and prestige data from Duncan
-<span id="id1">[<a class="reference internal" href="lin_regression_notation.html#id18" title="Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, Occupations and social status, pages 109–161. Free Press, New York, 1961.">Dun61</a>]</span>.</p>
+<span id="id1">[<a class="reference internal" href="#id18" title="Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, Occupations and social status, pages 109–161. Free Press, New York, 1961.">Dun61</a>]</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/Duncan_Occupational_Prestige.csv&#39;</span><span class="p">)</span>
@@ -668,7 +677,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Prestige&#39;)
 </pre></div>
 </div>
-<img alt="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" src="_images/c98cf1b37eeb2a49fdedd8d199da32c5d4820ef4e51fe62ed0475223400b6246.png" />
+<img alt="_images/d799ff004235ab5fc23708069fc39b59d4ce694e13f543704a362665e4f8d13a.png" src="_images/d799ff004235ab5fc23708069fc39b59d4ce694e13f543704a362665e4f8d13a.png" />
 </div>
 </div>
 <p>Start with a guess for the slope and intercept of a line to predict the
@@ -931,7 +940,7 @@ for much higher RMSEs.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Index for intercepts&#39;)
 </pre></div>
 </div>
-<img alt="_images/d2fc3a434ace91652360baeef5a751789c11b4e5e3801420d6a063f17d74eda3.png" src="_images/d2fc3a434ace91652360baeef5a751789c11b4e5e3801420d6a063f17d74eda3.png" />
+<img alt="_images/acb7afcf0d045555047efb33c0cd19b5c2a6c4f4bf7eb0c8df1c71fc4301649d.png" src="_images/acb7afcf0d045555047efb33c0cd19b5c2a6c4f4bf7eb0c8df1c71fc4301649d.png" />
 </div>
 </div>
 <p>Next we want to find the slope and intercept corresponding to the minimum RMSE value we found in the <code class="docutils literal notranslate"><span class="pre">rmses</span></code> array.</p>
@@ -1032,10 +1041,10 @@ for much higher RMSEs.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9013fed400&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f2ff48259a0&gt;
 </pre></div>
 </div>
-<img alt="_images/32bc75049057d63da2c05ca0aafe6c629c7960ae6bcd4bf1010036dc54644884.png" src="_images/32bc75049057d63da2c05ca0aafe6c629c7960ae6bcd4bf1010036dc54644884.png" />
+<img alt="_images/3fec90fe675c97eeeb97be4258c30e365114a99bf3ab4512f86751d04ec111bf.png" src="_images/3fec90fe675c97eeeb97be4258c30e365114a99bf3ab4512f86751d04ec111bf.png" />
 </div>
 </div>
 <p>Back to <code class="docutils literal notranslate"><span class="pre">np.where</span></code>.  If we call this on the <code class="docutils literal notranslate"><span class="pre">is_min</span></code> 2D Boolean array, it
@@ -1130,6 +1139,16 @@ coordinates and column coordinates).</p>
 </div>
 </div>
 </div>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<div class="docutils container" id="id2">
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">Dun61</a><span class="fn-bracket">]</span></span>
+<p>Otis Dudley Duncan. A socioeconomic index for all occupations. In Albert J Reiss, Otis Dudley Duncan, Paul K Hatt, and Douglass Cecil North, editors, <em>Occupations and social status</em>, pages 109–161. Free Press, New York, 1961.</p>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1187,6 +1206,20 @@ coordinates and column coordinates).</p>
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -1229,8 +1262,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
   <footer class="bd-footer">
   </footer>
