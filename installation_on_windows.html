@@ -412,7 +412,6 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-extra-step">An extra step</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-finish">To finish</a></li>
 </ul>
             </nav>
@@ -542,33 +541,6 @@ administrator Powershell prompt, and pressing Enter:</p>
 </pre></div>
 </div>
 </section>
-<section id="an-extra-step">
-<h2>An extra step<a class="headerlink" href="#an-extra-step" title="Permalink to this heading">#</a></h2>
-<p>You need to make sure that your new commands, installed in the installation step, are available at the terminal.</p>
-<p>To do this, you need to find the directory in which the new commands are
-stored.  You can do this from your Powershell terminal.</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Find the directory with the new commands.</span>
-<span class="nv">$site_path</span><span class="p">=</span><span class="n">python3</span> <span class="n">-c</span> <span class="s1">&#39;import os,sysconfig;print(sysconfig.get_path(&quot;scripts&quot;,f&quot;{os.name}_user&quot;))&#39;</span>
-<span class="nb">echo </span><span class="nv">$site_path</span>
-<span class="nv">$user_path</span><span class="p">=</span><span class="no">[Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
-<span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;$user_path;$site_path&quot;</span><span class="p">,</span> <span class="no">[System.EnvironmentVariableTarget]</span><span class="p">::</span><span class="n">User</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You should add this directory to the list of directories that Windows
-searches for new programs.  This list of directories is called the “PATH”.</p>
-<p>You can do this via the GUI if you want.  What you are trying to do is add the
-directory above to your PATH environment variable for your user.  See <a class="reference external" href="https://www.computerhope.com/issues/ch000549.htm">editing
-environment variables on
-Windows</a> for details.</p>
-<p>On the other hand, you might consider using this complicated couple of
-commands, copy-pasted into the same Powershell terminal you used above.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$user_path=[Environment]::GetEnvironmentVariable(&quot;PATH&quot;, &quot;User&quot;)
-[Environment]::SetEnvironmentVariable(&quot;PATH&quot;, &quot;$user_path;$site_path&quot;, [System.EnvironmentVariableTarget]::User)
-</pre></div>
-</div>
-<p>Whether you used the GUI or the Powershell command, close your Powershell
-terminal, and open it again to see the changes.</p>
-</section>
 <section id="to-finish">
 <h2>To finish<a class="headerlink" href="#to-finish" title="Permalink to this heading">#</a></h2>
 <p>Close the Powershell.  All done.</p>
@@ -633,7 +605,6 @@ terminal, and open it again to see the changes.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#check">Check</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#an-extra-step">An extra step</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#to-finish">To finish</a></li>
 </ul>
   </nav></div>
