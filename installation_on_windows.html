@@ -550,6 +550,8 @@ stored.  You can do this from your Powershell terminal.</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="c"># Find the directory with the new commands.</span>
 <span class="nv">$site_path</span><span class="p">=</span><span class="n">python3</span> <span class="n">-c</span> <span class="s1">&#39;import os,sysconfig;print(sysconfig.get_path(&quot;scripts&quot;,f&quot;{os.name}_user&quot;))&#39;</span>
 <span class="nb">echo </span><span class="nv">$site_path</span>
+<span class="nv">$user_path</span><span class="p">=</span><span class="no">[Environment]</span><span class="p">::</span><span class="n">GetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
+<span class="no">[Environment]</span><span class="p">::</span><span class="n">SetEnvironmentVariable</span><span class="p">(</span><span class="s2">&quot;PATH&quot;</span><span class="p">,</span> <span class="s2">&quot;$user_path;$site_path&quot;</span><span class="p">,</span> <span class="no">[System.EnvironmentVariableTarget]</span><span class="p">::</span><span class="n">User</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You should add this directory to the list of directories that Windows
