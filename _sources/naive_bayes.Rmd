@@ -1,0 +1,480 @@
+---
+jupyter:
+  orphan: true
+  jupytext:
+    notebook_metadata_filter: all,-language_info
+    split_at_heading: true
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.16.0
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Naive Bayes classifiers
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+pd.set_option('mode.copy_on_write', True)
+```
+
+Also see: [Naive Bayes
+classifiers](https://jakevdp.github.io/PythonDataScienceHandbook/05.05-naive-bayes.html)
+in the [Python Data Science
+Handbook](https://jakevdp.github.io/PythonDataScienceHandbook).
+
+```{python}
+import seaborn as sns
+```
+
+```{python}
+penguins = pd.read_csv('data/penguins.csv').dropna()
+penguins
+```
+
+```{python}
+sns.pairplot(penguins, hue="species")
+```
+
+```{python}
+list(penguins)
+```
+
+```{python}
+df = penguins.loc[
+    penguins['species'].isin(['Gentoo', 'Chinstrap']),
+    ['species', 'body_mass_g', 'bill_depth_mm']
+]
+df
+```
+
+```{python}
+sns.histplot(data=df, x="body_mass_g", hue="species")
+```
+
+```{python}
+by_species = df.groupby('species')
+bm_by_species = by_species['body_mass_g']
+```
+
+```{python}
+fig, axes = plt.subplots(1, 2)
+axes[0].hist(bm_by_species.get_group('Chinstrap'))
+axes[0].set_title('Chinstrap')
+axes[1].hist(bm_by_species.get_group('Gentoo'));
+axes[1].set_title('Gentoo')
+```
+
+While we are here:
+
+```{python}
+names = list(bm_by_species.groups)
+names
+```
+
+```{python}
+position_no = 0
+for name in names:
+    print('Group', position_no, 'name is', name)
+    position_no = position_no + 1
+```
+
+Or:
+
+```{python}
+for position_no, name in enumerate(names):
+    print('Group', position_no, 'name is', name)
+```
+
+The plots again:
+
+```{python}
+fig, axes = plt.subplots(1, 2)
+for i, name in enumerate(bm_by_species.groups):
+    axes[i].hist(bm_by_species.get_group(name))
+    axes[i].set_title(name)
+```
+
+As density plots (the area of the bars sums to 1):
+
+```{python}
+fig, axes = plt.subplots(1, 2)
+for i, name in enumerate(bm_by_species.groups):
+    axes[i].hist(bm_by_species.get_group(name), density=True)
+    axes[i].set_title(name)
+```
+
+For the moment, let us model these two distributions as normal curves.
+
+```{python}
+bm_params = bm_by_species.agg(['mean', 'std'])
+bm_params
+```
+
+We can use a Scipy statistics distribution to make a *normal* distribution with the same mean and variance.
+
+```{python}
+import scipy.stats as sps
+```
+
+```{python}
+# The distribution
+chinstrap_dist = sps.norm(bm_params.loc['Chinstrap', 'mean'],
+                          bm_params.loc['Chinstrap', 'std'])
+```
+
+```{python}
+# The probability density function of the distribution:
+chinstraps = bm_by_species.get_group('Chinstrap')
+c_masses_x = np.linspace(chinstraps.min(), chinstraps.max(), 1000)
+plt.plot(c_masses_x, chinstrap_dist.pdf(c_masses_x), 'r:')
+```
+
+With the actual densities:
+
+```{python}
+plt.hist(chinstraps, density=True)
+plt.plot(c_masses_x, chinstrap_dist.pdf(c_masses_x), 'r:')
+```
+
+The normal (Gaussian) probability density function gives our estimate of the probability (density) of any given weight.
+
+```{python}
+chinstrap_dist.pdf(3500)
+```
+
+With these we can get the probability of any mass in the dataset given that the penguin is a Chinstrap:
+
+$$
+P(\text{mass} | \text{Chinstrap})
+$$
+
+Let's fill those in.
+
+```{python}
+cpms = chinstrap_dist.pdf(df['body_mass_g'])
+df['p_m_given_c'] = chinstrap_dist.pdf(df['body_mass_g'])
+df
+```
+
+Likewise:
+
+$$
+P(\text{mass}|\text{Gentoo})
+$$
+
+```{python}
+gentoo_dist = sps.norm(bm_params.loc['Gentoo', 'mean'],
+                       bm_params.loc['Gentoo', 'std'])
+gentoos = bm_by_species.get_group('Gentoo')
+g_masses_x = np.linspace(gentoos.min(), gentoos.max(), 1000)
+plt.hist(gentoos, density=True)
+plt.plot(g_masses_x, gentoo_dist.pdf(g_masses_x), 'r:');
+plt.title('Gentoo density and estimated density')
+```
+
+```{python}
+gpms = gentoo_dist.pdf(df['body_mass_g'])
+df['p_m_given_g'] = gpms
+df
+```
+
+We also need prior probabilities for Chinstrap and Gentoo.
+
+$$
+P(\text{Chinstrap})
+$$
+
+$$
+P(\text{Gentoo})
+$$
+
+Let's just use the proportions in the dataset:
+
+```{python}
+p_chinstrap = np.mean(df['species'] == 'Chinstrap')
+p_chinstrap
+```
+
+```{python}
+p_gentoo = np.mean(df['species'] == 'Gentoo')
+p_gentoo
+```
+
+```{python}
+df['p_chinstrap'] = p_chinstrap
+df['p_gentoo'] = p_gentoo
+df
+```
+
+In our model, each individual mass can only come about in one of two situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  These are mutually exclusive:
+
+Thus:
+
+$$
+P(\text{mass}) = P(\text{mass} | \text{Chinstrap}) +
+                 P(\text{mass} | \text{Gentoo})
+$$
+
+```{python}
+df['p_mass'] = df['p_m_given_c'] + df['p_m_given_g']
+df
+```
+
+How we have everything we need to work out the *posterior* probability that a penguin is a Chinstrap, given the weight of the penguin:
+
+$$
+P(\text{Chinstrap} | \text{mass}) = \frac{
+P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
+}{P(\text{mass})}
+$$
+
+```{python}
+df['p_c_given_m'] = (df['p_m_given_c'] * df['p_chinstrap']) / df['p_mass']
+df
+```
+
+Likewise:
+
+$$
+P(\text{Gentoo} | \text{mass}) = \frac{
+P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
+}{P(\text{mass})}
+$$
+
+```{python}
+df['p_g_given_m'] = (df['p_m_given_g'] * df['p_gentoo']) / df['p_mass']
+df
+```
+
+```{python}
+df['bayes_predictions'] = np.where(
+    df['p_c_given_m'] > df['p_g_given_m'],
+    'Chinstrap', 'Gentoo')
+df
+```
+
+But - wait - for our Bayes predictions, we don't actually need the $P(\text{mass})$ value.  Why?  Because we can calculate the ratio of the posterior probabilities like this:
+
+```{python}
+likelihood_ratio = df['p_c_given_m'] / df['p_g_given_m']
+likelihood_ratio
+```
+
+Notice we have divided out the $P(\text{mass})$ in this ratio.  Notice too that ratios above 1 mean more likely Chinstrap, and less than one mean less likely Chinstrap, more likely Gentoo.  So we get the same predictions from the likelihood as we would from the full posterior probabilities:
+
+```{python}
+likelihood_predictions = np.where(
+    likelihood_ratio > 1,
+    'Chinstrap', 'Gentoo')
+np.all(df['bayes_predictions'] == likelihood_predictions)
+```
+
+Here is the same process, using the Scikit-learn library.
+
+```{python}
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(df[['body_mass_g']], df['species']);
+model.class_prior_
+```
+
+```{python}
+df['sklearn_predictions'] = model.predict(df[['body_mass_g']])
+df
+```
+
+```{python}
+np.all(df['bayes_predictions'] == df['sklearn_predictions'])
+```
+
+```{python}
+np.set_printoptions(suppress=True)
+p_values = model.predict_proba(df[['body_mass_g']])
+p_values
+```
+
+```{python}
+model.score(df[['body_mass_g']], df['species'])
+```
+
+```{python}
+np.mean(df['sklearn_predictions'] == df['species'])
+```
+
+```{python}
+df
+```
+
+## Putting the naïve into "naïve Bayes"
+
+Now, let's also consider the `bill_depth_mm` values:
+
+```{python}
+sns.histplot(data=df, x="bill_depth_mm", hue="species")
+```
+
+```{python}
+bd_by_species = by_species['bill_depth_mm']
+bd_params = bd_by_species.agg(['mean', 'std'])
+# The distributions
+pd_dists = {}
+species = ['Chinstrap', 'Gentoo']
+for name in species:
+    pd_dists[name] = sps.norm(bd_params.loc[name, 'mean'],
+                              bd_params.loc[name, 'std'])
+
+pd_dists
+```
+
+```{python}
+fig, axes = plt.subplots(1, 2)
+for i, name in enumerate(species):
+    axis = axes[i]
+    bds = bd_by_species.get_group(name)
+    x = np.linspace(bds.min(), bds.max(), 1000)
+    axis.hist(bds, density=True)
+    axis.plot(x, pd_dists[name].pdf(x), 'r:');
+    axis.set_title(f'{name} density / est density')
+```
+
+We can also think of these distributions in two-dimensions, along with the weight:
+
+```{python}
+sns.scatterplot(df, x='body_mass_g', y='bill_depth_mm',
+                hue='species')
+```
+
+Question - is the bill depth *independent* (in the sense of probability) from
+the body mass?   That is - if I know the body mass, do I know anything more
+about the bill depth?
+
+
+For the moment - let's say "yes" (it's independent).  That's *naïve*.  And
+that's where "naïve" Bayes reaches the name of the technique.
+
+
+Using independence, we can calculate the probability of a *combination* of a particular body mass and bill depth value with:
+
+$$
+P((\text{mass} \text{ and } \text{bill depth}) | \text{Chinstrap} ) =
+P(\text{mass} | \text{Chinstrap}) *
+P(\text{bill depth}) | \text{Chinstrap})
+$$
+
+
+Let's calculate the new probabilities we need:
+
+```{python}
+df['p_bd_given_c'] = pd_dists['Chinstrap'].pdf(df['bill_depth_mm'])
+df['p_bd_given_g'] = pd_dists['Gentoo'].pdf(df['bill_depth_mm'])
+df
+```
+
+The full formula for the posterior using the two measures is:
+
+$$
+P(\text{Chinstrap} | \text{mass and bill depth}) = \frac{
+P((\text{mass and bill_depth}) | \text{Chinstrap}) P(\text{Chinstrap})
+}{P(\text{mass and bill depth})}
+$$
+
+The naïve version of the formula is:
+
+$$
+P(\text{Chinstrap} | \text{mass and bill depth}) = \frac{
+P(\text{mass} | \text{Chinstrap}) *
+P(\text{bill depth}) | \text{Chinstrap}) *
+ P(\text{Chinstrap})
+}{P(\text{mass and bill depth})}
+$$
+
+But - using the likelihood trick above, we no longer have to calculate the denominator, we can just divide it out, to give the following ratio:
+
+```{python}
+both_ratio = ((df['p_m_given_c'] * df['p_bd_given_c'] * df['p_chinstrap']) /
+              (df['p_m_given_g'] * df['p_bd_given_g'] * df['p_gentoo']))
+df['both_predictions'] = np.where(both_ratio > 1, 'Chinstrap', 'Gentoo')
+df
+```
+Accuracy:
+
+```{python}
+np.mean(df['both_predictions'] == df['species'])
+```
+
+Scikit learn:
+
+```{python}
+both_model = GaussianNB()
+both_model.fit(df[['body_mass_g', 'bill_depth_mm']], df['species'])
+```
+
+```{python}
+both_model.score(df[['body_mass_g', 'bill_depth_mm']], df['species'])
+```
+
+Let's try the standard test-train split.  We "train" our classifier using a random subset of the data:
+
+```{python}
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    df[['body_mass_g', 'bill_depth_mm']],
+    df['species'])
+X_train
+```
+
+Here we fit the various parameters to classify the training data.
+
+```{python}
+test_model = GaussianNB()
+test_model.fit(X_train, y_train)
+```
+
+How does Scikit-learn do in classifying the test data (that it has not seen
+before):
+
+```{python}
+test_model.score(X_test, y_test)
+```
+
+We can look at the *decision boundary* to see where the model starts seeing
+Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
+(mass and bill depth).
+
+```{python}
+# Make grid of points to classify
+all_params = df[['body_mass_g', 'bill_depth_mm']].describe()
+bm_x = np.linspace(all_params.loc['min', 'body_mass_g'],
+                   all_params.loc['max', 'body_mass_g'],
+                   50)
+bm_y = np.linspace(all_params.loc['min', 'bill_depth_mm'],
+                   all_params.loc['max', 'bill_depth_mm'],
+                   50)
+x, y = np.meshgrid(bm_x, bm_y)
+xy = np.stack((x.ravel(), y.ravel()), axis=1)
+xy_df = pd.DataFrame(xy, columns=X_test.columns)
+```
+
+```{python}
+# Show the classification of the test data.
+sns.scatterplot(df.loc[X_test.index],
+                x='body_mass_g', y='bill_depth_mm',
+                hue='species')
+# Overlay the classification of the grid points.
+sns.scatterplot(x=xy[:, 0], y=xy[:, 1],
+                hue=test_model.predict(xy_df),
+                palette=sns.color_palette()[:2],
+                alpha=0.1);
+```
+
+```{python}
+
+```
