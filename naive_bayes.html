@@ -471,6 +471,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerate">Enumerate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#towards-classification-with-probability">Towards classification with probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-the-naive-into-naive-bayes">Putting the naïve into “naïve Bayes”</a></li>
 </ul>
             </nav>
@@ -676,7 +678,7 @@ Handbook</a>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f018b8d8f10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f3952f1bd60&gt;
 </pre></div>
 </div>
 <img alt="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" src="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" />
@@ -684,19 +686,7 @@ Handbook</a>.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">penguins</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;species&#39;,
- &#39;island&#39;,
- &#39;bill_length_mm&#39;,
- &#39;bill_depth_mm&#39;,
- &#39;flipper_length_mm&#39;,
- &#39;body_mass_g&#39;,
- &#39;sex&#39;,
- &#39;year&#39;]
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">species_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Chinstrap&#39;</span><span class="p">,</span> <span class="s1">&#39;Gentoo&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -704,7 +694,7 @@ Handbook</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">penguins</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
-    <span class="n">penguins</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Gentoo&#39;</span><span class="p">,</span> <span class="s1">&#39;Chinstrap&#39;</span><span class="p">]),</span>
+    <span class="n">penguins</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">species_names</span><span class="p">),</span>
     <span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span> <span class="s1">&#39;bill_depth_mm&#39;</span><span class="p">]</span>
 <span class="p">]</span>
 <span class="n">df</span>
@@ -845,26 +835,16 @@ Handbook</a>.</p>
 <img alt="_images/9bcabb7b139623c05551213df1c36cd33e86eaa9d7081954c3d0f3b205d984a4.png" src="_images/9bcabb7b139623c05551213df1c36cd33e86eaa9d7081954c3d0f3b205d984a4.png" />
 </div>
 </div>
-<p>While we are here:</p>
+<section id="enumerate">
+<h2>Enumerate<a class="headerlink" href="#enumerate" title="Permalink to this heading">#</a></h2>
+<p>While we are here — we introduce <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.</p>
+<p>Imagine we need <em>both</em> the elements in a list, <em>and</em> the position of that element:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">bm_by_species</span><span class="o">.</span><span class="n">groups</span><span class="p">)</span>
-<span class="n">names</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Chinstrap&#39;, &#39;Gentoo&#39;]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">position_no</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">position_no</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># A variable to keep track of the position (index).</span>
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">species_names</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">position_no</span><span class="p">,</span> <span class="s1">&#39;name is&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-    <span class="n">position_no</span> <span class="o">=</span> <span class="n">position_no</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">position_no</span> <span class="o">=</span> <span class="n">position_no</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># We have to increment the position.</span>
 </pre></div>
 </div>
 </div>
@@ -875,10 +855,12 @@ Group 1 name is Gentoo
 </div>
 </div>
 </div>
-<p>Or:</p>
+<p>We can avoid the extra variable by using <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, wrapped around the set of
+things we want to process.  <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> returns two things at each step — the
+position (index), and the next element from the set of things.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">position_no</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">position_no</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">species_names</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">position_no</span><span class="p">,</span> <span class="s1">&#39;name is&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -890,11 +872,12 @@ Group 1 name is Gentoo
 </div>
 </div>
 </div>
+<p>We use <code class="docutils literal notranslate"><span class="pre">enumerate</span></code> to do the plots more neatly below.</p>
 <p>The plots again:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bm_by_species</span><span class="o">.</span><span class="n">groups</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">species_names</span><span class="p">):</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bm_by_species</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
@@ -904,11 +887,17 @@ Group 1 name is Gentoo
 <img alt="_images/9bcabb7b139623c05551213df1c36cd33e86eaa9d7081954c3d0f3b205d984a4.png" src="_images/9bcabb7b139623c05551213df1c36cd33e86eaa9d7081954c3d0f3b205d984a4.png" />
 </div>
 </div>
-<p>As density plots (the area of the bars sums to 1):</p>
+</section>
+<section id="towards-classification-with-probability">
+<h2>Towards classification with probability<a class="headerlink" href="#towards-classification-with-probability" title="Permalink to this heading">#</a></h2>
+<p>We are going to start to think about getting the probability of a particular
+<em>mass</em> given we have a Chinstrap or a Gentoo penguin.  We might like to start
+with density histograms.  Here was ask Matplotlib to set the area of the bars
+to sum to 1.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bm_by_species</span><span class="o">.</span><span class="n">groups</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">species_names</span><span class="p">):</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">bm_by_species</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
@@ -921,7 +910,9 @@ Group 1 name is Gentoo
 <p>For the moment, let us model these two distributions as normal curves.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bm_params</span> <span class="o">=</span> <span class="n">bm_by_species</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Notice the Numpy std function (variance divisor is n rather than</span>
+<span class="c1"># (n - 1).  This is to match scikit-learn&#39;s implementation.</span>
+<span class="n">bm_params</span> <span class="o">=</span> <span class="n">bm_by_species</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">bm_params</span>
 </pre></div>
 </div>
@@ -958,18 +949,19 @@ Group 1 name is Gentoo
     <tr>
       <th>Chinstrap</th>
       <td>3733.088235</td>
-      <td>384.335081</td>
+      <td>381.498621</td>
     </tr>
     <tr>
       <th>Gentoo</th>
       <td>5092.436975</td>
-      <td>501.476154</td>
+      <td>499.364666</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>We can use a Scipy statistics distribution to make a <em>normal</em> distribution with the same mean and variance.</p>
+<p>We can use a Scipy statistics distribution to make a <em>normal</em> distribution with
+the same mean and standard deviation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">sps</span>
@@ -979,7 +971,7 @@ Group 1 name is Gentoo
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The distribution</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A normal distribution with the same mean and standard deviation.</span>
 <span class="n">chinstrap_dist</span> <span class="o">=</span> <span class="n">sps</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">bm_params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Chinstrap&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">],</span>
                           <span class="n">bm_params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Chinstrap&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
 </pre></div>
@@ -996,13 +988,13 @@ Group 1 name is Gentoo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f01824bf9a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f3949b15730&gt;]
 </pre></div>
 </div>
-<img alt="_images/a7774108334c10f2c8d1c27e757076d03cf6f5773688965cebe3b5e4e6500077.png" src="_images/a7774108334c10f2c8d1c27e757076d03cf6f5773688965cebe3b5e4e6500077.png" />
+<img alt="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" src="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" />
 </div>
 </div>
-<p>With the actual densities:</p>
+<p>This is the plot along with the actual densities:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">chinstraps</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1011,13 +1003,14 @@ Group 1 name is Gentoo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f0182445160&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f3949a8b130&gt;]
 </pre></div>
 </div>
-<img alt="_images/b04bee634e1ca01c56a263d2bc6e757df454ba414c254e6e6e771ec4c3c51080.png" src="_images/b04bee634e1ca01c56a263d2bc6e757df454ba414c254e6e6e771ec4c3c51080.png" />
+<img alt="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" src="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" />
 </div>
 </div>
-<p>The normal (Gaussian) probability density function gives our estimate of the probability (density) of any given weight.</p>
+<p>The normal (Gaussian) probability density function gives our estimate of the
+probability (density) of any given weight.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chinstrap_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="mi">3500</span><span class="p">)</span>
@@ -1025,21 +1018,27 @@ Group 1 name is Gentoo
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0008636377972201158
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0008676740928442561
 </pre></div>
 </div>
 </div>
 </div>
-<p>With these we can get the probability of any mass in the dataset given that the penguin is a Chinstrap:</p>
+<p>With these we can get the probability of any mass in the dataset given that the
+penguin is a Chinstrap:</p>
 <div class="math notranslate nohighlight">
 \[
 P(\text{mass} | \text{Chinstrap})
 \]</div>
-<p>Let’s fill those in.</p>
+<p>Actually, to be concise, let’s use <span class="math notranslate nohighlight">\(m\)</span> for <span class="math notranslate nohighlight">\(\text{mass}\)</span> and <span class="math notranslate nohighlight">\(C\)</span> for
+<span class="math notranslate nohighlight">\(\text{Chinstrap}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+P(m | C)
+\]</div>
+<p>We fill in the values of <span class="math notranslate nohighlight">\(P(m | C)\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cpms</span> <span class="o">=</span> <span class="n">chinstrap_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chinstrap_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chinstrap_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">])</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1075,35 +1074,35 @@ P(\text{mass} | \text{Chinstrap})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
+      <td>1.386413e-04</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
+      <td>1.767096e-09</td>
     </tr>
     <tr>
       <th>154</th>
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
+      <td>1.788899e-04</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
+      <td>1.767096e-09</td>
     </tr>
     <tr>
       <th>156</th>
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
+      <td>7.477526e-08</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1117,35 +1116,35 @@ P(\text{mass} | \text{Chinstrap})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
+      <td>8.186991e-04</td>
     </tr>
     <tr>
       <th>340</th>
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
     </tr>
     <tr>
       <th>341</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
     </tr>
     <tr>
       <th>342</th>
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
+      <td>6.585033e-04</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
     </tr>
   </tbody>
 </table>
@@ -1155,7 +1154,12 @@ P(\text{mass} | \text{Chinstrap})
 <p>Likewise:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{mass}|\text{Gentoo})
+P(\text{mass}|\text{Gentoo}) 
+\]</div>
+<p>which we will write as:</p>
+<div class="math notranslate nohighlight">
+\[
+P(m | G)
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1165,21 +1169,17 @@ P(\text{mass}|\text{Gentoo})
 <span class="n">g_masses_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">gentoos</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">gentoos</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">gentoos</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g_masses_x</span><span class="p">,</span> <span class="n">gentoo_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">g_masses_x</span><span class="p">),</span> <span class="s1">&#39;r:&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gentoo density and estimated density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gentoo density and estimated density&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Gentoo density and estimated density&#39;)
-</pre></div>
-</div>
-<img alt="_images/654eca1fd88d7112dc0c17c27ace9d3099478ad565af9138da034a9f0ad54bb0.png" src="_images/654eca1fd88d7112dc0c17c27ace9d3099478ad565af9138da034a9f0ad54bb0.png" />
+<img alt="_images/022fb98298ac772c7b867020245bcc809c574a87f25092167e2f146f45966117.png" src="_images/022fb98298ac772c7b867020245bcc809c574a87f25092167e2f146f45966117.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpms</span> <span class="o">=</span> <span class="n">gentoo_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gpms</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gentoo_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">])</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1216,40 +1216,40 @@ P(\text{mass}|\text{Gentoo})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
     </tr>
     <tr>
       <th>154</th>
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
     </tr>
     <tr>
       <th>156</th>
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1264,15 +1264,15 @@ P(\text{mass}|\text{Gentoo})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
     </tr>
     <tr>
       <th>340</th>
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
     </tr>
     <tr>
@@ -1280,7 +1280,7 @@ P(\text{mass}|\text{Gentoo})
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
     </tr>
     <tr>
@@ -1288,15 +1288,15 @@ P(\text{mass}|\text{Gentoo})
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
     </tr>
   </tbody>
@@ -1304,14 +1304,14 @@ P(\text{mass}|\text{Gentoo})
 <p>187 rows × 5 columns</p>
 </div></div></div>
 </div>
-<p>We also need prior probabilities for Chinstrap and Gentoo.</p>
+<p>We also need prior probabilities for Chinstrap (<span class="math notranslate nohighlight">\(C\)</span>) and Gentoo (<span class="math notranslate nohighlight">\(G\)</span>):</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Chinstrap})
+P(C)
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Gentoo})
+P(G)
 \]</div>
 <p>Let’s just use the proportions in the dataset:</p>
 <div class="cell docutils container">
@@ -1382,8 +1382,8 @@ P(\text{Gentoo})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1392,8 +1392,8 @@ P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1402,8 +1402,8 @@ P(\text{Gentoo})
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1412,8 +1412,8 @@ P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1422,8 +1422,8 @@ P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1442,8 +1442,8 @@ P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1452,7 +1452,7 @@ P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
@@ -1462,7 +1462,7 @@ P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
@@ -1472,8 +1472,8 @@ P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
     </tr>
@@ -1482,7 +1482,7 @@ P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
@@ -1492,12 +1492,12 @@ P(\text{Gentoo})
 <p>187 rows × 7 columns</p>
 </div></div></div>
 </div>
-<p>In our model, each individual mass can only come about in one of two situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  These are mutually exclusive:</p>
-<p>Thus:</p>
+<p>In our model, each individual mass can only come about in one of two
+situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  These are
+mutually exclusive, so we add the probabilities to give the probability of getting a particular mass value <span class="math notranslate nohighlight">\(m\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{mass}) = P(\text{mass} | \text{Chinstrap}) +
-                 P(\text{mass} | \text{Gentoo})
+P(m) = P(m | C) + P(m | G)
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1541,55 +1541,55 @@ P(\text{mass}) = P(\text{mass} | \text{Chinstrap}) +
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
+      <td>0.000534</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
     </tr>
     <tr>
       <th>154</th>
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
+      <td>0.000528</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
     </tr>
     <tr>
       <th>156</th>
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
+      <td>0.000661</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1607,67 +1607,66 @@ P(\text{mass}) = P(\text{mass} | \text{Chinstrap}) +
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
+      <td>0.000892</td>
     </tr>
     <tr>
       <th>340</th>
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
+      <td>0.000717</td>
     </tr>
     <tr>
       <th>341</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
+      <td>0.001064</td>
     </tr>
     <tr>
       <th>342</th>
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
+      <td>0.000769</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
+      <td>0.001064</td>
     </tr>
   </tbody>
 </table>
 <p>187 rows × 8 columns</p>
 </div></div></div>
 </div>
-<p>How we have everything we need to work out the <em>posterior</em> probability that a penguin is a Chinstrap, given the weight of the penguin:</p>
+<p>How we have everything we need to work out the <em>posterior</em> probability that
+a penguin is a Chinstrap, given the weight of the penguin:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Chinstrap} | \text{mass}) = \frac{
-P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
-}{P(\text{mass})}
+P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1712,23 +1711,23 @@ P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
     </tr>
     <tr>
@@ -1736,23 +1735,23 @@ P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
     </tr>
     <tr>
@@ -1760,12 +1759,12 @@ P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1784,60 +1783,60 @@ P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
     </tr>
     <tr>
       <th>340</th>
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
     </tr>
     <tr>
       <th>341</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
     </tr>
     <tr>
       <th>342</th>
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
     </tr>
   </tbody>
 </table>
@@ -1847,9 +1846,7 @@ P(\text{mass} | \text{Chinstrap}) P(\text{Chinstrap})
 <p>Likewise:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Gentoo} | \text{mass}) = \frac{
-P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
-}{P(\text{mass})}
+P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1895,65 +1892,65 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
+      <td>0.471108</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
     </tr>
     <tr>
       <th>154</th>
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
+      <td>0.420802</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
     </tr>
     <tr>
       <th>156</th>
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
+      <td>0.636292</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1973,65 +1970,65 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
+      <td>0.052090</td>
     </tr>
     <tr>
       <th>340</th>
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
+      <td>0.002272</td>
     </tr>
     <tr>
       <th>341</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
     </tr>
     <tr>
       <th>342</th>
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
+      <td>0.091703</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
     </tr>
   </tbody>
 </table>
@@ -2085,13 +2082,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
+      <td>0.471108</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2099,13 +2096,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2113,13 +2110,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
+      <td>0.420802</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2127,13 +2124,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2141,13 +2138,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
+      <td>0.636292</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2169,13 +2166,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
+      <td>0.052090</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2183,13 +2180,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
+      <td>0.002272</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2197,13 +2194,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2211,13 +2208,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
+      <td>0.091703</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2225,13 +2222,13 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
     </tr>
   </tbody>
@@ -2240,26 +2237,31 @@ P(\text{mass} | \text{Gentoo}) P(\text{Gentoo})
 </div></div></div>
 </div>
 <p>But - wait - for our Bayes predictions, we don’t actually need the <span class="math notranslate nohighlight">\(P(\text{mass})\)</span> value.  Why?  Because we can calculate the ratio of the posterior probabilities like this:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\text{LR} = \frac{P(C | m)}{P(G | m)}  \\
+= \frac
+{\frac{ P(m | C) * P(C) } { P(m) }}
+{\frac{P(m | G) * P(G)} { P(m) }} \\
+= \frac{P(m | C) * P(C)} {P(m | G) * P(G)}
+\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood_ratio</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_c_given_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_g_given_m&#39;</span><span class="p">]</span>
-<span class="n">likelihood_ratio</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">likelihood_ratio</span> <span class="o">=</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_chinstrap&#39;</span><span class="p">])</span> <span class="o">/</span>
+                    <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_g&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_gentoo&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># From the divide-out trick above, this gives us the same as:</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">likelihood_ratio</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_c_given_m&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_g_given_m&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>152      0.204621
-153      0.000003
-154      0.297392
-155      0.000003
-156      0.000074
-          ...    
-339      6.284476
-340    152.304860
-341     23.367677
-342      3.350179
-343     23.367677
-Length: 187, dtype: float64
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
@@ -2276,6 +2278,129 @@ Length: 187, dtype: float64
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The probabilities for the two categories do not sum to 1, because the
+probabilities <span class="math notranslate nohighlight">\(P(m | C)\)</span>, <span class="math notranslate nohighlight">\(P(m | G)\)</span> do not sum to 1.  This in turn is because
+we are taking discrete samples from the continuous Gaussian, so the sum of the
+probabilities will depend on the samples.   We allow for this below by dividing
+the two probabilities by their (&lt; 0) sum, to normalize them to sum to 1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_posteriors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;p_c_given_m&#39;</span><span class="p">,</span> <span class="s1">&#39;p_g_given_m&#39;</span><span class="p">]]</span>
+<span class="n">posteriors</span> <span class="o">=</span> <span class="n">raw_posteriors</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">raw_posteriors</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">posteriors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>p_c_given_m</th>
+      <th>p_g_given_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>152</th>
+      <td>0.166976</td>
+      <td>0.833024</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>0.000003</td>
+      <td>0.999997</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>0.226439</td>
+      <td>0.773561</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>0.000003</td>
+      <td>0.999997</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>0.000065</td>
+      <td>0.999935</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>339</th>
+      <td>0.865038</td>
+      <td>0.134962</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>0.993768</td>
+      <td>0.006232</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>0.960216</td>
+      <td>0.039784</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>0.772415</td>
+      <td>0.227585</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>0.960216</td>
+      <td>0.039784</td>
+    </tr>
+  </tbody>
+</table>
+<p>187 rows × 2 columns</p>
+</div></div></div>
+</div>
+<p>As you may remember from the logit transform in logistic regression, we can also get probabilities from the likelihood ratios, with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Probability from likelihood ratio</span>
+<span class="n">p_from_lr</span> <span class="o">=</span> <span class="n">likelihood_ratio</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">likelihood_ratio</span><span class="p">)</span>
+<span class="n">p_from_lr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>152    0.166976
+153    0.000003
+154    0.226439
+155    0.000003
+156    0.000065
+         ...   
+339    0.865038
+340    0.993768
+341    0.960216
+342    0.772415
+343    0.960216
+Length: 187, dtype: float64
 </pre></div>
 </div>
 </div>
@@ -2342,13 +2467,13 @@ Length: 187, dtype: float64
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
+      <td>0.471108</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2357,13 +2482,13 @@ Length: 187, dtype: float64
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2372,13 +2497,13 @@ Length: 187, dtype: float64
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
+      <td>0.420802</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2387,13 +2512,13 @@ Length: 187, dtype: float64
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2402,13 +2527,13 @@ Length: 187, dtype: float64
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
+      <td>0.636292</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2432,13 +2557,13 @@ Length: 187, dtype: float64
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
+      <td>0.052090</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2447,13 +2572,13 @@ Length: 187, dtype: float64
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
+      <td>0.002272</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2462,13 +2587,13 @@ Length: 187, dtype: float64
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2477,13 +2602,13 @@ Length: 187, dtype: float64
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
+      <td>0.091703</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2492,13 +2617,13 @@ Length: 187, dtype: float64
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2507,6 +2632,7 @@ Length: 187, dtype: float64
 <p>187 rows × 12 columns</p>
 </div></div></div>
 </div>
+<p>Scikit-learn gives the same predictions as we do:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;bayes_predictions&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sklearn_predictions&#39;</span><span class="p">])</span>
@@ -2519,233 +2645,15 @@ Length: 187, dtype: float64
 </div>
 </div>
 </div>
+<p>Scikit-learn also calculates the posterior probabilities:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">p_values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">]])</span>
-<span class="n">p_values</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.16697628, 0.83302372],
-       [0.00000265, 0.99999735],
-       [0.22643912, 0.77356088],
-       [0.00000265, 0.99999735],
-       [0.00006465, 0.99993535],
-       [0.11993516, 0.88006484],
-       [0.01747265, 0.98252735],
-       [0.00047123, 0.99952877],
-       [0.29796695, 0.70203305],
-       [0.00076041, 0.99923959],
-       [0.05807624, 0.94192376],
-       [0.00001352, 0.99998648],
-       [0.05807624, 0.94192376],
-       [0.00000049, 0.99999951],
-       [0.6358983 , 0.3641017 ],
-       [0.00000049, 0.99999951],
-       [0.70958652, 0.29041348],
-       [0.        , 1.        ],
-       [0.01747265, 0.98252735],
-       [0.00010738, 0.99989262],
-       [0.00000265, 0.99999735],
-       [0.00305663, 0.99694337],
-       [0.29796695, 0.70203305],
-       [0.00193689, 0.99806311],
-       [0.00305663, 0.99694337],
-       [0.00121811, 0.99878189],
-       [0.00000459, 0.99999541],
-       [0.08424419, 0.91575581],
-       [0.00001352, 0.99998648],
-       [0.00028991, 0.99971009],
-       [0.03941269, 0.96058731],
-       [0.00193689, 0.99806311],
-       [0.00000005, 0.99999995],
-       [0.00076041, 0.99923959],
-       [0.00006465, 0.99993535],
-       [0.00478639, 0.99521361],
-       [0.00028991, 0.99971009],
-       [0.37927671, 0.62072329],
-       [0.00010738, 0.99989262],
-       [0.897057  , 0.102943  ],
-       [0.00000265, 0.99999735],
-       [0.46620345, 0.53379655],
-       [0.02639328, 0.97360672],
-       [0.00001352, 0.99998648],
-       [0.00743472, 0.99256528],
-       [0.6358983 , 0.3641017 ],
-       [0.00006465, 0.99993535],
-       [0.00121811, 0.99878189],
-       [0.00017707, 0.99982293],
-       [0.01145015, 0.98854985],
-       [0.00017707, 0.99982293],
-       [0.29796695, 0.70203305],
-       [0.00305663, 0.99694337],
-       [0.00743472, 0.99256528],
-       [0.00193689, 0.99806311],
-       [0.46620345, 0.53379655],
-       [0.00305663, 0.99694337],
-       [0.22643912, 0.77356088],
-       [0.00001352, 0.99998648],
-       [0.6358983 , 0.3641017 ],
-       [0.00017707, 0.99982293],
-       [0.29796695, 0.70203305],
-       [0.00000459, 0.99999541],
-       [0.03941269, 0.96058731],
-       [0.00000265, 0.99999735],
-       [0.00000086, 0.99999914],
-       [0.03941269, 0.96058731],
-       [0.00001352, 0.99998648],
-       [0.02639328, 0.97360672],
-       [0.00305663, 0.99694337],
-       [0.00121811, 0.99878189],
-       [0.00047123, 0.99952877],
-       [0.03941269, 0.96058731],
-       [0.00000086, 0.99999914],
-       [0.08424419, 0.91575581],
-       [0.00000008, 0.99999992],
-       [0.02639328, 0.97360672],
-       [0.00000015, 0.99999985],
-       [0.0700967 , 0.9299033 ],
-       [0.00003865, 0.99996135],
-       [0.03230223, 0.96769777],
-       [0.00010738, 0.99989262],
-       [0.02639328, 0.97360672],
-       [0.00000791, 0.99999209],
-       [0.08424419, 0.91575581],
-       [0.00017707, 0.99982293],
-       [0.00923671, 0.99076329],
-       [0.00001352, 0.99998648],
-       [0.00478639, 0.99521361],
-       [0.00006465, 0.99993535],
-       [0.02639328, 0.97360672],
-       [0.00000459, 0.99999541],
-       [0.01145015, 0.98854985],
-       [0.00047123, 0.99952877],
-       [0.00597153, 0.99402847],
-       [0.00923671, 0.99076329],
-       [0.0700967 , 0.9299033 ],
-       [0.00028991, 0.99971009],
-       [0.01145015, 0.98854985],
-       [0.00000791, 0.99999209],
-       [0.00382873, 0.99617127],
-       [0.00002294, 0.99997706],
-       [0.00002294, 0.99997706],
-       [0.03941269, 0.96058731],
-       [0.00002294, 0.99997706],
-       [0.10077498, 0.89922502],
-       [0.00002294, 0.99997706],
-       [0.00305663, 0.99694337],
-       [0.00000015, 0.99999985],
-       [0.05807624, 0.94192376],
-       [0.00002294, 0.99997706],
-       [0.33762084, 0.66237916],
-       [0.00000049, 0.99999951],
-       [0.00000008, 0.99999992],
-       [0.00597153, 0.99402847],
-       [0.01145015, 0.98854985],
-       [0.00000152, 0.99999848],
-       [0.00047123, 0.99952877],
-       [0.00006465, 0.99993535],
-       [0.9901227 , 0.0098773 ],
-       [0.92164831, 0.07835169],
-       [0.979321  , 0.020679  ],
-       [0.98887183, 0.01112817],
-       [0.96948891, 0.03051109],
-       [0.897057  , 0.102943  ],
-       [0.99671239, 0.00328761],
-       [0.96517864, 0.03482136],
-       [0.70958652, 0.29041348],
-       [0.97323387, 0.02676613],
-       [0.95450217, 0.04549783],
-       [0.96021617, 0.03978383],
-       [0.97323387, 0.02676613],
-       [0.82396771, 0.17603229],
-       [0.98580699, 0.01419301],
-       [0.82396771, 0.17603229],
-       [0.9959592 , 0.0040408 ],
-       [0.97323387, 0.02676613],
-       [0.99218012, 0.00781988],
-       [0.29796695, 0.70203305],
-       [0.98393382, 0.01606618],
-       [0.99376753, 0.00623247],
-       [0.99905495, 0.00094505],
-       [0.95450217, 0.04549783],
-       [0.9959592 , 0.0040408 ],
-       [0.70958652, 0.29041348],
-       [0.99376753, 0.00623247],
-       [0.95450217, 0.04549783],
-       [0.97323387, 0.02676613],
-       [0.11993516, 0.88006484],
-       [0.99730642, 0.00269358],
-       [0.46620345, 0.53379655],
-       [0.99499884, 0.00500116],
-       [0.77241466, 0.22758534],
-       [0.98393382, 0.01606618],
-       [0.92164831, 0.07835169],
-       [0.94035329, 0.05964671],
-       [0.01747265, 0.98252735],
-       [0.999458  , 0.000542  ],
-       [0.16697628, 0.83302372],
-       [0.897057  , 0.102943  ],
-       [0.979321  , 0.020679  ],
-       [0.98744239, 0.01255761],
-       [0.9901227 , 0.0098773 ],
-       [0.97648929, 0.02351071],
-       [0.22643912, 0.77356088],
-       [0.99376753, 0.00623247],
-       [0.46620345, 0.53379655],
-       [0.99671239, 0.00328761],
-       [0.97648929, 0.02351071],
-       [0.99550848, 0.00449152],
-       [0.897057  , 0.102943  ],
-       [0.98393382, 0.01606618],
-       [0.82396771, 0.17603229],
-       [0.99499884, 0.00500116],
-       [0.99218012, 0.00781988],
-       [0.99671239, 0.00328761],
-       [0.82396771, 0.17603229],
-       [0.95450217, 0.04549783],
-       [0.98887183, 0.01112817],
-       [0.897057  , 0.102943  ],
-       [0.979321  , 0.020679  ],
-       [0.979321  , 0.020679  ],
-       [0.86503796, 0.13496204],
-       [0.99376753, 0.00623247],
-       [0.96021617, 0.03978383],
-       [0.77241466, 0.22758534],
-       [0.96021617, 0.03978383]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9358288770053476
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sklearn_predictions&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9358288770053476
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The predict_proba values are just the posteriors.</span>
+<span class="n">skl_posteriors</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">]])</span>
+<span class="c1"># They are the same as ours, with calculation error.</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">skl_posteriors</span><span class="p">,</span> <span class="n">posteriors</span><span class="p">)</span>
+<span class="c1"># Show scikit-learn&#39;s posterior probabilities.</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">skl_posteriors</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">posteriors</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -2768,191 +2676,98 @@ Length: 187, dtype: float64
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>species</th>
-      <th>body_mass_g</th>
-      <th>bill_depth_mm</th>
-      <th>p_m_given_c</th>
-      <th>p_m_given_g</th>
-      <th>p_chinstrap</th>
-      <th>p_gentoo</th>
-      <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
-      <th>bayes_predictions</th>
-      <th>sklearn_predictions</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>152</th>
-      <td>Gentoo</td>
-      <td>4500.0</td>
-      <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
-      <td>Gentoo</td>
-      <td>Gentoo</td>
+      <th>0</th>
+      <td>0.166976</td>
+      <td>0.833024</td>
     </tr>
     <tr>
-      <th>153</th>
-      <td>Gentoo</td>
-      <td>5700.0</td>
-      <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000382</td>
-      <td>0.000002</td>
-      <td>0.636360</td>
-      <td>Gentoo</td>
-      <td>Gentoo</td>
+      <th>1</th>
+      <td>0.000003</td>
+      <td>0.999997</td>
     </tr>
     <tr>
-      <th>154</th>
-      <td>Gentoo</td>
-      <td>4450.0</td>
-      <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
-      <td>Gentoo</td>
-      <td>Gentoo</td>
+      <th>2</th>
+      <td>0.226439</td>
+      <td>0.773561</td>
     </tr>
     <tr>
-      <th>155</th>
-      <td>Gentoo</td>
-      <td>5700.0</td>
-      <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000382</td>
-      <td>0.000002</td>
-      <td>0.636360</td>
-      <td>Gentoo</td>
-      <td>Gentoo</td>
+      <th>3</th>
+      <td>0.000003</td>
+      <td>0.999997</td>
     </tr>
     <tr>
-      <th>156</th>
-      <td>Gentoo</td>
-      <td>5400.0</td>
-      <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
-      <td>Gentoo</td>
-      <td>Gentoo</td>
+      <th>4</th>
+      <td>0.000065</td>
+      <td>0.999935</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>339</th>
-      <td>Chinstrap</td>
-      <td>4000.0</td>
-      <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
-      <td>Chinstrap</td>
-      <td>Chinstrap</td>
+      <th>182</th>
+      <td>0.865038</td>
+      <td>0.134962</td>
     </tr>
     <tr>
-      <th>340</th>
-      <td>Chinstrap</td>
-      <td>3400.0</td>
-      <td>18.1</td>
-      <td>7.130179e-04</td>
-      <td>0.000003</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
-      <td>Chinstrap</td>
-      <td>Chinstrap</td>
+      <th>183</th>
+      <td>0.993768</td>
+      <td>0.006232</td>
     </tr>
     <tr>
-      <th>341</th>
-      <td>Chinstrap</td>
-      <td>3775.0</td>
-      <td>18.2</td>
-      <td>1.031853e-03</td>
-      <td>0.000025</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
-      <td>Chinstrap</td>
-      <td>Chinstrap</td>
+      <th>184</th>
+      <td>0.960216</td>
+      <td>0.039784</td>
     </tr>
     <tr>
-      <th>342</th>
-      <td>Chinstrap</td>
-      <td>4100.0</td>
-      <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
-      <td>Chinstrap</td>
-      <td>Chinstrap</td>
+      <th>185</th>
+      <td>0.772415</td>
+      <td>0.227585</td>
     </tr>
     <tr>
-      <th>343</th>
-      <td>Chinstrap</td>
-      <td>3775.0</td>
-      <td>18.7</td>
-      <td>1.031853e-03</td>
-      <td>0.000025</td>
-      <td>0.363636</td>
-      <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
-      <td>Chinstrap</td>
-      <td>Chinstrap</td>
+      <th>186</th>
+      <td>0.960216</td>
+      <td>0.039784</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 12 columns</p>
+<p>187 rows × 2 columns</p>
 </div></div></div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">score</span></code> is the proportion of labels we predicted correctly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">]],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9358288770053476
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here we calculated the same value by hand(ish):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;sklearn_predictions&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9358288770053476
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="putting-the-naive-into-naive-bayes">
 <h2>Putting the naïve into “naïve Bayes”<a class="headerlink" href="#putting-the-naive-into-naive-bayes" title="Permalink to this heading">#</a></h2>
 <p>Now, let’s also consider the <code class="docutils literal notranslate"><span class="pre">bill_depth_mm</span></code> values:</p>
@@ -2969,10 +2784,11 @@ Length: 187, dtype: float64
 <img alt="_images/93c67b9d5cdf4b38c326cca109981ea547abc1dd5de6aac327dbbe7d4f01f4d6.png" src="_images/93c67b9d5cdf4b38c326cca109981ea547abc1dd5de6aac327dbbe7d4f01f4d6.png" />
 </div>
 </div>
+<p>Make the distributions for bill depth:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bd_by_species</span> <span class="o">=</span> <span class="n">by_species</span><span class="p">[</span><span class="s1">&#39;bill_depth_mm&#39;</span><span class="p">]</span>
-<span class="n">bd_params</span> <span class="o">=</span> <span class="n">bd_by_species</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span>
+<span class="n">bd_params</span> <span class="o">=</span> <span class="n">bd_by_species</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="c1"># The distributions</span>
 <span class="n">pd_dists</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Chinstrap&#39;</span><span class="p">,</span> <span class="s1">&#39;Gentoo&#39;</span><span class="p">]</span>
@@ -2985,12 +2801,13 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f0186180580&gt;,
- &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f017a856610&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f394ae6a730&gt;,
+ &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f394a505f40&gt;}
 </pre></div>
 </div>
 </div>
 </div>
+<p>Plot the actual and estimated density, using the Gaussian approximations:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -3005,10 +2822,11 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/90fc7107a8d8bf52facff82074cbb9d8e880ad1feb54839196eef2d6f4a60680.png" src="_images/90fc7107a8d8bf52facff82074cbb9d8e880ad1feb54839196eef2d6f4a60680.png" />
+<img alt="_images/8e0e916d01bb5321915042dd9680bc54eb1a0ef7e3e17a8088733b8a2d7514a0.png" src="_images/8e0e916d01bb5321915042dd9680bc54eb1a0ef7e3e17a8088733b8a2d7514a0.png" />
 </div>
 </div>
-<p>We can also think of these distributions in two-dimensions, along with the weight:</p>
+<p>We can also think of these distributions in two dimensions, along with the
+mass:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;bill_depth_mm&#39;</span><span class="p">,</span>
@@ -3028,12 +2846,12 @@ the body mass?   That is - if I know the body mass, do I know anything more
 about the bill depth?</p>
 <p>For the moment - let’s say “yes” (it’s independent).  That’s <em>naïve</em>.  And
 that’s where “naïve” Bayes reaches the name of the technique.</p>
-<p>Using independence, we can calculate the probability of a <em>combination</em> of a particular body mass and bill depth value with:</p>
+<p>Using independence, we can calculate the probability of a <em>combination</em> of a particular body mass and bill depth value.</p>
+<p>Call <span class="math notranslate nohighlight">\(P(d)\)</span> the probability of a particular bill depth value.  Naïve Bayes
+estimates the probability of the combination with:</p>
 <div class="math notranslate nohighlight">
 \[
-P((\text{mass} \text{ and } \text{bill depth}) | \text{Chinstrap} ) =
-P(\text{mass} | \text{Chinstrap}) *
-P(\text{bill depth}) | \text{Chinstrap})
+P((m \text{ and } d) | C) = P(m | C) * P(d | C)
 \]</div>
 <p>Let’s calculate the new probabilities we need:</p>
 <div class="cell docutils container">
@@ -3085,85 +2903,85 @@ P(\text{bill depth}) | \text{Chinstrap})
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
+      <td>0.471108</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000009</td>
-      <td>0.076922</td>
+      <td>0.000008</td>
+      <td>0.076169</td>
     </tr>
     <tr>
       <th>153</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.061416</td>
-      <td>0.168890</td>
+      <td>0.060282</td>
+      <td>0.168353</td>
     </tr>
     <tr>
       <th>154</th>
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
+      <td>0.420802</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000252</td>
-      <td>0.267586</td>
+      <td>0.000228</td>
+      <td>0.267777</td>
     </tr>
     <tr>
       <th>155</th>
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.006289</td>
-      <td>0.396093</td>
+      <td>0.005967</td>
+      <td>0.397696</td>
     </tr>
     <tr>
       <th>156</th>
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
+      <td>0.636292</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000905</td>
-      <td>0.356404</td>
+      <td>0.000834</td>
+      <td>0.357527</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3187,16 +3005,16 @@ P(\text{bill depth}) | \text{Chinstrap})
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
+      <td>0.052090</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.167976</td>
+      <td>0.167371</td>
       <td>0.000003</td>
     </tr>
     <tr>
@@ -3204,68 +3022,68 @@ P(\text{bill depth}) | \text{Chinstrap})
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
+      <td>0.002272</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.337638</td>
-      <td>0.002857</td>
+      <td>0.339946</td>
+      <td>0.002751</td>
     </tr>
     <tr>
       <th>341</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.344799</td>
-      <td>0.002066</td>
+      <td>0.347265</td>
+      <td>0.001984</td>
     </tr>
     <tr>
       <th>342</th>
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
+      <td>0.091703</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.308470</td>
-      <td>0.000106</td>
+      <td>0.310160</td>
+      <td>0.000100</td>
     </tr>
     <tr>
       <th>343</th>
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.340888</td>
-      <td>0.000350</td>
+      <td>0.343268</td>
+      <td>0.000331</td>
     </tr>
   </tbody>
 </table>
@@ -3275,20 +3093,19 @@ P(\text{bill depth}) | \text{Chinstrap})
 <p>The full formula for the posterior using the two measures is:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Chinstrap} | \text{mass and bill depth}) = \frac{
-P((\text{mass and bill_depth}) | \text{Chinstrap}) P(\text{Chinstrap})
-}{P(\text{mass and bill depth})}
+P(C | (m \text{ and } d)) = \frac{
+P((m \text{ and } d) | C) * P(C)
+}{P(m \text{ and } d)}
 \]</div>
 <p>The naïve version of the formula is:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{Chinstrap} | \text{mass and bill depth}) = \frac{
-P(\text{mass} | \text{Chinstrap}) *
-P(\text{bill depth}) | \text{Chinstrap}) *
- P(\text{Chinstrap})
-}{P(\text{mass and bill depth})}
+P(C | (m \text{ and } d)) = \frac{
+P(m | C) * P(d | C) * P(C)
+}{P(m \text{ and } d)}
 \]</div>
-<p>But - using the likelihood trick above, we no longer have to calculate the denominator, we can just divide it out, to give the following ratio:</p>
+<p>But - using the likelihood trick above, we no longer have to calculate the
+denominator, we can just divide it out, to give the following ratio:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">both_ratio</span> <span class="o">=</span> <span class="p">((</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_bd_given_c&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_chinstrap&#39;</span><span class="p">])</span> <span class="o">/</span>
@@ -3340,17 +3157,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Gentoo</td>
       <td>4500.0</td>
       <td>13.2</td>
-      <td>1.417687e-04</td>
-      <td>0.000396</td>
+      <td>1.386413e-04</td>
+      <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000538</td>
-      <td>0.095880</td>
-      <td>0.468574</td>
+      <td>0.000534</td>
+      <td>0.094432</td>
+      <td>0.471108</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000009</td>
-      <td>0.076922</td>
+      <td>0.000008</td>
+      <td>0.076169</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -3358,17 +3175,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>16.3</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.061416</td>
-      <td>0.168890</td>
+      <td>0.060282</td>
+      <td>0.168353</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -3376,17 +3193,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Gentoo</td>
       <td>4450.0</td>
       <td>14.1</td>
-      <td>1.822409e-04</td>
-      <td>0.000350</td>
+      <td>1.788899e-04</td>
+      <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000532</td>
-      <td>0.124470</td>
-      <td>0.418540</td>
+      <td>0.000528</td>
+      <td>0.123178</td>
+      <td>0.420802</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000252</td>
-      <td>0.267586</td>
+      <td>0.000228</td>
+      <td>0.267777</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -3394,17 +3211,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Gentoo</td>
       <td>5700.0</td>
       <td>15.2</td>
-      <td>2.132690e-09</td>
-      <td>0.000382</td>
+      <td>1.767096e-09</td>
+      <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000382</td>
+      <td>0.000381</td>
       <td>0.000002</td>
-      <td>0.636360</td>
+      <td>0.636361</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.006289</td>
-      <td>0.396093</td>
+      <td>0.005967</td>
+      <td>0.397696</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -3412,17 +3229,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Gentoo</td>
       <td>5400.0</td>
       <td>14.5</td>
-      <td>8.540955e-08</td>
-      <td>0.000659</td>
+      <td>7.477526e-08</td>
+      <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000659</td>
-      <td>0.000047</td>
-      <td>0.636281</td>
+      <td>0.000661</td>
+      <td>0.000041</td>
+      <td>0.636292</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
-      <td>0.000905</td>
-      <td>0.356404</td>
+      <td>0.000834</td>
+      <td>0.357527</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -3448,16 +3265,16 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Chinstrap</td>
       <td>4000.0</td>
       <td>19.8</td>
-      <td>8.155872e-04</td>
-      <td>0.000074</td>
+      <td>8.186991e-04</td>
+      <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000890</td>
-      <td>0.333328</td>
-      <td>0.053040</td>
+      <td>0.000892</td>
+      <td>0.333871</td>
+      <td>0.052090</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.167976</td>
+      <td>0.167371</td>
       <td>0.000003</td>
       <td>Chinstrap</td>
     </tr>
@@ -3466,17 +3283,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Chinstrap</td>
       <td>3400.0</td>
       <td>18.1</td>
-      <td>7.130179e-04</td>
+      <td>7.143042e-04</td>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000716</td>
-      <td>0.362277</td>
-      <td>0.002379</td>
+      <td>0.000717</td>
+      <td>0.362338</td>
+      <td>0.002272</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.337638</td>
-      <td>0.002857</td>
+      <td>0.339946</td>
+      <td>0.002751</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -3484,17 +3301,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.2</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.344799</td>
-      <td>0.002066</td>
+      <td>0.347265</td>
+      <td>0.001984</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -3502,17 +3319,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Chinstrap</td>
       <td>4100.0</td>
       <td>19.0</td>
-      <td>6.581042e-04</td>
-      <td>0.000112</td>
+      <td>6.585033e-04</td>
+      <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000770</td>
-      <td>0.310650</td>
-      <td>0.092726</td>
+      <td>0.000769</td>
+      <td>0.311235</td>
+      <td>0.091703</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.308470</td>
-      <td>0.000106</td>
+      <td>0.310160</td>
+      <td>0.000100</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -3520,17 +3337,17 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>Chinstrap</td>
       <td>3775.0</td>
       <td>18.7</td>
-      <td>1.031853e-03</td>
+      <td>1.039432e-03</td>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001057</td>
-      <td>0.354956</td>
-      <td>0.015190</td>
+      <td>0.001064</td>
+      <td>0.355226</td>
+      <td>0.014718</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
-      <td>0.340888</td>
-      <td>0.000350</td>
+      <td>0.343268</td>
+      <td>0.000331</td>
       <td>Chinstrap</td>
     </tr>
   </tbody>
@@ -3611,29 +3428,29 @@ P(\text{bill depth}) | \text{Chinstrap}) *
   </thead>
   <tbody>
     <tr>
-      <th>298</th>
-      <td>2900.0</td>
-      <td>16.6</td>
+      <th>163</th>
+      <td>5550.0</td>
+      <td>16.1</td>
     </tr>
     <tr>
-      <th>205</th>
-      <td>5000.0</td>
-      <td>15.0</td>
+      <th>326</th>
+      <td>3325.0</td>
+      <td>16.4</td>
     </tr>
     <tr>
-      <th>162</th>
-      <td>4650.0</td>
-      <td>13.7</td>
+      <th>338</th>
+      <td>3650.0</td>
+      <td>17.0</td>
     </tr>
     <tr>
-      <th>315</th>
-      <td>4500.0</td>
-      <td>19.9</td>
+      <th>276</th>
+      <td>3500.0</td>
+      <td>17.9</td>
     </tr>
     <tr>
-      <th>264</th>
-      <td>4650.0</td>
-      <td>15.2</td>
+      <th>322</th>
+      <td>3400.0</td>
+      <td>17.9</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3641,29 +3458,29 @@ P(\text{bill depth}) | \text{Chinstrap}) *
       <td>...</td>
     </tr>
     <tr>
-      <th>179</th>
-      <td>5650.0</td>
-      <td>15.0</td>
+      <th>207</th>
+      <td>5050.0</td>
+      <td>15.4</td>
     </tr>
     <tr>
-      <th>296</th>
-      <td>3600.0</td>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>312</th>
-      <td>3850.0</td>
-      <td>18.3</td>
-    </tr>
-    <tr>
-      <th>159</th>
-      <td>5200.0</td>
-      <td>15.3</td>
-    </tr>
-    <tr>
-      <th>309</th>
-      <td>4100.0</td>
+      <th>334</th>
+      <td>3800.0</td>
       <td>18.8</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>3525.0</td>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>5700.0</td>
+      <td>16.0</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>4400.0</td>
+      <td>13.9</td>
     </tr>
   </tbody>
 </table>
@@ -3725,12 +3542,12 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
 <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">xy</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
                 <span class="n">hue</span><span class="o">=</span><span class="n">test_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xy_df</span><span class="p">),</span>
                 <span class="n">palette</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[:</span><span class="mi">2</span><span class="p">],</span>
-                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">);</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/23ea00a3a3fe30fec79777ec5baa42d31fc1ce6bea588ba4926fb8fecb24f001.png" src="_images/23ea00a3a3fe30fec79777ec5baa42d31fc1ce6bea588ba4926fb8fecb24f001.png" />
+<img alt="_images/bb51e4d96ec71c52cbb001a4a414930a1ce7f429aa0a55f66ec650f3554a1c20.png" src="_images/bb51e4d96ec71c52cbb001a4a414930a1ce7f429aa0a55f66ec650f3554a1c20.png" />
 </div>
 </div>
 </section>
@@ -3781,6 +3598,8 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enumerate">Enumerate</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#towards-classification-with-probability">Towards classification with probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-the-naive-into-naive-bayes">Putting the naïve into “naïve Bayes”</a></li>
 </ul>
   </nav></div>
