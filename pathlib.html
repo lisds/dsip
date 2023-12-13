@@ -503,7 +503,8 @@ approach.</p>
 <p>The standard way to use the Pathlib module is to import the <code class="docutils literal notranslate"><span class="pre">Path</span></code> class from the module:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Path class from pathlib library.</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 </pre></div>
 </div>
 </div>
@@ -874,7 +875,8 @@ you could do:</p>
 <p>Notice that we used <code class="docutils literal notranslate"><span class="pre">list</span></code> around the output of <code class="docutils literal notranslate"><span class="pre">glob</span></code>, as in, for example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">cwd</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># List all txt files.</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">cwd</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.txt&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -895,7 +897,7 @@ return all the Path objects, but will not do that until we ask it to.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;generator object Path.glob at 0x7f969783dc80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;generator object Path.glob at 0x7f1ee4f49cf0&gt;
 </pre></div>
 </div>
 </div>

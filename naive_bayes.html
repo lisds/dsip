@@ -682,7 +682,7 @@ Handbook</a>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f84abc99dc0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f2d995d4a00&gt;
 </pre></div>
 </div>
 <img alt="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" src="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" />
@@ -992,7 +992,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f84a2893940&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f2d901d19d0&gt;]
 </pre></div>
 </div>
 <img alt="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" src="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" />
@@ -1007,7 +1007,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f84a280c0d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f2d90147100&gt;]
 </pre></div>
 </div>
 <img alt="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" src="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" />
@@ -1158,7 +1158,7 @@ P(m | C)
 <p>Likewise:</p>
 <div class="math notranslate nohighlight">
 \[
-P(\text{mass}|\text{Gentoo}) 
+P(\text{mass}|\text{Gentoo})
 \]</div>
 <p>which we will write as:</p>
 <div class="math notranslate nohighlight">
@@ -1497,15 +1497,45 @@ P(G)
 </div></div></div>
 </div>
 <p>In our model, each individual mass can only come about in one of two
-situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  These are
-mutually exclusive, so we add the probabilities to give the probability of getting a particular mass value <span class="math notranslate nohighlight">\(m\)</span>:</p>
+situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  That is, the mass can only come about in these situations:</p>
 <div class="math notranslate nohighlight">
 \[
-P(m) = P(m | C) + P(m | G)
+P(m \text{ and } C)
+\]</div>
+<p>or:</p>
+<div class="math notranslate nohighlight">
+\[
+P(m \text{ and } G)
+\]</div>
+<p>But:</p>
+<div class="math notranslate nohighlight">
+\[
+P(m \text{ and } C) = P(m | C) P(C)
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+P(m \text{ and } G) = P(m | G) P(G)
+\]</div>
+<p>Let’s calculate those now:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_and_c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_chinstrap&#39;</span><span class="p">]</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_and_g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_g&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_gentoo&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(P(m \text{ and } C)\)</span>, <span class="math notranslate nohighlight">\(P(m \text{ and } G)\)</span> are
+mutually exclusive, so we add the probabilities to give the probability of
+getting a particular mass value <span class="math notranslate nohighlight">\(m\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(m) = P(m \text{ and } C) + P(m \text{ and } G)
 \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_c&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_given_g&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_mass&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_and_c&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p_m_and_g&#39;</span><span class="p">]</span>
 <span class="n">df</span>
 </pre></div>
 </div>
@@ -1536,6 +1566,8 @@ P(m) = P(m | C) + P(m | G)
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
     </tr>
   </thead>
@@ -1549,7 +1581,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
     </tr>
     <tr>
       <th>153</th>
@@ -1560,7 +1594,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
     </tr>
     <tr>
       <th>154</th>
@@ -1571,7 +1607,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
     </tr>
     <tr>
       <th>155</th>
@@ -1582,7 +1620,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
     </tr>
     <tr>
       <th>156</th>
@@ -1593,10 +1633,14 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1615,7 +1659,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
     </tr>
     <tr>
       <th>340</th>
@@ -1626,7 +1672,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
     </tr>
     <tr>
       <th>341</th>
@@ -1637,7 +1685,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
     </tr>
     <tr>
       <th>342</th>
@@ -1648,7 +1698,9 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
     </tr>
     <tr>
       <th>343</th>
@@ -1659,11 +1711,13 @@ P(m) = P(m | C) + P(m | G)
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 8 columns</p>
+<p>187 rows × 10 columns</p>
 </div></div></div>
 </div>
 <p>How we have everything we need to work out the <em>posterior</em> probability that
@@ -1705,6 +1759,8 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
     </tr>
@@ -1719,8 +1775,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
     </tr>
     <tr>
       <th>153</th>
@@ -1731,8 +1789,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
     </tr>
     <tr>
       <th>154</th>
@@ -1743,8 +1803,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
     </tr>
     <tr>
       <th>155</th>
@@ -1755,8 +1817,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
     </tr>
     <tr>
       <th>156</th>
@@ -1767,11 +1831,15 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1791,8 +1859,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
     </tr>
     <tr>
       <th>340</th>
@@ -1803,8 +1873,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
     </tr>
     <tr>
       <th>341</th>
@@ -1815,8 +1887,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
     </tr>
     <tr>
       <th>342</th>
@@ -1827,8 +1901,10 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
     </tr>
     <tr>
       <th>343</th>
@@ -1839,12 +1915,14 @@ P(C | m) = \frac{P(m | C) * P(C)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 9 columns</p>
+<p>187 rows × 11 columns</p>
 </div></div></div>
 </div>
 <p>Likewise:</p>
@@ -1885,6 +1963,8 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
@@ -1900,9 +1980,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
-      <td>0.471108</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
+      <td>0.833024</td>
     </tr>
     <tr>
       <th>153</th>
@@ -1913,9 +1995,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
     </tr>
     <tr>
       <th>154</th>
@@ -1926,9 +2010,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
-      <td>0.420802</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
+      <td>0.773561</td>
     </tr>
     <tr>
       <th>155</th>
@@ -1939,9 +2025,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
     </tr>
     <tr>
       <th>156</th>
@@ -1952,12 +2040,16 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
-      <td>0.636292</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
+      <td>0.999935</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -1978,9 +2070,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
-      <td>0.052090</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
+      <td>0.134962</td>
     </tr>
     <tr>
       <th>340</th>
@@ -1991,9 +2085,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
-      <td>0.002272</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
+      <td>0.006232</td>
     </tr>
     <tr>
       <th>341</th>
@@ -2004,9 +2100,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
     </tr>
     <tr>
       <th>342</th>
@@ -2017,9 +2115,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
-      <td>0.091703</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
+      <td>0.227585</td>
     </tr>
     <tr>
       <th>343</th>
@@ -2030,13 +2130,15 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 10 columns</p>
+<p>187 rows × 12 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -2074,6 +2176,8 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
@@ -2090,9 +2194,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
-      <td>0.471108</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
+      <td>0.833024</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2104,9 +2210,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2118,9 +2226,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
-      <td>0.420802</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
+      <td>0.773561</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2132,9 +2242,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
     </tr>
     <tr>
@@ -2146,13 +2258,17 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
-      <td>0.636292</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
+      <td>0.999935</td>
       <td>Gentoo</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -2174,9 +2290,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
-      <td>0.052090</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
+      <td>0.134962</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2188,9 +2306,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
-      <td>0.002272</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
+      <td>0.006232</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2202,9 +2322,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2216,9 +2338,11 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
-      <td>0.091703</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
+      <td>0.227585</td>
       <td>Chinstrap</td>
     </tr>
     <tr>
@@ -2230,14 +2354,16 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 11 columns</p>
+<p>187 rows × 13 columns</p>
 </div></div></div>
 </div>
 <p>But - wait - for our Bayes predictions, we don’t actually need the <span class="math notranslate nohighlight">\(P(\text{mass})\)</span> value.  Why?  Because we can calculate the ratio of the posterior probabilities like this:</p>
@@ -2285,103 +2411,6 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
 </pre></div>
 </div>
 </div>
-</div>
-<p>The probabilities for the two categories do not sum to 1, because the
-probabilities <span class="math notranslate nohighlight">\(P(m | C)\)</span>, <span class="math notranslate nohighlight">\(P(m | G)\)</span> do not sum to 1.  This in turn is because
-we are taking discrete samples from the continuous Gaussian, so the sum of the
-probabilities will depend on the samples.   We allow for this below by dividing
-the two probabilities by their (&lt; 0) sum, to normalize them to sum to 1.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_posteriors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;p_c_given_m&#39;</span><span class="p">,</span> <span class="s1">&#39;p_g_given_m&#39;</span><span class="p">]]</span>
-<span class="n">posteriors</span> <span class="o">=</span> <span class="n">raw_posteriors</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span><span class="n">raw_posteriors</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">posteriors</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>p_c_given_m</th>
-      <th>p_g_given_m</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>152</th>
-      <td>0.166976</td>
-      <td>0.833024</td>
-    </tr>
-    <tr>
-      <th>153</th>
-      <td>0.000003</td>
-      <td>0.999997</td>
-    </tr>
-    <tr>
-      <th>154</th>
-      <td>0.226439</td>
-      <td>0.773561</td>
-    </tr>
-    <tr>
-      <th>155</th>
-      <td>0.000003</td>
-      <td>0.999997</td>
-    </tr>
-    <tr>
-      <th>156</th>
-      <td>0.000065</td>
-      <td>0.999935</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>339</th>
-      <td>0.865038</td>
-      <td>0.134962</td>
-    </tr>
-    <tr>
-      <th>340</th>
-      <td>0.993768</td>
-      <td>0.006232</td>
-    </tr>
-    <tr>
-      <th>341</th>
-      <td>0.960216</td>
-      <td>0.039784</td>
-    </tr>
-    <tr>
-      <th>342</th>
-      <td>0.772415</td>
-      <td>0.227585</td>
-    </tr>
-    <tr>
-      <th>343</th>
-      <td>0.960216</td>
-      <td>0.039784</td>
-    </tr>
-  </tbody>
-</table>
-<p>187 rows × 2 columns</p>
-</div></div></div>
 </div>
 <p>As you may remember from the logit transform in logistic regression, we can also get probabilities from the likelihood ratios, with:</p>
 <div class="cell docutils container">
@@ -2458,6 +2487,8 @@ Length: 187, dtype: float64
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
@@ -2475,9 +2506,11 @@ Length: 187, dtype: float64
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
-      <td>0.471108</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
+      <td>0.833024</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2490,9 +2523,11 @@ Length: 187, dtype: float64
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2505,9 +2540,11 @@ Length: 187, dtype: float64
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
-      <td>0.420802</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
+      <td>0.773561</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2520,9 +2557,11 @@ Length: 187, dtype: float64
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
@@ -2535,14 +2574,18 @@ Length: 187, dtype: float64
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
-      <td>0.636292</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
+      <td>0.999935</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -2565,9 +2608,11 @@ Length: 187, dtype: float64
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
-      <td>0.052090</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
+      <td>0.134962</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2580,9 +2625,11 @@ Length: 187, dtype: float64
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
-      <td>0.002272</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
+      <td>0.006232</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2595,9 +2642,11 @@ Length: 187, dtype: float64
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2610,9 +2659,11 @@ Length: 187, dtype: float64
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
-      <td>0.091703</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
+      <td>0.227585</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
@@ -2625,15 +2676,17 @@ Length: 187, dtype: float64
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 12 columns</p>
+<p>187 rows × 14 columns</p>
 </div></div></div>
 </div>
 <p>Scikit-learn gives the same predictions as we do:</p>
@@ -2655,95 +2708,11 @@ Length: 187, dtype: float64
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The predict_proba values are just the posteriors.</span>
 <span class="n">skl_posteriors</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;body_mass_g&#39;</span><span class="p">]])</span>
 <span class="c1"># They are the same as ours, with calculation error.</span>
-<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">skl_posteriors</span><span class="p">,</span> <span class="n">posteriors</span><span class="p">)</span>
-<span class="c1"># Show scikit-learn&#39;s posterior probabilities.</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">skl_posteriors</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">posteriors</span><span class="p">))</span>
+<span class="n">our_posteriors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;p_c_given_m&#39;</span><span class="p">,</span> <span class="s1">&#39;p_g_given_m&#39;</span><span class="p">]]</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">skl_posteriors</span><span class="p">,</span> <span class="n">our_posteriors</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>p_c_given_m</th>
-      <th>p_g_given_m</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.166976</td>
-      <td>0.833024</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>0.000003</td>
-      <td>0.999997</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.226439</td>
-      <td>0.773561</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.000003</td>
-      <td>0.999997</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.000065</td>
-      <td>0.999935</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>182</th>
-      <td>0.865038</td>
-      <td>0.134962</td>
-    </tr>
-    <tr>
-      <th>183</th>
-      <td>0.993768</td>
-      <td>0.006232</td>
-    </tr>
-    <tr>
-      <th>184</th>
-      <td>0.960216</td>
-      <td>0.039784</td>
-    </tr>
-    <tr>
-      <th>185</th>
-      <td>0.772415</td>
-      <td>0.227585</td>
-    </tr>
-    <tr>
-      <th>186</th>
-      <td>0.960216</td>
-      <td>0.039784</td>
-    </tr>
-  </tbody>
-</table>
-<p>187 rows × 2 columns</p>
-</div></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">score</span></code> is the proportion of labels we predicted correctly:</p>
 <div class="cell docutils container">
@@ -2805,8 +2774,8 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f84a2a1ef40&gt;,
- &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f84a2b8f6d0&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f2d9035fe50&gt;,
+ &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f2dde3b3a00&gt;}
 </pre></div>
 </div>
 </div>
@@ -2892,6 +2861,8 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
@@ -2911,9 +2882,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
-      <td>0.471108</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
+      <td>0.833024</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000008</td>
@@ -2928,9 +2901,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.060282</td>
@@ -2945,9 +2920,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
-      <td>0.420802</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
+      <td>0.773561</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000228</td>
@@ -2962,9 +2939,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.005967</td>
@@ -2979,9 +2958,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
-      <td>0.636292</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
+      <td>0.999935</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000834</td>
@@ -2989,6 +2970,8 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -3013,9 +2996,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
-      <td>0.052090</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
+      <td>0.134962</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.167371</td>
@@ -3030,9 +3015,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
-      <td>0.002272</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
+      <td>0.006232</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.339946</td>
@@ -3047,9 +3034,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.347265</td>
@@ -3064,9 +3053,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
-      <td>0.091703</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
+      <td>0.227585</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.310160</td>
@@ -3081,9 +3072,11 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.343268</td>
@@ -3091,7 +3084,7 @@ P((m \text{ and } d) | C) = P(m | C) * P(d | C)
     </tr>
   </tbody>
 </table>
-<p>187 rows × 14 columns</p>
+<p>187 rows × 16 columns</p>
 </div></div></div>
 </div>
 <p>The full formula for the posterior using the two measures is:</p>
@@ -3145,6 +3138,8 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <th>p_m_given_g</th>
       <th>p_chinstrap</th>
       <th>p_gentoo</th>
+      <th>p_m_and_c</th>
+      <th>p_m_and_g</th>
       <th>p_mass</th>
       <th>p_c_given_m</th>
       <th>p_g_given_m</th>
@@ -3165,9 +3160,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000395</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000534</td>
-      <td>0.094432</td>
-      <td>0.471108</td>
+      <td>5.041503e-05</td>
+      <td>0.000252</td>
+      <td>0.000302</td>
+      <td>0.166976</td>
+      <td>0.833024</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000008</td>
@@ -3183,9 +3180,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.060282</td>
@@ -3201,9 +3200,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000349</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000528</td>
-      <td>0.123178</td>
-      <td>0.420802</td>
+      <td>6.505088e-05</td>
+      <td>0.000222</td>
+      <td>0.000287</td>
+      <td>0.226439</td>
+      <td>0.773561</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000228</td>
@@ -3219,9 +3220,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000381</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000381</td>
-      <td>0.000002</td>
-      <td>0.636361</td>
+      <td>6.425805e-10</td>
+      <td>0.000243</td>
+      <td>0.000243</td>
+      <td>0.000003</td>
+      <td>0.999997</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.005967</td>
@@ -3237,9 +3240,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000661</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000661</td>
-      <td>0.000041</td>
-      <td>0.636292</td>
+      <td>2.719100e-08</td>
+      <td>0.000421</td>
+      <td>0.000421</td>
+      <td>0.000065</td>
+      <td>0.999935</td>
       <td>Gentoo</td>
       <td>Gentoo</td>
       <td>0.000834</td>
@@ -3248,6 +3253,8 @@ denominator, we can just divide it out, to give the following ratio:</p>
     </tr>
     <tr>
       <th>...</th>
+      <td>...</td>
+      <td>...</td>
       <td>...</td>
       <td>...</td>
       <td>...</td>
@@ -3273,9 +3280,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000073</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000892</td>
-      <td>0.333871</td>
-      <td>0.052090</td>
+      <td>2.977088e-04</td>
+      <td>0.000046</td>
+      <td>0.000344</td>
+      <td>0.865038</td>
+      <td>0.134962</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.167371</td>
@@ -3291,9 +3300,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000003</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000717</td>
-      <td>0.362338</td>
-      <td>0.002272</td>
+      <td>2.597470e-04</td>
+      <td>0.000002</td>
+      <td>0.000261</td>
+      <td>0.993768</td>
+      <td>0.006232</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.339946</td>
@@ -3309,9 +3320,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.347265</td>
@@ -3327,9 +3340,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000111</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.000769</td>
-      <td>0.311235</td>
-      <td>0.091703</td>
+      <td>2.394557e-04</td>
+      <td>0.000071</td>
+      <td>0.000310</td>
+      <td>0.772415</td>
+      <td>0.227585</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.310160</td>
@@ -3345,9 +3360,11 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>0.000025</td>
       <td>0.363636</td>
       <td>0.636364</td>
-      <td>0.001064</td>
-      <td>0.355226</td>
-      <td>0.014718</td>
+      <td>3.779754e-04</td>
+      <td>0.000016</td>
+      <td>0.000394</td>
+      <td>0.960216</td>
+      <td>0.039784</td>
       <td>Chinstrap</td>
       <td>Chinstrap</td>
       <td>0.343268</td>
@@ -3356,7 +3373,7 @@ denominator, we can just divide it out, to give the following ratio:</p>
     </tr>
   </tbody>
 </table>
-<p>187 rows × 15 columns</p>
+<p>187 rows × 17 columns</p>
 </div></div></div>
 </div>
 <p>Accuracy:</p>
@@ -3432,29 +3449,29 @@ denominator, we can just divide it out, to give the following ratio:</p>
   </thead>
   <tbody>
     <tr>
-      <th>273</th>
-      <td>5750.0</td>
-      <td>15.7</td>
+      <th>170</th>
+      <td>4800.0</td>
+      <td>14.5</td>
     </tr>
     <tr>
-      <th>181</th>
-      <td>5550.0</td>
-      <td>15.3</td>
+      <th>169</th>
+      <td>6300.0</td>
+      <td>15.2</td>
     </tr>
     <tr>
-      <th>204</th>
-      <td>4400.0</td>
-      <td>14.4</td>
+      <th>323</th>
+      <td>4300.0</td>
+      <td>19.6</td>
     </tr>
     <tr>
-      <th>286</th>
-      <td>3800.0</td>
-      <td>17.8</td>
+      <th>243</th>
+      <td>5400.0</td>
+      <td>17.1</td>
     </tr>
     <tr>
-      <th>296</th>
-      <td>3600.0</td>
-      <td>17.3</td>
+      <th>264</th>
+      <td>4650.0</td>
+      <td>15.2</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3462,29 +3479,29 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>...</td>
     </tr>
     <tr>
-      <th>179</th>
-      <td>5650.0</td>
-      <td>15.0</td>
+      <th>262</th>
+      <td>5000.0</td>
+      <td>15.2</td>
     </tr>
     <tr>
-      <th>208</th>
-      <td>4300.0</td>
+      <th>239</th>
+      <td>5300.0</td>
+      <td>14.2</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>5850.0</td>
+      <td>14.6</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>6000.0</td>
+      <td>16.3</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>4400.0</td>
       <td>13.9</td>
-    </tr>
-    <tr>
-      <th>321</th>
-      <td>4450.0</td>
-      <td>18.5</td>
-    </tr>
-    <tr>
-      <th>274</th>
-      <td>5200.0</td>
-      <td>14.8</td>
-    </tr>
-    <tr>
-      <th>253</th>
-      <td>5600.0</td>
-      <td>17.0</td>
     </tr>
   </tbody>
 </table>
@@ -3551,7 +3568,7 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ffef8446742f41e8a1d86911a37bf12fb0830377efdc847e8863fd6b4b31f01f.png" src="_images/ffef8446742f41e8a1d86911a37bf12fb0830377efdc847e8863fd6b4b31f01f.png" />
+<img alt="_images/8e572dfbd9d5be182ea3cad505767af0d8cb9e74424c8b66e0d3a8c88fa50079.png" src="_images/8e572dfbd9d5be182ea3cad505767af0d8cb9e74424c8b66e0d3a8c88fa50079.png" />
 </div>
 </div>
 </section>

@@ -28,6 +28,7 @@ The primary documentation for `pathlib` is
 The standard way to use the Pathlib module is to import the `Path` class from the module:
 
 ```{python}
+# Import Path class from pathlib library.
 from pathlib import Path
 ```
 
@@ -223,6 +224,7 @@ There are more detail in the page linked above.
 Notice that we used `list` around the output of `glob`, as in, for example:
 
 ```{python}
+# List all txt files.
 list(cwd.glob('*.txt'))
 ```
 

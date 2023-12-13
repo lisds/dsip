@@ -7,7 +7,7 @@ jupyter:
       extension: .Rmd
       format_name: rmarkdown
       format_version: '1.2'
-      jupytext_version: 1.16.0
+      jupytext_version: 1.14.1
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
@@ -185,7 +185,7 @@ df
 Likewise:
 
 $$
-P(\text{mass}|\text{Gentoo}) 
+P(\text{mass}|\text{Gentoo})
 $$
 
 which we will write as:
@@ -238,15 +238,47 @@ df
 ```
 
 In our model, each individual mass can only come about in one of two
-situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  These are
-mutually exclusive, so we add the probabilities to give the probability of getting a particular mass value $m$:
+situations: the penguin is a Chinstrap, or the penguin is a Gentoo.  That is, the mass can only come about in these situations:
 
 $$
-P(m) = P(m | C) + P(m | G)
+P(m \text{ and } C)
+$$
+
+or:
+
+$$
+P(m \text{ and } G)
+$$
+
+But:
+
+$$
+P(m \text{ and } C) = P(m | C) P(C)
+$$
+
+and
+
+$$
+P(m \text{ and } G) = P(m | G) P(G)
+$$
+
+Let's calculate those now:
+
+```{python}
+df['p_m_and_c'] = df['p_m_given_c'] * df['p_chinstrap']
+df['p_m_and_g'] = df['p_m_given_g'] * df['p_gentoo']
+```
+
+$P(m \text{ and } C)$, $P(m \text{ and } G)$ are
+mutually exclusive, so we add the probabilities to give the probability of
+getting a particular mass value $m$:
+
+$$
+P(m) = P(m \text{ and } C) + P(m \text{ and } G)
 $$
 
 ```{python}
-df['p_mass'] = df['p_m_given_c'] + df['p_m_given_g']
+df['p_mass'] = df['p_m_and_c'] + df['p_m_and_g']
 df
 ```
 
@@ -309,18 +341,6 @@ likelihood_predictions = np.where(
 np.all(df['bayes_predictions'] == likelihood_predictions)
 ```
 
-The probabilities for the two categories do not sum to 1, because the
-probabilities $P(m | C)$, $P(m | G)$ do not sum to 1.  This in turn is because
-we are taking discrete samples from the continuous Gaussian, so the sum of the
-probabilities will depend on the samples.   We allow for this below by dividing
-the two probabilities by their (< 0) sum, to normalize them to sum to 1.
-
-```{python}
-raw_posteriors = df[['p_c_given_m', 'p_g_given_m']]
-posteriors = raw_posteriors.divide(raw_posteriors.sum(axis=1), axis=0)
-posteriors
-```
-
 As you may remember from the logit transform in logistic regression, we can also get probabilities from the likelihood ratios, with:
 
 ```{python}
@@ -355,9 +375,8 @@ Scikit-learn also calculates the posterior probabilities:
 # The predict_proba values are just the posteriors.
 skl_posteriors = model.predict_proba(df[['body_mass_g']])
 # They are the same as ours, with calculation error.
-assert np.allclose(skl_posteriors, posteriors)
-# Show scikit-learn's posterior probabilities.
-pd.DataFrame(skl_posteriors, columns=list(posteriors))
+our_posteriors = df[['p_c_given_m', 'p_g_given_m']]
+assert np.allclose(skl_posteriors, our_posteriors)
 ```
 
 The `score` is the proportion of labels we predicted correctly:
