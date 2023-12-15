@@ -33,6 +33,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
+We will use the famous [iris data
+set](https://en.wikipedia.org/wiki/Iris_flower_data_set).  Quoting from the
+Wikipedia page above:
+
+> The data set consists of 50 samples from each of three species of Iris (Iris
+setosa, Iris virginica and Iris versicolor). Four features were measured from
+each sample: the length and the width of the sepals and petals, in centimeters.
+
 ```{python}
 iris = pd.read_csv('data/iris.csv')
 iris
@@ -55,16 +63,19 @@ sns.scatterplot(iris,
                 hue='Name')
 ```
 
-K-means is a technique for splitting up (classifying) the data into *clusters*
-— groups of nearby points.  Here is Scikit-learn's KMeans implementation.  We
-use it to identify clusters in the data automatically, without using the
-species labels.  Notice though that the clusters it finds are very similar to
-the clusters by species.
+[K-means](https://en.wikipedia.org/wiki/K-means_clustering) is a technique for
+splitting up (classifying) the data into *clusters* — groups of nearby points.
+Here is Scikit-learn's k-means implementation.  We use it to identify clusters
+in the data automatically, without using the species labels.  We define the
+clusters by their *centers*. Notice though that the clusters it finds are very
+similar to the clusters by species.
 
 ```{python}
 from sklearn.cluster import KMeans
 
-kmeans_model = KMeans(n_clusters=3, n_init='auto')
+# n_init is the number of different starting states to try.
+# The algorithm depends to some extent on starting state.
+kmeans_model = KMeans(n_clusters=3, n_init=10)
 kmeans_model.fit(measures)
 cluster_nos = kmeans_model.predict(measures)
 ```
@@ -113,10 +124,10 @@ The algorithm of k-means is as follows.  We specify we want $k$ clusters, then:
 
 Remember the loop here as:
 
-A. Distance
-B. Allocate
-C. New centers
-D. Check
+A. Calculate the distance.<br>
+B. Allocate each point to one the centers.<br>
+C. Calculate new centers.<br>
+D. Check.<br>
 
 ```{python}
 # Step 1: Select k points at random as starting estimates.
@@ -128,7 +139,7 @@ centers = df.sample(n_clusters).set_index(cluster_names)
 centers
 ```
 
-Step 2A - **calculate the distance** of each point to each each center.
+This is step 2A - **calculate the distance** of each point to each each center.
 
 ```{python}
 def distance(pt1, pt2):
@@ -220,7 +231,7 @@ centers = df.sample(n_clusters,
 
 # Repeat for a long time, if necessary.
 for i in range(1000):
-    
+
     # Find distances of each point to each center.
     distances = pd.DataFrame()
     for point_no, cluster_name in enumerate(cluster_names):
@@ -231,7 +242,7 @@ for i in range(1000):
     # Allocate each point to one of the cluster (centers) by
     # choosing the closest center.
     labels = distances.idxmin(axis=1)
-    
+
     # Make new centers with mean of points in cluster.
     new_centers = df.groupby(labels).mean().set_index(cluster_names)
 
@@ -241,20 +252,25 @@ for i in range(1000):
     # Otherwise continue
     centers = new_centers
     # Show the current estimated centers.
+    print(f'Centers after iteration {i}')
     display(centers)
 ```
 
 ```{python}
+# Plot the points with their cluster labels.
 sns.scatterplot(
     df,
     x=features[0],
     y=features[1],
     hue=labels)
-plt.scatter(centers.iloc[:, 0],
-            centers.iloc[:, 1],
-            color='r',
-            s=100,
-            alpha=0.5);
+# Plot the centers.
+sns.scatterplot(
+    centers,
+    x=features[0],
+    y=features[1],
+    color='r',
+    s=100,
+    alpha=0.5);
 ```
 
 ```{python}
@@ -267,20 +283,27 @@ Notice that the centers we found are the same as those that scikit-learn found. 
 kmeans_model.cluster_centers_
 ```
 
+```{python}
+# Scikit-learn clusters are (near as dammit) the same as
+# the ones we found.  The order of the centers is arbitrary,
+# solve by sorting.
+assert np.allclose(
+    np.sort(kmeans_model.cluster_centers_, axis=0),
+    np.sort(centers, axis=0))
+```
+
 One measure of how well the points match the clusters is *inertia* - the sum of the squared distances between each point and its corresponding cluster.
 
 ```{python}
-def ss_dist(sub_df):
-    """ Sum of squared distances of each point and matching center
+def center_difference_sq(sub_df):
+    """ Squared difference between each point and matching center
     """
-    center = sub_df.mean(axis=0)
-    d2s = ((sub_df - center) ** 2).sum(axis=1)
-    return np.sum(d2s)
+    return (sub_df - sub_df.mean(axis=0)) ** 2
 ```
 
 ```{python}
-inertia = df.groupby(labels).apply(ss_dist).sum()
-inertia
+# .transform applies the function to each sub-dataframe.
+df.groupby(labels).transform(center_difference_sq).sum().sum()
 ```
 
 Scikit-learn does the same calculation.

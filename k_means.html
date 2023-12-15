@@ -509,6 +509,14 @@ much inspiration from that page here.</p>
 </div>
 </div>
 </div>
+<p>We will use the famous <a class="reference external" href="https://en.wikipedia.org/wiki/Iris_flower_data_set">iris data
+set</a>.  Quoting from the
+Wikipedia page above:</p>
+<blockquote>
+<div><p>The data set consists of 50 samples from each of three species of Iris (Iris
+setosa, Iris virginica and Iris versicolor). Four features were measured from
+each sample: the length and the width of the sepals and petals, in centimeters.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/iris.csv&#39;</span><span class="p">)</span>
@@ -643,7 +651,7 @@ much inspiration from that page here.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f1efade0df0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f486cffae80&gt;
 </pre></div>
 </div>
 <img alt="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" src="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" />
@@ -757,16 +765,19 @@ much inspiration from that page here.</p>
 <img alt="_images/0029f79fefd8e38088ffa630e80bcae2c2f2afbf8c900b06987df5afe93eaee0.png" src="_images/0029f79fefd8e38088ffa630e80bcae2c2f2afbf8c900b06987df5afe93eaee0.png" />
 </div>
 </div>
-<p>K-means is a technique for splitting up (classifying) the data into <em>clusters</em>
-— groups of nearby points.  Here is Scikit-learn’s KMeans implementation.  We
-use it to identify clusters in the data automatically, without using the
-species labels.  Notice though that the clusters it finds are very similar to
-the clusters by species.</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/K-means_clustering">K-means</a> is a technique for
+splitting up (classifying) the data into <em>clusters</em> — groups of nearby points.
+Here is Scikit-learn’s k-means implementation.  We use it to identify clusters
+in the data automatically, without using the species labels.  We define the
+clusters by their <em>centers</em>. Notice though that the clusters it finds are very
+similar to the clusters by species.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 
-<span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="c1"># n_init is the number of different starting states to try.</span>
+<span class="c1"># The algorithm depends to some extent on starting state.</span>
+<span class="n">kmeans_model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_init</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">kmeans_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">measures</span><span class="p">)</span>
 <span class="n">cluster_nos</span> <span class="o">=</span> <span class="n">kmeans_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">measures</span><span class="p">)</span>
 </pre></div>
@@ -811,31 +822,31 @@ the clusters by species.</p>
       <th>0</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.2</td>
       <td>1.3</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.2</td>
       <td>1.5</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>1</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -847,31 +858,31 @@ the clusters by species.</p>
       <th>145</th>
       <td>2.3</td>
       <td>5.2</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>146</th>
       <td>1.9</td>
       <td>5.0</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>147</th>
       <td>2.0</td>
       <td>5.2</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>148</th>
       <td>2.3</td>
       <td>5.4</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>149</th>
       <td>1.8</td>
       <td>5.1</td>
-      <td>2</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
@@ -886,9 +897,9 @@ the clusters by species.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.35925926, 4.29259259],
-       [0.244     , 1.464     ],
-       [2.04782609, 5.62608696]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.244     , 1.464     ],
+       [2.0375    , 5.59583333],
+       [1.34230769, 4.26923077]])
 </pre></div>
 </div>
 </div>
@@ -908,7 +919,7 @@ species labels, that we have not used here.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5642eb7ba21e1c4a19b9c6c6f772f0a7896dd465cfec715df697a2d53f267d09.png" src="_images/5642eb7ba21e1c4a19b9c6c6f772f0a7896dd465cfec715df697a2d53f267d09.png" />
+<img alt="_images/09c8c99fe2c9e7ce8a79d47a6b9529b869ae9479bc3001977a1c86af86334e03.png" src="_images/09c8c99fe2c9e7ce8a79d47a6b9529b869ae9479bc3001977a1c86af86334e03.png" />
 </div>
 </div>
 <p>The algorithm of k-means is as follows.  We specify we want <span class="math notranslate nohighlight">\(k\)</span> clusters, then:</p>
@@ -927,10 +938,10 @@ we are finished.<br></p>
 </li>
 </ol>
 <p>Remember the loop here as:</p>
-<p>A. Distance
-B. Allocate
-C. New centers
-D. Check</p>
+<p>A. Calculate the distance.<br>
+B. Allocate each point to one the centers.<br>
+C. Calculate new centers.<br>
+D. Check.<br></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: Select k points at random as starting estimates.</span>
@@ -969,24 +980,24 @@ D. Check</p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>1.9</td>
-      <td>5.1</td>
+      <td>1.8</td>
+      <td>6.3</td>
     </tr>
     <tr>
       <th>c1</th>
-      <td>2.3</td>
-      <td>5.2</td>
+      <td>2.0</td>
+      <td>6.4</td>
     </tr>
     <tr>
       <th>c2</th>
-      <td>1.8</td>
-      <td>4.8</td>
+      <td>2.2</td>
+      <td>6.7</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Step 2A - <strong>calculate the distance</strong> of each point to each each center.</p>
+<p>This is step 2A - <strong>calculate the distance</strong> of each point to each each center.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">):</span>
@@ -1003,7 +1014,7 @@ D. Check</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.071854614300467
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.15460958754395
 </pre></div>
 </div>
 </div>
@@ -1058,33 +1069,33 @@ D. Check</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4.162932</td>
-      <td>4.429447</td>
-      <td>3.848376</td>
+      <td>5.249762</td>
+      <td>5.408327</td>
+      <td>5.758472</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.981206</td>
-      <td>4.254409</td>
-      <td>3.667424</td>
+      <td>5.059644</td>
+      <td>5.220153</td>
+      <td>5.571355</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1094,33 +1105,33 @@ D. Check</p>
     </tr>
     <tr>
       <th>145</th>
-      <td>0.412311</td>
-      <td>0.000000</td>
-      <td>0.640312</td>
+      <td>1.208305</td>
+      <td>1.236932</td>
+      <td>1.503330</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>0.100000</td>
-      <td>0.447214</td>
-      <td>0.223607</td>
+      <td>1.303840</td>
+      <td>1.403567</td>
+      <td>1.726268</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>0.141421</td>
-      <td>0.300000</td>
-      <td>0.447214</td>
+      <td>1.118034</td>
+      <td>1.200000</td>
+      <td>1.513275</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>0.500000</td>
-      <td>0.200000</td>
-      <td>0.781025</td>
+      <td>1.029563</td>
+      <td>1.044031</td>
+      <td>1.303840</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>0.100000</td>
-      <td>0.509902</td>
-      <td>0.300000</td>
+      <td>1.200000</td>
+      <td>1.315295</td>
+      <td>1.649242</td>
     </tr>
   </tbody>
 </table>
@@ -1167,33 +1178,33 @@ D. Check</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>4.162932</td>
-      <td>4.429447</td>
-      <td>3.848376</td>
+      <td>5.249762</td>
+      <td>5.408327</td>
+      <td>5.758472</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>3.981206</td>
-      <td>4.254409</td>
-      <td>3.667424</td>
+      <td>5.059644</td>
+      <td>5.220153</td>
+      <td>5.571355</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>4.071855</td>
-      <td>4.341659</td>
-      <td>3.757659</td>
+      <td>5.154610</td>
+      <td>5.314132</td>
+      <td>5.664804</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1203,33 +1214,33 @@ D. Check</p>
     </tr>
     <tr>
       <th>145</th>
-      <td>0.412311</td>
-      <td>0.000000</td>
-      <td>0.640312</td>
+      <td>1.208305</td>
+      <td>1.236932</td>
+      <td>1.503330</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>0.100000</td>
-      <td>0.447214</td>
-      <td>0.223607</td>
+      <td>1.303840</td>
+      <td>1.403567</td>
+      <td>1.726268</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>0.141421</td>
-      <td>0.300000</td>
-      <td>0.447214</td>
+      <td>1.118034</td>
+      <td>1.200000</td>
+      <td>1.513275</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>0.500000</td>
-      <td>0.200000</td>
-      <td>0.781025</td>
+      <td>1.029563</td>
+      <td>1.044031</td>
+      <td>1.303840</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>0.100000</td>
-      <td>0.509902</td>
-      <td>0.300000</td>
+      <td>1.200000</td>
+      <td>1.315295</td>
+      <td>1.649242</td>
     </tr>
   </tbody>
 </table>
@@ -1275,41 +1286,41 @@ center estimates:</p>
       <th>0</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>4.0719</td>
-      <td>4.3417</td>
-      <td>3.7577</td>
+      <td>5.1546</td>
+      <td>5.3141</td>
+      <td>5.6648</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>4.0719</td>
-      <td>4.3417</td>
-      <td>3.7577</td>
+      <td>5.1546</td>
+      <td>5.3141</td>
+      <td>5.6648</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.2</td>
       <td>1.3</td>
-      <td>4.1629</td>
-      <td>4.4294</td>
-      <td>3.8484</td>
+      <td>5.2498</td>
+      <td>5.4083</td>
+      <td>5.7585</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.2</td>
       <td>1.5</td>
-      <td>3.9812</td>
-      <td>4.2544</td>
-      <td>3.6674</td>
+      <td>5.0596</td>
+      <td>5.2202</td>
+      <td>5.5714</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>4.0719</td>
-      <td>4.3417</td>
-      <td>3.7577</td>
+      <td>5.1546</td>
+      <td>5.3141</td>
+      <td>5.6648</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1323,41 +1334,41 @@ center estimates:</p>
       <th>145</th>
       <td>2.3</td>
       <td>5.2</td>
-      <td>0.4123</td>
-      <td>0.0000</td>
-      <td>0.6403</td>
+      <td>1.2083</td>
+      <td>1.2369</td>
+      <td>1.5033</td>
     </tr>
     <tr>
       <th>146</th>
       <td>1.9</td>
       <td>5.0</td>
-      <td>0.1000</td>
-      <td>0.4472</td>
-      <td>0.2236</td>
+      <td>1.3038</td>
+      <td>1.4036</td>
+      <td>1.7263</td>
     </tr>
     <tr>
       <th>147</th>
       <td>2.0</td>
       <td>5.2</td>
-      <td>0.1414</td>
-      <td>0.3000</td>
-      <td>0.4472</td>
+      <td>1.1180</td>
+      <td>1.2000</td>
+      <td>1.5133</td>
     </tr>
     <tr>
       <th>148</th>
       <td>2.3</td>
       <td>5.4</td>
-      <td>0.5000</td>
-      <td>0.2000</td>
-      <td>0.7810</td>
+      <td>1.0296</td>
+      <td>1.0440</td>
+      <td>1.3038</td>
     </tr>
     <tr>
       <th>149</th>
       <td>1.8</td>
       <td>5.1</td>
-      <td>0.1000</td>
-      <td>0.5099</td>
-      <td>0.3000</td>
+      <td>1.2000</td>
+      <td>1.3153</td>
+      <td>1.6492</td>
     </tr>
   </tbody>
 </table>
@@ -1376,16 +1387,16 @@ the point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c2
-1      c2
-2      c2
-3      c2
-4      c2
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c0
+1      c0
+2      c0
+3      c0
+4      c0
        ..
-145    c1
+145    c0
 146    c0
 147    c0
-148    c1
+148    c0
 149    c0
 Length: 150, dtype: object
 </pre></div>
@@ -1428,18 +1439,18 @@ just allocated to each cluster.</p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>1.800000</td>
-      <td>5.355000</td>
+      <td>1.086765</td>
+      <td>3.514706</td>
     </tr>
     <tr>
       <th>c1</th>
-      <td>2.238462</td>
-      <td>5.834615</td>
+      <td>2.340000</td>
+      <td>5.890000</td>
     </tr>
     <tr>
       <th>c2</th>
-      <td>0.823077</td>
-      <td>2.932692</td>
+      <td>2.150000</td>
+      <td>6.725000</td>
     </tr>
   </tbody>
 </table>
@@ -1467,7 +1478,7 @@ same - in which case, we have finished the search, and we can stop.</p>
 
 <span class="c1"># Repeat for a long time, if necessary.</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
-    
+
     <span class="c1"># Find distances of each point to each center.</span>
     <span class="n">distances</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">point_no</span><span class="p">,</span> <span class="n">cluster_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cluster_names</span><span class="p">):</span>
@@ -1478,7 +1489,7 @@ same - in which case, we have finished the search, and we can stop.</p>
     <span class="c1"># Allocate each point to one of the cluster (centers) by</span>
     <span class="c1"># choosing the closest center.</span>
     <span class="n">labels</span> <span class="o">=</span> <span class="n">distances</span><span class="o">.</span><span class="n">idxmin</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    
+
     <span class="c1"># Make new centers with mean of points in cluster.</span>
     <span class="n">new_centers</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">cluster_names</span><span class="p">)</span>
 
@@ -1488,11 +1499,15 @@ same - in which case, we have finished the search, and we can stop.</p>
     <span class="c1"># Otherwise continue</span>
     <span class="n">centers</span> <span class="o">=</span> <span class="n">new_centers</span>
     <span class="c1"># Show the current estimated centers.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Centers after iteration </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">display</span><span class="p">(</span><span class="n">centers</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 0
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1533,7 +1548,10 @@ same - in which case, we have finished the search, and we can stop.</p>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 1
+</pre></div>
+</div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1573,7 +1591,10 @@ same - in which case, we have finished the search, and we can stop.</p>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 2
+</pre></div>
+</div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1613,7 +1634,10 @@ same - in which case, we have finished the search, and we can stop.</p>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 3
+</pre></div>
+</div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1653,7 +1677,10 @@ same - in which case, we have finished the search, and we can stop.</p>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 4
+</pre></div>
+</div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1693,7 +1720,10 @@ same - in which case, we have finished the search, and we can stop.</p>
     </tr>
   </tbody>
 </table>
-</div></div><div class="output text_html"><div>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Centers after iteration 5
+</pre></div>
+</div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1737,21 +1767,25 @@ same - in which case, we have finished the search, and we can stop.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the points with their cluster labels.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
     <span class="n">df</span><span class="p">,</span>
     <span class="n">x</span><span class="o">=</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">y</span><span class="o">=</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">hue</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centers</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
-            <span class="n">centers</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
-            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
-            <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
-            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="c1"># Plot the centers.</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span>
+    <span class="n">centers</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">features</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d760b07d47169592de4e856dcd4ec6b26d9b5c2aa759e2d0df466fa98389b6dc.png" src="_images/d760b07d47169592de4e856dcd4ec6b26d9b5c2aa759e2d0df466fa98389b6dc.png" />
+<img alt="_images/f5b973401b0c67d2b45ec8613ff1d331ed3abd81aa1110cbf99de671cffaec6d.png" src="_images/f5b973401b0c67d2b45ec8613ff1d331ed3abd81aa1110cbf99de671cffaec6d.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1811,9 +1845,21 @@ same - in which case, we have finished the search, and we can stop.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.35925926, 4.29259259],
-       [0.244     , 1.464     ],
-       [2.04782609, 5.62608696]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.244     , 1.464     ],
+       [2.0375    , 5.59583333],
+       [1.34230769, 4.26923077]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scikit-learn clusters are (near as dammit) the same as</span>
+<span class="c1"># the ones we found.  The order of the centers is arbitrary,</span>
+<span class="c1"># solve by sorting.</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">kmeans_model</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">centers</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1821,20 +1867,18 @@ same - in which case, we have finished the search, and we can stop.</p>
 <p>One measure of how well the points match the clusters is <em>inertia</em> - the sum of the squared distances between each point and its corresponding cluster.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">ss_dist</span><span class="p">(</span><span class="n">sub_df</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot; Sum of squared distances of each point and matching center</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">center_difference_sq</span><span class="p">(</span><span class="n">sub_df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Squared difference between each point and matching center</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">center</span> <span class="o">=</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">d2s</span> <span class="o">=</span> <span class="p">((</span><span class="n">sub_df</span> <span class="o">-</span> <span class="n">center</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">d2s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">sub_df</span> <span class="o">-</span> <span class="n">sub_df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inertia</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">ss_dist</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="n">inertia</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># .transform applies the function to each sub-dataframe.</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">center_difference_sq</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1852,7 +1896,7 @@ same - in which case, we have finished the search, and we can stop.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>31.42928566827698
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>31.38775897435897
 </pre></div>
 </div>
 </div>
