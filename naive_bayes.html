@@ -69,6 +69,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="k-means clustering" href="k_means.html" />
+    <link rel="prev" title="Multiple Logistic Regression, Model Selection and Cross-validation" href="logistic_regression_cross_validation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -187,6 +189,12 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Naive Bayes classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="k_means.html">k-means clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel_density_estimation.html">Kernel density estimation</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
 <ul class="nav bd-sidenav">
@@ -682,7 +690,7 @@ Handbook</a>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f2d995d4a00&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f0e1f512fa0&gt;
 </pre></div>
 </div>
 <img alt="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" src="_images/4ccee6cd1036f19a6fc38e782c6f918a3cd209b4a6f81e10e1e8be13d85f430d.png" />
@@ -992,7 +1000,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f2d901d19d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f0e1610b7c0&gt;]
 </pre></div>
 </div>
 <img alt="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" src="_images/fcff45b3d27006efd9a46532489ac3b90270db832024edaa7976890754374763.png" />
@@ -1007,7 +1015,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f2d90147100&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f0e160820a0&gt;]
 </pre></div>
 </div>
 <img alt="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" src="_images/3e59543a657da9fa0973942c8ed05fab31bef0313fcab0d6e38d998dae1d0822.png" />
@@ -2774,8 +2782,8 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f2d9035fe50&gt;,
- &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f2dde3b3a00&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f0e163001f0&gt;,
+ &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f0e145072e0&gt;}
 </pre></div>
 </div>
 </div>
@@ -3449,29 +3457,29 @@ denominator, we can just divide it out, to give the following ratio:</p>
   </thead>
   <tbody>
     <tr>
-      <th>170</th>
-      <td>4800.0</td>
-      <td>14.5</td>
+      <th>219</th>
+      <td>5800.0</td>
+      <td>16.2</td>
     </tr>
     <tr>
-      <th>169</th>
-      <td>6300.0</td>
-      <td>15.2</td>
+      <th>304</th>
+      <td>3700.0</td>
+      <td>17.8</td>
     </tr>
     <tr>
-      <th>323</th>
-      <td>4300.0</td>
-      <td>19.6</td>
+      <th>316</th>
+      <td>3950.0</td>
+      <td>19.5</td>
     </tr>
     <tr>
-      <th>243</th>
-      <td>5400.0</td>
-      <td>17.1</td>
+      <th>330</th>
+      <td>3350.0</td>
+      <td>17.3</td>
     </tr>
     <tr>
-      <th>264</th>
-      <td>4650.0</td>
-      <td>15.2</td>
+      <th>324</th>
+      <td>3250.0</td>
+      <td>18.7</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3479,29 +3487,29 @@ denominator, we can just divide it out, to give the following ratio:</p>
       <td>...</td>
     </tr>
     <tr>
-      <th>262</th>
-      <td>5000.0</td>
-      <td>15.2</td>
+      <th>317</th>
+      <td>3650.0</td>
+      <td>17.5</td>
     </tr>
     <tr>
-      <th>239</th>
-      <td>5300.0</td>
-      <td>14.2</td>
+      <th>180</th>
+      <td>4600.0</td>
+      <td>14.3</td>
     </tr>
     <tr>
-      <th>165</th>
-      <td>5850.0</td>
-      <td>14.6</td>
+      <th>246</th>
+      <td>4850.0</td>
+      <td>14.7</td>
     </tr>
     <tr>
-      <th>229</th>
-      <td>6000.0</td>
-      <td>16.3</td>
+      <th>254</th>
+      <td>4975.0</td>
+      <td>15.5</td>
     </tr>
     <tr>
-      <th>214</th>
-      <td>4400.0</td>
-      <td>13.9</td>
+      <th>286</th>
+      <td>3800.0</td>
+      <td>17.8</td>
     </tr>
   </tbody>
 </table>
@@ -3568,7 +3576,7 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8e572dfbd9d5be182ea3cad505767af0d8cb9e74424c8b66e0d3a8c88fa50079.png" src="_images/8e572dfbd9d5be182ea3cad505767af0d8cb9e74424c8b66e0d3a8c88fa50079.png" />
+<img alt="_images/2f1757932a6fb9a48ff1b04a9b0d5889e7c12410f863531240debf55ebea5d88.png" src="_images/2f1757932a6fb9a48ff1b04a9b0d5889e7c12410f863531240debf55ebea5d88.png" />
 </div>
 </div>
 </section>
@@ -3604,6 +3612,24 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="logistic_regression_cross_validation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multiple Logistic Regression, Model Selection and Cross-validation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="k_means.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">k-means clustering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
