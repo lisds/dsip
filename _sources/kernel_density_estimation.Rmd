@@ -38,7 +38,8 @@ penguins = pd.read_csv('data/penguins.csv').dropna()
 penguins
 ```
 
-In fact, let's imagine we're getting ready to do some prediction task, so we've split the data into a test and train set.
+In fact, let's imagine we're getting ready to do some prediction task, so we've
+split the data into a test and train set.
 
 ```{python}
 from sklearn.model_selection import train_test_split
@@ -61,7 +62,8 @@ chinstrap_train
 len(chinstrap_train)
 ```
 
-We're particularly interested in the histogram of the bill depth.  We'll use the density version of the histogram, normalized to a bar area of 1:
+We're particularly interested in the histogram of the bill depth.  We'll use
+the density version of the histogram, normalized to a bar area of 1:
 
 ```{python}
 bill_depth = chinstrap_train['bill_depth_mm']
@@ -77,7 +79,8 @@ plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
 plt.title('Density histogram with 10 bins, point markers');
 ```
 
-Notice this histogram is rather blocky. We could try increasing the number of bins, but we've only got 51 rows to play with:
+Notice this histogram is rather blocky. We could try increasing the number of
+bins, but we've only got 51 rows to play with:
 
 ```{python}
 plt.hist(chinstrap_train, bins=20, density=True);
@@ -86,14 +89,19 @@ plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
 plt.title('Density histogram with 20 bins');
 ```
 
-Oops - that's even worse.  We can see that small variations in the weights are going to push the blocks back and forth, changing our estimate of the densities.
+Oops - that's even worse.  We can see that small variations in the weights are
+going to push the blocks back and forth, changing our estimate of the
+densities.
 
-We'd like some estimate of what this density histogram would look like if we had a lot more data.
+We'd like some estimate of what this density histogram would look like if we
+had a lot more data.
 
 This estimate is called a *kernel density* estimate.
 
 
-We are going to *blur* the histogram by replacing the points that stack up into the bars, by little normal distributions.  Let's give these normal distributions a standard deviation of (arbitrarily) 0.25.
+We are going to *blur* the histogram by replacing the points that stack up into
+the bars, by little normal distributions.  Let's give these normal
+distributions a standard deviation of (arbitrarily) 0.25.
 
 ```{python}
 dist_sd = 0.25
@@ -131,7 +139,8 @@ plt.fill_between(nd_x, max_nd.pdf(nd_x), alpha=0.5, color='r')
 plt.title('Gaussian corresponding to maximum value');
 ```
 
-Here we've replaced the single point (the maximum) with a spread-out version of that point.
+Here we've replaced the single point (the maximum) with a spread-out version of
+that point.
 
 
 Now let's do the same for all the points.
@@ -142,8 +151,8 @@ plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
 # A normal distribution for each point
 values = np.array(chinstrap_train)
 for point in values:
-    nd = sps.norm(point, dist_sd)
-    plt.fill_between(nd_x, nd.pdf(nd_x), alpha=0.1,
+    dist_for_pt = sps.norm(point, dist_sd)
+    plt.fill_between(nd_x, dist_for_pt.pdf(nd_x), alpha=0.1,
                      color='r')
 plt.title('Gaussians comprising KDE estimate');
 ```
@@ -153,18 +162,20 @@ Finally, add up all these normal distributions:
 ```{python}
 y_values = np.zeros(len(nd_x))
 for point in bill_depth:
-    nd = sps.norm(point, dist_sd)
-    y_values += nd.pdf(nd_x)
+    dist_for_pt = sps.norm(point, dist_sd)
+    y_values += dist_for_pt.pdf(nd_x)
 ```
 
-This is the shape of our kernel density estimate - we still need to get the y-axis scaling right:
+This is the shape of our kernel density estimate - we still need to get the
+y-axis scaling right, but a few cells down.
 
 ```{python}
 plt.fill_between(nd_x, y_values, alpha=0.5, color='r');
 plt.title('KDE before normalizing area to 1');
 ```
 
-Finally, divide this curve by the area under the curve to get the kernel density estimate.
+Finally, divide this curve by the area under the curve to get the kernel
+density estimate.
 
 ```{python}
 # The gap between the x values
@@ -193,8 +204,9 @@ from sklearn.neighbors import KernelDensity
 skl_kde = KernelDensity(bandwidth=dist_sd, kernel='gaussian')
 skl_kde.fit(values)
 
-# score_samples returns the log of the probability density
+# score_samples returns the log of the probability density.
 logprob = skl_kde.score_samples(nd_x[:, None])
+# Convert to probability density.
 skl_kde_y = np.exp(logprob)
 
 # This gives the same plot as our original calculation.
