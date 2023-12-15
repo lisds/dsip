@@ -55,26 +55,44 @@ sns.scatterplot(iris,
                 hue='Name')
 ```
 
+K-means is a technique for splitting up (classifying) the data into *clusters*
+— groups of nearby points.  Here is Scikit-learn's KMeans implementation.  We
+use it to identify clusters in the data automatically, without using the
+species labels.  Notice though that the clusters it finds are very similar to
+the clusters by species.
+
 ```{python}
 from sklearn.cluster import KMeans
+
 kmeans_model = KMeans(n_clusters=3, n_init='auto')
 kmeans_model.fit(measures)
 cluster_nos = kmeans_model.predict(measures)
-measures['cluster'] = cluster_nos
-measures
 ```
 
 ```{python}
-centers = kmeans_model.cluster_centers_
-centers
+# The measures with Scikit-learn's cluster labels.
+labeled_measures = measures.copy()
+labeled_measures['cluster'] = cluster_nos
+labeled_measures
 ```
 
+These are Scikit-learn's cluster centers:
+
 ```{python}
-sns.scatterplot(measures,
+kmeans_model.cluster_centers_
+```
+
+The clusters displayed graphically.  Notice how similar they are to the actual
+species labels, that we have not used here.
+
+```{python}
+sns.scatterplot(labeled_measures,
                 x=features[0],
                 y=features[1],
                 hue='cluster')
-plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5);
+plt.scatter(kmeans_model.cluster_centers_[:, 0],
+            kmeans_model.cluster_centers_[:, 1],
+            color='r', s=100, alpha=0.5);
 ```
 
 The algorithm of k-means is as follows.  We specify we want $k$ clusters, then:
@@ -234,8 +252,8 @@ sns.scatterplot(
     hue=labels)
 plt.scatter(centers.iloc[:, 0],
             centers.iloc[:, 1],
-            c='black',
-            s=200,
+            color='r',
+            s=100,
             alpha=0.5);
 ```
 
