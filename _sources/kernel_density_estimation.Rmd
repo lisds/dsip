@@ -74,14 +74,16 @@ plt.hist(bill_depth, density=True);
 tick_y = np.zeros(len(bill_depth)) - 0.01
 # Black marks at the actual values.
 plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
+plt.title('Density histogram with 10 bins, point markers');
 ```
 
-Notice this histogram is rather blocky. We could try increasing the number of bins, but we've only got 119 rows to play with:
+Notice this histogram is rather blocky. We could try increasing the number of bins, but we've only got 51 rows to play with:
 
 ```{python}
 plt.hist(chinstrap_train, bins=20, density=True);
 # Black marks at the actual values.
 plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
+plt.title('Density histogram with 20 bins');
 ```
 
 Oops - that's even worse.  We can see that small variations in the weights are going to push the blocks back and forth, changing our estimate of the densities.
@@ -100,7 +102,7 @@ dist_sd = 0.25
 First consider the maximum point:
 
 ```{python}
-bd_max = np.max(chinstrap_train)
+bd_max = np.max(bill_depth)
 bd_max
 ```
 
@@ -111,16 +113,25 @@ We'll make a little normal distribution centered on that point:
 max_nd = sps.norm(bd_max, dist_sd)
 ```
 
+```{python}
+# x axis values for which to calculate y-axis values.
+nd_x = np.linspace(
+    bill_depth.min() - 4 * dist_sd,
+    bill_depth.max() + 4 * dist_sd,
+    1000
+)
+```
+
 We can plot that on the same plot as before.
 
 ```{python}
 # Black marks at the actual values.
 plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
-nd_x = np.linspace(19, 22, 1000)
-plt.plot(nd_x, max_nd.pdf(nd_x), 'r:');
+plt.fill_between(nd_x, max_nd.pdf(nd_x), alpha=0.5, color='r')
+plt.title('Gaussian corresponding to maximum value');
 ```
 
-Here we've replace the single point (the maximum) with a spread-out version of that point.
+Here we've replaced the single point (the maximum) with a spread-out version of that point.
 
 
 Now let's do the same for all the points.
@@ -130,29 +141,27 @@ Now let's do the same for all the points.
 plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
 # A normal distribution for each point
 values = np.array(chinstrap_train)
-nd_x = np.linspace(
-    values.min() - 4 * dist_sd,
-    values.max() + 4 * dist_sd,
-    1000
-)
 for point in values:
     nd = sps.norm(point, dist_sd)
-    plt.plot(nd_x, nd.pdf(nd_x), 'r:')
+    plt.fill_between(nd_x, nd.pdf(nd_x), alpha=0.1,
+                     color='r')
+plt.title('Gaussians comprising KDE estimate');
 ```
 
 Finally, add up all these normal distributions:
 
 ```{python}
 y_values = np.zeros(len(nd_x))
-for point in values:
+for point in bill_depth:
     nd = sps.norm(point, dist_sd)
     y_values += nd.pdf(nd_x)
 ```
 
-This is the (shape of) our kernel density estimate.
+This is the shape of our kernel density estimate - we still need to get the y-axis scaling right:
 
 ```{python}
-plt.plot(y_values);
+plt.fill_between(nd_x, y_values, alpha=0.5, color='r');
+plt.title('KDE before normalizing area to 1');
 ```
 
 Finally, divide this curve by the area under the curve to get the kernel density estimate.
@@ -160,8 +169,8 @@ Finally, divide this curve by the area under the curve to get the kernel density
 ```{python}
 # The gap between the x values
 delta_x = np.diff(nd_x)[0]
-# Divide by sum and  gap
-kde = y_values / (np.sum(y_values) * delta_x)
+# Divide by sum and by gap
+kde_y = y_values / np.sum(y_values) / delta_x
 ```
 
 ```{python}
@@ -169,10 +178,13 @@ plt.hist(chinstrap_train, bins=20, density=True);
 # Black marks at the actual values.
 plt.plot(bill_depth, tick_y, '|k', markeredgewidth=1);
 # Show the kernel density estimate
-plt.plot(nd_x, kde, 'r')
+plt.fill_between(nd_x, kde_y, alpha=0.5, color='r')
+plt.title('KDE and raw density histogram');
 ```
 
 This is our kernel density estimate.
+
+We get the same estimate from Scikit-learn.
 
 ```{python}
 from sklearn.neighbors import KernelDensity
@@ -183,6 +195,10 @@ skl_kde.fit(values)
 
 # score_samples returns the log of the probability density
 logprob = skl_kde.score_samples(nd_x[:, None])
+skl_kde_y = np.exp(logprob)
 
-plt.plot(nd_x, np.exp(logprob));
+# This gives the same plot as our original calculation.
+assert np.allclose(kde_y, skl_kde_y)  # Values the same.
+plt.fill_between(nd_x, np.exp(logprob), alpha=0.5, color='r');
+plt.title('KDE from Scikit-learn');
 ```
