@@ -63,6 +63,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'weighted_least_squares';</script>
     <link rel="canonical" href="https://lisds.github.io/dsip/weighted_least_squares.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
@@ -504,7 +506,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">LASSO</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
 </ul>
             </nav>
@@ -533,7 +539,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_4287/525649390.py:4: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3991/525649390.py:4: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -686,6 +692,17 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 <p>75 rows × 6 columns</p>
 </div></div></div>
 </div>
+<p>Fetch some columns of interest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This will be our y (the variable we predict).</span>
+<span class="n">quality</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Quality&#39;</span><span class="p">]</span>
+<span class="c1"># One of both of these will be our X (the predictors).</span>
+<span class="n">clarity_easiness</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>Fit the model with Statsmodels.</p>
 <p>Fit the same model with Scikit-learn.</p>
 <p>Compare the parameters to Statsmodels.</p>
@@ -733,11 +750,37 @@ regression</a>.</p>
 <section id="penalized-regression">
 <h2>Penalized regression<a class="headerlink" href="#penalized-regression" title="Permalink to this heading">#</a></h2>
 <p>Penalized regression is where you simultaneously minimize some cost related to the model (mis-)fit, and some cost related to the parameters of your model.</p>
+<section id="ridge-regression">
+<h3>Ridge regression<a class="headerlink" href="#ridge-regression" title="Permalink to this heading">#</a></h3>
 <p>For example, in <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">ridge
 regression</a>,
 with try and minimize the sum of squared residuals <em>and</em> the sum of squares
 of the parameters (apart from the intercept).</p>
 <p>Fit with the <code class="docutils literal notranslate"><span class="pre">minimize</span></code> cost function:</p>
+</section>
+<section id="lasso">
+<h3>LASSO<a class="headerlink" href="#lasso" title="Permalink to this heading">#</a></h3>
+<p>See the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html">Scikit-learn LASSO page</a>.</p>
+<p>As noted there, the cost function is:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2 * \text{n_samples}} * ||y - Xw||^2_2 + alpha * ||w||_1
+\]</div>
+<p><span class="math notranslate nohighlight">\(w\)</span> refers to the vector of model parameters.</p>
+<p>This part of the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+||y - Xw||^2_2
+\]</div>
+<p>is the sum of squares of the residuals, because the residuals are <span class="math notranslate nohighlight">\(y - Xw\)</span> (where <span class="math notranslate nohighlight">\(w\)</span> are the parameters of the model), and the <span class="math notranslate nohighlight">\(||y - Xw||^2_2\)</span> refers to the squared <a class="reference external" href="https://mathworld.wolfram.com/L2-Norm.html">L2 vector norm</a>, which is the same as the sum of squares.</p>
+<div class="math notranslate nohighlight">
+\[
+||w||_1
+\]</div>
+<p>is the L1 vector norm, which is the same as the sum of the absolute values of
+the parameters.</p>
+<p>Let’s do that, with a low <code class="docutils literal notranslate"><span class="pre">alpha</span></code> (otherwise both slopes get forced down to zero):</p>
+</section>
 </section>
 <section id="cross-validation">
 <h2>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h2>
@@ -836,7 +879,11 @@ value.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">LASSO</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
 </ul>
   </nav></div>

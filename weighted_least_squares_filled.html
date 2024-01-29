@@ -506,7 +506,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">LASSO</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
 </ul>
             </nav>
@@ -535,7 +539,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_4313/525649390.py:4: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_4016/525649390.py:4: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -688,6 +692,17 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 <p>75 rows × 6 columns</p>
 </div></div></div>
 </div>
+<p>Fetch some columns of interest:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This will be our y (the variable we predict).</span>
+<span class="n">quality</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Quality&#39;</span><span class="p">]</span>
+<span class="c1"># One of both of these will be our X (the predictors).</span>
+<span class="n">clarity_easiness</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>Fit the model with Statsmodels.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -713,7 +728,7 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
   <th>Date:</th>             <td>Mon, 29 Jan 2024</td> <th>  Prob (F-statistic):</th> <td>3.63e-62</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>15:44:40</td>     <th>  Log-Likelihood:    </th> <td>  169.91</td>
+  <th>Time:</th>                 <td>22:56:03</td>     <th>  Log-Likelihood:    </th> <td>  169.91</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -333.8</td>
@@ -760,10 +775,7 @@ please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
 <p>Fit the same model with Scikit-learn.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quality</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Quality&#39;</span><span class="p">]</span>
-<span class="n">clarity_easiness</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">]]</span>
-
-<span class="n">sk_fit</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_fit</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
 <span class="n">sk_fit</span><span class="o">.</span><span class="n">coef_</span>
 </pre></div>
 </div>
@@ -1179,7 +1191,7 @@ Name: Number of Professors, Length: 75, dtype: float64
   <th>Date:</th>             <td>Mon, 29 Jan 2024</td> <th>  Prob (F-statistic):</th> <td>2.91e-62</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>15:44:40</td>     <th>  Log-Likelihood:    </th> <td>  143.05</td>
+  <th>Time:</th>                 <td>22:56:03</td>     <th>  Log-Likelihood:    </th> <td>  143.05</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -280.1</td>
@@ -1307,6 +1319,8 @@ dtype: float64
 <section id="penalized-regression">
 <h2>Penalized regression<a class="headerlink" href="#penalized-regression" title="Permalink to this heading">#</a></h2>
 <p>Penalized regression is where you simultaneously minimize some cost related to the model (mis-)fit, and some cost related to the parameters of your model.</p>
+<section id="ridge-regression">
+<h3>Ridge regression<a class="headerlink" href="#ridge-regression" title="Permalink to this heading">#</a></h3>
 <p>For example, in <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">ridge
 regression</a>,
 with try and minimize the sum of squared residuals <em>and</em> the sum of squares
@@ -1351,6 +1365,99 @@ of the parameters (apart from the intercept).</p>
 </div>
 </div>
 </div>
+</section>
+<section id="lasso">
+<h3>LASSO<a class="headerlink" href="#lasso" title="Permalink to this heading">#</a></h3>
+<p>See the <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Lasso.html">Scikit-learn LASSO page</a>.</p>
+<p>As noted there, the cost function is:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{2 * \text{n_samples}} * ||y - Xw||^2_2 + alpha * ||w||_1
+\]</div>
+<p><span class="math notranslate nohighlight">\(w\)</span> refers to the vector of model parameters.</p>
+<p>This part of the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+||y - Xw||^2_2
+\]</div>
+<p>is the sum of squares of the residuals, because the residuals are <span class="math notranslate nohighlight">\(y - Xw\)</span>
+(where <span class="math notranslate nohighlight">\(w\)</span> are the parameters of the model, and <span class="math notranslate nohighlight">\(Xw\)</span> are therefore the fitted
+values), and the <span class="math notranslate nohighlight">\(||y - Xw||^2_2\)</span> refers to the squared <a class="reference external" href="https://mathworld.wolfram.com/L2-Norm.html">L2 vector
+norm</a>, which is the same as the
+sum of squares.</p>
+<div class="math notranslate nohighlight">
+\[
+||w||_1
+\]</div>
+<p>is the <a class="reference external" href="https://mathworld.wolfram.com/L1-Norm.html">L1 vector norm</a> of the
+parameters <span class="math notranslate nohighlight">\(w\)</span>, which is the sum of the absolute values of the parameters.</p>
+<p>Let’s do that calculation, with a low <code class="docutils literal notranslate"><span class="pre">alpha</span></code> (otherwise both slopes get
+forced down to zero):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We need LassoLars for increased accuracy.</span>
+<span class="n">sk_lasso</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LassoLars</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+
+<span class="n">sk_lasso</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">sk_lasso</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.64395012, 0.00706178]), 1.3249885924023608)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sos_lasso</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="n">ss_resid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">penalty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">params</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n_samples</span><span class="p">)</span> <span class="o">*</span> <span class="n">ss_resid</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">penalty</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change optimization method and tighten tolerance to get very close to</span>
+<span class="c1"># LassoLars answer.</span>
+<span class="n">res_lasso</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">sos_lasso</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
+                     <span class="n">method</span><span class="o">=</span><span class="s1">&#39;powell&#39;</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
+<span class="n">res_lasso</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> message: Optimization terminated successfully.
+ success: True
+  status: 0
+     fun: 0.008173990381429122
+       x: [ 6.440e-01  7.062e-03  1.325e+00]
+     nit: 5
+   direc: [[ 0.000e+00  0.000e+00  1.000e+00]
+           [-3.541e-01  0.000e+00  1.313e+00]
+           [-7.225e-03  7.021e-03  4.367e-03]]
+    nfev: 429
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_lasso</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.64395013, 0.00706178, 1.32498857])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="cross-validation">
 <h2>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h2>
@@ -1513,7 +1620,11 @@ value.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-regression">Ridge regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lasso">LASSO</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
 </ul>
   </nav></div>
