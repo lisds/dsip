@@ -1,0 +1,1572 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Fitting models with different cost functions &#8212; Data Science in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'weighted_least_squares_filled';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/weighted_least_squares_filled.html" />
+    <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dsfe_logo.png" class="logo__image only-light" alt="Data Science in Practice - Home"/>
+    <script>document.write(`<img src="_static/dsfe_logo.png" class="logo__image only-dark" alt="Data Science in Practice - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays, images, optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_and_dicts.html">Pandas and dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_multiple_predictors.html">Linear regression notation for models with multiple predictors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="epl_modeling.html">Attack or defense?  An example of multiple regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="naive_bayes.html">Naive Bayes classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="k_means.html">k-means clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel_density_estimation.html">Kernel density estimation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_work.html">The problem with data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The tools</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing on your computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the-problem-with-notebooks.html">The joys and sorrows of notebooks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/weighted_least_squares_filled.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/weighted_least_squares_filled.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip/edit/main/weighted_least_squares_filled.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Fweighted_least_squares_filled.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/weighted_least_squares_filled.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fitting models with different cost functions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fitted-values-and-scikit-learn">The fitted values and Scikit-learn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-long-and-the-short-of-r-2">The long and the short of R^2^</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2-for-another-reduced-model">R^2^ for another, reduced model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="fitting-models-with-different-cost-functions">
+<h1>Fitting models with different cost functions<a class="headerlink" href="#fitting-models-with-different-cost-functions" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">sklearn.linear_model</span> <span class="k">as</span> <span class="nn">sklm</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span> <span class="k">as</span> <span class="nn">skmetrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_4313/525649390.py:4: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/rate_my_course.csv&#39;</span><span class="p">)</span>
+<span class="c1">#MB To make it easier to run Statsmodels, in particular.</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Overall Quality&#39;</span><span class="p">:</span> <span class="s1">&#39;Quality&#39;</span><span class="p">})</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Discipline</th>
+      <th>Number of Professors</th>
+      <th>Clarity</th>
+      <th>Helpfulness</th>
+      <th>Quality</th>
+      <th>Easiness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>English</td>
+      <td>23343</td>
+      <td>3.756147</td>
+      <td>3.821866</td>
+      <td>3.791364</td>
+      <td>3.162754</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mathematics</td>
+      <td>22394</td>
+      <td>3.487379</td>
+      <td>3.641526</td>
+      <td>3.566867</td>
+      <td>3.063322</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Biology</td>
+      <td>11774</td>
+      <td>3.608331</td>
+      <td>3.701530</td>
+      <td>3.657641</td>
+      <td>2.710459</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Psychology</td>
+      <td>11179</td>
+      <td>3.909520</td>
+      <td>3.887536</td>
+      <td>3.900949</td>
+      <td>3.316210</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>History</td>
+      <td>11145</td>
+      <td>3.788818</td>
+      <td>3.753642</td>
+      <td>3.773746</td>
+      <td>3.053803</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>Anatomy</td>
+      <td>117</td>
+      <td>3.932991</td>
+      <td>3.974701</td>
+      <td>3.954188</td>
+      <td>2.863504</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>Earth Science</td>
+      <td>110</td>
+      <td>3.636182</td>
+      <td>3.671364</td>
+      <td>3.655091</td>
+      <td>3.106727</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>Linguistics</td>
+      <td>110</td>
+      <td>3.749000</td>
+      <td>3.834545</td>
+      <td>3.798182</td>
+      <td>3.309636</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Mechanical Engineering</td>
+      <td>104</td>
+      <td>3.441923</td>
+      <td>3.531154</td>
+      <td>3.489327</td>
+      <td>2.799135</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>Medicine</td>
+      <td>102</td>
+      <td>3.927255</td>
+      <td>3.934216</td>
+      <td>3.929118</td>
+      <td>3.109118</td>
+    </tr>
+  </tbody>
+</table>
+<p>75 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>Fit the model with Statsmodels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;Quality ~ Clarity + Easiness&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">sm_fit</span> <span class="o">=</span> <span class="n">sm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">sm_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>OLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>         <td>Quality</td>     <th>  R-squared:         </th> <td>   0.980</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.980</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   1796.</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 29 Jan 2024</td> <th>  Prob (F-statistic):</th> <td>3.63e-62</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>15:44:40</td>     <th>  Log-Likelihood:    </th> <td>  169.91</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -333.8</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    72</td>      <th>  BIC:               </th> <td>  -326.9</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     2</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    0.3194</td> <td>    0.058</td> <td>    5.499</td> <td> 0.000</td> <td>    0.204</td> <td>    0.435</td>
+</tr>
+<tr>
+  <th>Clarity</th>   <td>    0.9236</td> <td>    0.023</td> <td>   39.411</td> <td> 0.000</td> <td>    0.877</td> <td>    0.970</td>
+</tr>
+<tr>
+  <th>Easiness</th>  <td>   -0.0029</td> <td>    0.017</td> <td>   -0.168</td> <td> 0.867</td> <td>   -0.037</td> <td>    0.031</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td> 4.337</td> <th>  Durbin-Watson:     </th> <td>   1.819</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.114</td> <th>  Jarque-Bera (JB):  </th> <td>   3.840</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.552</td> <th>  Prob(JB):          </th> <td>   0.147</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 3.109</td> <th>  Cond. No.          </th> <td>    103.</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p>Fit the same model with Scikit-learn.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quality</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Quality&#39;</span><span class="p">]</span>
+<span class="n">clarity_easiness</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">]]</span>
+
+<span class="n">sk_fit</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+<span class="n">sk_fit</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.92362019, -0.00288795])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_fit</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.31938904368674503
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare the parameters to Statsmodels.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sm_fit</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.319389
+Clarity      0.923620
+Easiness    -0.002888
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="the-fitted-values-and-scikit-learn">
+<h2>The fitted values and Scikit-learn<a class="headerlink" href="#the-fitted-values-and-scikit-learn" title="Permalink to this heading">#</a></h2>
+<p>The values predicted by the (Sklearn) model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted</span> <span class="o">=</span> <span class="n">sk_fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">)</span>
+<span class="n">fitted</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.77950841, 3.53155618, 3.64428881, 3.92072327, 3.80999891,
+       3.44019232, 3.88158962, 3.67250771, 3.78246319, 3.43534692,
+       3.66525992, 3.76482633, 3.42535999, 3.52946972, 3.79453979,
+       3.56173677, 3.3540456 , 3.721143  , 3.73373725, 3.86002543,
+       3.69031193, 3.90334332, 3.82592469, 3.41135192, 4.05620596,
+       3.67046469, 3.6521298 , 3.71195263, 3.63939982, 3.74253256,
+       3.74966631, 3.88957336, 3.79743589, 3.40253809, 3.68698611,
+       3.82763393, 4.07548979, 3.7894775 , 3.49510332, 3.72282954,
+       3.64905635, 3.65172276, 3.87020774, 3.81700383, 3.57330698,
+       3.80932439, 3.67185743, 3.97131495, 3.96476749, 4.12627525,
+       3.79253571, 3.56758494, 3.6004621 , 3.65554835, 3.7241984 ,
+       3.42966027, 3.74060389, 3.56762262, 3.92543354, 3.94203325,
+       3.49912142, 3.95781475, 3.719975  , 3.79696214, 4.14987453,
+       3.87372198, 3.78927054, 3.99902421, 3.83313764, 3.66109183,
+       3.94370971, 3.66886792, 3.77248308, 3.49033494, 3.937702  ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare to Statsmodels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">sm_fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(),</span> <span class="n">fitted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Write a function to compute the fitted values given the parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">fitted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="c1"># Add contribution of each regressor.</span>
+    <span class="k">for</span> <span class="n">col_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+        <span class="n">fitted</span> <span class="o">+=</span> <span class="n">params</span><span class="p">[</span><span class="n">col_no</span><span class="p">]</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="n">col_no</span><span class="p">]</span>
+    <span class="c1"># Add contribution of intercept (last parameter)</span>
+    <span class="k">return</span> <span class="n">fitted</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compile Sklearn parameters, and use these to calculated fitted values with our function.  Compare, to show they are (near as dammit) similar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sk_fit</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">sk_fit</span><span class="o">.</span><span class="n">intercept_</span><span class="p">]</span>
+<span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.9236201906758177, -0.0028879473629162683, 0.31938904368674503]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">clarity_easiness</span><span class="p">),</span> <span class="n">fitted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-long-and-the-short-of-r-2">
+<h2>The long and the short of R^2^<a class="headerlink" href="#the-long-and-the-short-of-r-2" title="Permalink to this heading">#</a></h2>
+<p>Sklearn has an <code class="docutils literal notranslate"><span class="pre">r2_score</span></code> metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">skmetrics</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">quality</span><span class="p">,</span> <span class="n">fitted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9803507892000523
+</pre></div>
+</div>
+</div>
+</div>
+<p>We already know the formula for R^2^.  We can calculate by hand to show this gives the same answer.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss_around_mean</span> <span class="o">=</span> <span class="p">((</span><span class="n">quality</span> <span class="o">-</span> <span class="n">quality</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ss_around_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.406735439529159
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">resid</span> <span class="o">=</span> <span class="n">quality</span> <span class="o">-</span> <span class="n">fitted</span>
+<span class="n">ss_residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">resid</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ss_residuals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.047290451991013296
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate R2</span>
+<span class="mi">1</span> <span class="o">-</span> <span class="n">ss_residuals</span> <span class="o">/</span> <span class="n">ss_around_mean</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9803507892000523
+</pre></div>
+</div>
+</div>
+</div>
+<section id="r-2-for-another-reduced-model">
+<h3>R^2^ for another, reduced model<a class="headerlink" href="#r-2-for-another-reduced-model" title="Permalink to this heading">#</a></h3>
+<p>Fit a reduced model that is just “Clarity” without “Easiness”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clarity_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">]]</span>
+<span class="n">reduced_fit</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_df</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+<span class="n">reduced_fit</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">reduced_fit</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.92064712]), 0.3212159899846512)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate R^2^ for reduced model as compared to our full model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reduced_resid</span> <span class="o">=</span> <span class="n">quality</span> <span class="o">-</span> <span class="n">reduced_fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">clarity_df</span><span class="p">)</span>
+<span class="n">ss_reduced_residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">reduced_resid</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ss_reduced_residuals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.047308983421775544
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">-</span> <span class="n">ss_residuals</span> <span class="o">/</span> <span class="n">ss_reduced_residuals</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0003917106101611889
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="on-weights-and-a-weighted-mean">
+<h2>On weights, and a weighted mean<a class="headerlink" href="#on-weights-and-a-weighted-mean" title="Permalink to this heading">#</a></h2>
+<p>This is the usual mean:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">quality</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.735897096508351
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course this is the same as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">quality</span><span class="p">)</span>
+<span class="n">quality</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.735897096508351
+</pre></div>
+</div>
+</div>
+</div>
+<p>or</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">quality</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.735897096508351
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate weights to weight values by number of professors, on the basis that larger number of professors may give more reliable values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_professors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Number of Professors&#39;</span><span class="p">]</span>
+<span class="n">prop_professors</span> <span class="o">=</span> <span class="n">n_professors</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_professors</span><span class="p">)</span>
+<span class="n">prop_professors</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     0.126937
+1     0.121777
+2     0.064026
+3     0.060790
+4     0.060606
+        ...   
+70    0.000636
+71    0.000598
+72    0.000598
+73    0.000566
+74    0.000555
+Name: Number of Professors, Length: 75, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate weighted mean.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">prop_professors</span>
+<span class="p">(</span><span class="n">quality</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.694854100731966
+</pre></div>
+</div>
+</div>
+</div>
+<p>Numpy’s version of same:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">quality</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.694854100731966
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-the-model-with-minimize">
+<h2>Fitting the model with minimize<a class="headerlink" href="#fitting-the-model-with-minimize" title="Permalink to this heading">#</a></h2>
+<p>A function for Sum of Squares, to use with <code class="docutils literal notranslate"><span class="pre">minimize</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sos</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">sos</span></code> function, in example call, and then with <code class="docutils literal notranslate"><span class="pre">minimize</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_cols</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">]]</span>
+<span class="n">sos</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">model_cols</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1049.1762691169936
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">model_cols</span><span class="p">,</span> <span class="n">quality</span><span class="p">))</span>
+<span class="n">res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 0.04729045200402138
+        x: [ 9.236e-01 -2.887e-03  3.194e-01]
+      nit: 9
+      jac: [-7.777e-08 -7.823e-08 -1.630e-08]
+ hess_inv: [[ 4.145e-01 -2.309e-01 -8.019e-01]
+            [-2.309e-01  2.249e-01  1.400e-01]
+            [-8.019e-01  1.400e-01  2.535e+00]]
+     nfev: 44
+     njev: 11
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.9236173 , -0.00288711,  0.31939708])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare to parameters with (e.g.) Sklearn.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_fit</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">sk_fit</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([ 0.92362019, -0.00288795]), 0.31938904368674503)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-with-weights">
+<h2>Fitting with weights<a class="headerlink" href="#fitting-with-weights" title="Permalink to this heading">#</a></h2>
+<p>Statsmodels, weighted regression.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wls_model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">wls</span><span class="p">(</span><span class="s1">&#39;Quality ~ Clarity + Easiness&#39;</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">)</span>
+<span class="n">wls_fit</span> <span class="o">=</span> <span class="n">wls_model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">wls_fit</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>WLS Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>         <td>Quality</td>     <th>  R-squared:         </th> <td>   0.980</td>
+</tr>
+<tr>
+  <th>Model:</th>                   <td>WLS</td>       <th>  Adj. R-squared:    </th> <td>   0.980</td>
+</tr>
+<tr>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   1807.</td>
+</tr>
+<tr>
+  <th>Date:</th>             <td>Mon, 29 Jan 2024</td> <th>  Prob (F-statistic):</th> <td>2.91e-62</td>
+</tr>
+<tr>
+  <th>Time:</th>                 <td>15:44:40</td>     <th>  Log-Likelihood:    </th> <td>  143.05</td>
+</tr>
+<tr>
+  <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -280.1</td>
+</tr>
+<tr>
+  <th>Df Residuals:</th>          <td>    72</td>      <th>  BIC:               </th> <td>  -273.1</td>
+</tr>
+<tr>
+  <th>Df Model:</th>              <td>     2</td>      <th>                     </th>     <td> </td>   
+</tr>
+<tr>
+  <th>Covariance Type:</th>      <td>nonrobust</td>    <th>                     </th>     <td> </td>   
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    0.5447</td> <td>    0.053</td> <td>   10.349</td> <td> 0.000</td> <td>    0.440</td> <td>    0.650</td>
+</tr>
+<tr>
+  <th>Clarity</th>   <td>    0.8574</td> <td>    0.020</td> <td>   42.308</td> <td> 0.000</td> <td>    0.817</td> <td>    0.898</td>
+</tr>
+<tr>
+  <th>Easiness</th>  <td>    0.0034</td> <td>    0.016</td> <td>    0.219</td> <td> 0.828</td> <td>   -0.028</td> <td>    0.034</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+  <th>Omnibus:</th>       <td>12.821</td> <th>  Durbin-Watson:     </th> <td>   1.720</td>
+</tr>
+<tr>
+  <th>Prob(Omnibus):</th> <td> 0.002</td> <th>  Jarque-Bera (JB):  </th> <td>  21.227</td>
+</tr>
+<tr>
+  <th>Skew:</th>          <td> 0.612</td> <th>  Prob(JB):          </th> <td>2.46e-05</td>
+</tr>
+<tr>
+  <th>Kurtosis:</th>      <td> 5.301</td> <th>  Cond. No.          </th> <td>    108.</td>
+</tr>
+</table><br/><br/>Notes:<br/>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</div></div>
+</div>
+<p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html">Sklearn, weighted
+regression</a>.
+Also see <a class="reference external" href="https://en.wikipedia.org/wiki/Weighted_least_squares">Wikipedia on weighted
+regression</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_weights</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span>
+<span class="n">sample_weight</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
+<span class="n">sk_weights</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">sk_weights</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.8574253 , 0.00339504]), 0.5447456532268076)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">minimize</span></code> cost function for weighted regression:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sos_weighted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">weights</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wls_res</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">sos_weighted</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">model_cols</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span>
+<span class="n">weights</span><span class="p">))</span>
+<span class="n">wls_res</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  message: Optimization terminated successfully.
+  success: True
+   status: 0
+      fun: 0.00045285004089750297
+        x: [ 8.575e-01  3.335e-03  5.448e-01]
+      nit: 8
+      jac: [ 2.832e-06 -8.423e-07  1.071e-06]
+ hess_inv: [[ 3.224e+01 -1.707e+01 -6.499e+01]
+            [-1.707e+01  1.815e+01  6.063e+00]
+            [-6.499e+01  6.063e+00  2.196e+02]]
+     nfev: 52
+     njev: 13
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wls_res</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.85746066, 0.00333499, 0.54480339])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wls_fit</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.544746
+Clarity      0.857425
+Easiness     0.003395
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="penalized-regression">
+<h2>Penalized regression<a class="headerlink" href="#penalized-regression" title="Permalink to this heading">#</a></h2>
+<p>Penalized regression is where you simultaneously minimize some cost related to the model (mis-)fit, and some cost related to the parameters of your model.</p>
+<p>For example, in <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.Ridge.html">ridge
+regression</a>,
+with try and minimize the sum of squared residuals <em>and</em> the sum of squares
+of the parameters (apart from the intercept).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_ridge</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">)</span>
+
+<span class="n">sk_ridge</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">sk_ridge</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.54656461, 0.17264768]), 1.1586812601079335)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fit with the <code class="docutils literal notranslate"><span class="pre">minimize</span></code> cost function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sos_ridge</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">calc_fitted</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="n">ss_resid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">residuals</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">penalty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">params</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ss_resid</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">penalty</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">res_ridge</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span><span class="n">sos_ridge</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">clarity_easiness</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span> <span class="n">alpha</span><span class="p">))</span>
+<span class="n">res_ridge</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.54656294, 0.17264776, 1.15868717])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-validation">
+<h2>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading">#</a></h2>
+<p>Should I add the “Easiness” regressor?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">drop_and_predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x_cols</span><span class="p">,</span> <span class="n">y_col</span><span class="p">,</span> <span class="n">to_drop</span><span class="p">):</span>
+    <span class="n">out_row</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">to_drop</span><span class="p">:</span><span class="n">to_drop</span><span class="p">]</span>  <span class="c1"># Row to drop, as a data frame</span>
+    <span class="n">out_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">to_drop</span><span class="p">)</span>  <span class="c1"># Dataframe without dropped row.</span>
+    <span class="c1"># Fit on everything but the dropped row.</span>
+    <span class="n">fit</span> <span class="o">=</span> <span class="n">sklm</span><span class="o">.</span><span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">out_df</span><span class="p">[</span><span class="n">x_cols</span><span class="p">],</span> <span class="n">out_df</span><span class="p">[</span><span class="n">y_col</span><span class="p">])</span>
+    <span class="c1"># Use fit to predict the dropped row.</span>
+    <span class="n">fitted</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">out_row</span><span class="p">[</span><span class="n">x_cols</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">fitted</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fit the larger model, with “Easiness”, and drop / predict each “Quality” value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_quality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">out_quality</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">drop_and_predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">,</span> <span class="s1">&#39;Easiness&#39;</span><span class="p">],</span> <span class="s1">&#39;Quality&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="n">out_quality</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.77931034, 3.53023709, 3.64314152, 3.92134268, 3.81136249,
+       3.43831873, 3.88174277, 3.67266156, 3.78324002, 3.43536429,
+       3.66485572, 3.76533771, 3.42561061, 3.52938394, 3.79373627,
+       3.56152824, 3.3517633 , 3.72146361, 3.73269754, 3.86182331,
+       3.69046229, 3.90370941, 3.82615466, 3.41276159, 4.0568044 ,
+       3.67053937, 3.65263929, 3.71257833, 3.63980561, 3.74369389,
+       3.74954648, 3.89141199, 3.79727406, 3.40294787, 3.68680533,
+       3.82876325, 4.07733917, 3.7886376 , 3.49500609, 3.72292865,
+       3.65268274, 3.65209873, 3.86894775, 3.81728037, 3.57493186,
+       3.8098557 , 3.67254971, 3.97224777, 3.96573333, 4.12687139,
+       3.79230418, 3.56624288, 3.60039514, 3.65574447, 3.72446441,
+       3.43037247, 3.74046306, 3.56733477, 3.9233139 , 3.94135387,
+       3.49965453, 3.95671859, 3.72074625, 3.79599233, 4.14643605,
+       3.87271041, 3.78846196, 3.99950343, 3.83318986, 3.6604274 ,
+       3.94158035, 3.66908121, 3.77203894, 3.49038196, 3.93836105])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Calculate the sum of squared error:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">quality</span> <span class="o">-</span> <span class="n">out_quality</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0506026901551455
+</pre></div>
+</div>
+</div>
+</div>
+<p>Fit the smaller model, omitting “Easiness”, and drop / predict each “Quality”
+value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">out_quality_reduced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">out_quality_reduced</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">drop_and_predict</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Clarity&#39;</span><span class="p">],</span> <span class="s1">&#39;Quality&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="n">out_quality_reduced</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([3.77912902, 3.53074255, 3.6429665 , 3.92106267, 3.80994615,
+       3.43823051, 3.88183163, 3.67281487, 3.78231668, 3.43554716,
+       3.66488182, 3.76559327, 3.42639534, 3.52890393, 3.79382903,
+       3.56117617, 3.35185776, 3.72163787, 3.73412891, 3.86151728,
+       3.69047196, 3.90393833, 3.82630465, 3.41290945, 4.05655063,
+       3.67089909, 3.65282299, 3.71277592, 3.63995841, 3.74183056,
+       3.74929852, 3.89114764, 3.79723939, 3.4025403 , 3.68668703,
+       3.82842374, 4.07749226, 3.78854876, 3.49591224, 3.72260407,
+       3.64844833, 3.65214821, 3.86899367, 3.81725609, 3.57484871,
+       3.8099755 , 3.67271543, 3.97099422, 3.96567339, 4.12702512,
+       3.79252182, 3.56741819, 3.60023445, 3.65534139, 3.72513444,
+       3.43031484, 3.7404284 , 3.56706261, 3.92326779, 3.94122807,
+       3.49933427, 3.95754844, 3.71989303, 3.79603563, 4.14800557,
+       3.87260343, 3.78927406, 3.99966928, 3.833676  , 3.66026453,
+       3.94172234, 3.6690693 , 3.77236294, 3.49004034, 3.93707413])
+</pre></div>
+</div>
+</div>
+</div>
+<p>How is the sum of squared error for this reduced model?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">quality</span> <span class="o">-</span> <span class="n">out_quality_reduced</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.04958762841051558
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "lisds/dsip",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fitted-values-and-scikit-learn">The fitted values and Scikit-learn</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-long-and-the-short-of-r-2">The long and the short of R^2^</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#r-2-for-another-reduced-model">R^2^ for another, reduced model</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-weights-and-a-weighted-mean">On weights, and a weighted mean</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model-with-minimize">Fitting the model with minimize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-with-weights">Fitting with weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#penalized-regression">Penalized regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation">Cross-validation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matthew Brett and Peter Rush
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

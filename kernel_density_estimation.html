@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>Kernel density estimation &#8212; Data Science in Practice</title>
   
@@ -19,37 +19,38 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -78,10 +79,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -122,11 +122,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -160,7 +163,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
 <ul class="nav bd-sidenav">
@@ -187,6 +201,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
 <ul class="current nav bd-sidenav">
@@ -481,7 +496,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="kernel-density-estimation">
 <h1>Kernel density estimation<a class="headerlink" href="#kernel-density-estimation" title="Permalink to this heading">#</a></h1>
@@ -493,6 +508,18 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3967/1649756431.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
 </pre></div>
 </div>
 </div>
@@ -702,48 +729,48 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>308</th>
-      <td>16.7</td>
+      <th>224</th>
+      <td>15.6</td>
     </tr>
     <tr>
-      <th>170</th>
-      <td>14.5</td>
+      <th>168</th>
+      <td>13.5</td>
     </tr>
     <tr>
-      <th>214</th>
-      <td>13.9</td>
+      <th>87</th>
+      <td>18.6</td>
     </tr>
     <tr>
-      <th>220</th>
-      <td>14.2</td>
+      <th>33</th>
+      <td>18.9</td>
     </tr>
     <tr>
-      <th>186</th>
-      <td>14.8</td>
+      <th>123</th>
+      <td>18.5</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
     </tr>
     <tr>
-      <th>263</th>
-      <td>15.9</td>
+      <th>7</th>
+      <td>19.6</td>
     </tr>
     <tr>
-      <th>162</th>
-      <td>13.7</td>
+      <th>90</th>
+      <td>18.0</td>
     </tr>
     <tr>
-      <th>159</th>
-      <td>15.3</td>
+      <th>205</th>
+      <td>15.0</td>
     </tr>
     <tr>
-      <th>145</th>
-      <td>18.7</td>
+      <th>132</th>
+      <td>18.5</td>
     </tr>
     <tr>
-      <th>87</th>
-      <td>18.6</td>
+      <th>103</th>
+      <td>20.0</td>
     </tr>
   </tbody>
 </table>
@@ -783,196 +810,224 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>308</th>
-      <td>16.7</td>
-    </tr>
-    <tr>
-      <th>286</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>292</th>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>287</th>
-      <td>20.3</td>
-    </tr>
-    <tr>
-      <th>314</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>319</th>
-      <td>17.0</td>
-    </tr>
-    <tr>
-      <th>306</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>342</th>
+      <th>327</th>
       <td>19.0</td>
     </tr>
     <tr>
-      <th>278</th>
-      <td>19.2</td>
-    </tr>
-    <tr>
-      <th>312</th>
-      <td>18.3</td>
-    </tr>
-    <tr>
-      <th>295</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>323</th>
-      <td>19.6</td>
-    </tr>
-    <tr>
-      <th>305</th>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>302</th>
-      <td>18.4</td>
-    </tr>
-    <tr>
-      <th>282</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>334</th>
-      <td>18.8</td>
-    </tr>
-    <tr>
-      <th>291</th>
-      <td>19.6</td>
-    </tr>
-    <tr>
-      <th>326</th>
-      <td>16.4</td>
-    </tr>
-    <tr>
-      <th>279</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>288</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>313</th>
-      <td>20.7</td>
-    </tr>
-    <tr>
-      <th>336</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>337</th>
-      <td>16.5</td>
-    </tr>
-    <tr>
-      <th>304</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>297</th>
-      <td>17.5</td>
+      <th>276</th>
+      <td>17.9</td>
     </tr>
     <tr>
       <th>284</th>
       <td>18.9</td>
     </tr>
     <tr>
-      <th>338</th>
-      <td>17.0</td>
-    </tr>
-    <tr>
-      <th>277</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>329</th>
-      <td>19.7</td>
-    </tr>
-    <tr>
-      <th>299</th>
-      <td>19.4</td>
-    </tr>
-    <tr>
       <th>283</th>
       <td>18.2</td>
     </tr>
     <tr>
-      <th>328</th>
-      <td>17.3</td>
+      <th>312</th>
+      <td>18.3</td>
     </tr>
     <tr>
-      <th>281</th>
-      <td>17.8</td>
+      <th>278</th>
+      <td>19.2</td>
     </tr>
     <tr>
-      <th>332</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>341</th>
+      <th>295</th>
       <td>18.2</td>
     </tr>
     <tr>
-      <th>309</th>
-      <td>18.8</td>
-    </tr>
-    <tr>
-      <th>294</th>
-      <td>18.6</td>
-    </tr>
-    <tr>
-      <th>307</th>
-      <td>20.8</td>
-    </tr>
-    <tr>
-      <th>327</th>
-      <td>19.0</td>
-    </tr>
-    <tr>
-      <th>315</th>
-      <td>19.9</td>
-    </tr>
-    <tr>
-      <th>324</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>301</th>
-      <td>19.0</td>
-    </tr>
-    <tr>
-      <th>331</th>
-      <td>18.8</td>
+      <th>292</th>
+      <td>20.0</td>
     </tr>
     <tr>
       <th>290</th>
       <td>17.1</td>
     </tr>
     <tr>
+      <th>330</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>334</th>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>338</th>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>305</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>313</th>
+      <td>20.7</td>
+    </tr>
+    <tr>
+      <th>335</th>
+      <td>19.4</td>
+    </tr>
+    <tr>
+      <th>319</th>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>291</th>
+      <td>19.6</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
       <th>280</th>
       <td>19.8</td>
     </tr>
     <tr>
-      <th>285</th>
-      <td>19.9</td>
+      <th>322</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>18.4</td>
+    </tr>
+    <tr>
+      <th>328</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>19.0</td>
     </tr>
     <tr>
       <th>317</th>
       <td>17.5</td>
     </tr>
     <tr>
+      <th>309</th>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>293</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>332</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>324</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>294</th>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>289</th>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>337</th>
+      <td>16.5</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>296</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <th>298</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>287</th>
+      <td>20.3</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>307</th>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>323</th>
+      <td>19.6</td>
+    </tr>
+    <tr>
       <th>321</th>
       <td>18.5</td>
+    </tr>
+    <tr>
+      <th>329</th>
+      <td>19.7</td>
+    </tr>
+    <tr>
+      <th>315</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>297</th>
+      <td>17.5</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>304</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>340</th>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>308</th>
+      <td>16.7</td>
     </tr>
   </tbody>
 </table>
@@ -985,7 +1040,7 @@ split the data into a test and train set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55
 </pre></div>
 </div>
 </div>
@@ -1000,7 +1055,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/51ac6af985e02be9b05174a35d9b93c796528da752d84abb5146fa8eb46cfa13.png" src="_images/51ac6af985e02be9b05174a35d9b93c796528da752d84abb5146fa8eb46cfa13.png" />
+<img alt="_images/006e04b70fd23371aa2991733c50ecd4e48ca91004e60adc00050221bcc0c31d.png" src="_images/006e04b70fd23371aa2991733c50ecd4e48ca91004e60adc00050221bcc0c31d.png" />
 </div>
 </div>
 <p>We can also mark where the actual points fall on the x-axis, like this:</p>
@@ -1015,7 +1070,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9fcd1372f67a767690ad0560f9d1e803700d743012b3d8143487e3720e17e7fa.png" src="_images/9fcd1372f67a767690ad0560f9d1e803700d743012b3d8143487e3720e17e7fa.png" />
+<img alt="_images/37ec2c830fa716cb9f69c6825ebf7d0d92180c8fbac94568cf88384f4245c0db.png" src="_images/37ec2c830fa716cb9f69c6825ebf7d0d92180c8fbac94568cf88384f4245c0db.png" />
 </div>
 </div>
 <p>Notice this histogram is rather blocky. We could try increasing the number of
@@ -1030,7 +1085,7 @@ bins, but we’ve only got 51 rows to play with:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7f13f0ae520d9e9f37fc6f011f4b34aadf2e2dd1c795664dfec2c9bc880ac3bc.png" src="_images/7f13f0ae520d9e9f37fc6f011f4b34aadf2e2dd1c795664dfec2c9bc880ac3bc.png" />
+<img alt="_images/39795eca962244f67b2940386cb287a9e5be667608f5b7fdaf3b2fa8d450d8e2.png" src="_images/39795eca962244f67b2940386cb287a9e5be667608f5b7fdaf3b2fa8d450d8e2.png" />
 </div>
 </div>
 <p>Oops - that’s even worse.  We can see that small variations in the weights are
@@ -1095,7 +1150,7 @@ distributions a standard deviation of (arbitrarily) 0.25.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d73c5e39c8c79a049f31150349ef207b0184be2554e74bc69a80609683f22280.png" src="_images/d73c5e39c8c79a049f31150349ef207b0184be2554e74bc69a80609683f22280.png" />
+<img alt="_images/0b691c86d042ecb13209a26e7c456bb1a1cd35c51f94bceef3308b74f0a3219b.png" src="_images/0b691c86d042ecb13209a26e7c456bb1a1cd35c51f94bceef3308b74f0a3219b.png" />
 </div>
 </div>
 <p>Here we’ve replaced the single point (the maximum) with a spread-out version of
@@ -1116,7 +1171,7 @@ that point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/96846fc7723acf07bcc0e1ddb5c9047e185ba31e6de65378b4ab413416d99883.png" src="_images/96846fc7723acf07bcc0e1ddb5c9047e185ba31e6de65378b4ab413416d99883.png" />
+<img alt="_images/a732c838182750ad738c01a780fee8900bd4e8720288c96e646cd6c2122a1e5c.png" src="_images/a732c838182750ad738c01a780fee8900bd4e8720288c96e646cd6c2122a1e5c.png" />
 </div>
 </div>
 <p>Finally, add up all these normal distributions:</p>
@@ -1140,7 +1195,7 @@ y-axis scaling right, but a few cells down.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a5fc3b937fab7819d2986c594caf7591171e8fa25759e73fb2c37713b636742d.png" src="_images/a5fc3b937fab7819d2986c594caf7591171e8fa25759e73fb2c37713b636742d.png" />
+<img alt="_images/caa7835cf8eadd83d340629a0b73015599441ca0e38c4462dece477eb9481647.png" src="_images/caa7835cf8eadd83d340629a0b73015599441ca0e38c4462dece477eb9481647.png" />
 </div>
 </div>
 <p>Finally, divide this curve by the area under the curve to get the kernel
@@ -1167,7 +1222,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ffd3607800772c228804b1bfecfbec365754954c44d16f074218dc73cfcf86fb.png" src="_images/ffd3607800772c228804b1bfecfbec365754954c44d16f074218dc73cfcf86fb.png" />
+<img alt="_images/cb51558142eb2e3c5f82a3bea5836259679007677450edcc58bfc6e63718aab3.png" src="_images/cb51558142eb2e3c5f82a3bea5836259679007677450edcc58bfc6e63718aab3.png" />
 </div>
 </div>
 <p>This is our kernel density estimate.</p>
@@ -1193,7 +1248,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3b01545eb7eb2a7f975a37680ddcd7777afa0c476329fa5b23989846f8f88938.png" src="_images/3b01545eb7eb2a7f975a37680ddcd7777afa0c476329fa5b23989846f8f88938.png" />
+<img alt="_images/2d4c87eb2832733fca8288d9d2281e56418b1d49e8f217cdb1639044b8767bd6.png" src="_images/2d4c87eb2832733fca8288d9d2281e56418b1d49e8f217cdb1639044b8767bd6.png" />
 </div>
 </div>
 </section>
@@ -1253,6 +1308,8 @@ density estimate.</p>
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -1272,7 +1329,7 @@ By Matthew Brett and Peter Rush
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -1296,8 +1353,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>

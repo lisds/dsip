@@ -7,7 +7,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>k-means clustering &#8212; Data Science in Practice</title>
   
@@ -19,37 +19,38 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -80,10 +81,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -124,11 +124,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -162,7 +165,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
 <ul class="nav bd-sidenav">
@@ -189,6 +203,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
 <ul class="current nav bd-sidenav">
@@ -483,7 +498,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="k-means-clustering">
 <h1>k-means clustering<a class="headerlink" href="#k-means-clustering" title="Permalink to this heading">#</a></h1>
@@ -498,6 +513,18 @@ much inspiration from that page here.</p>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3925/1677209489.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
 </pre></div>
 </div>
 </div>
@@ -651,7 +678,7 @@ each sample: the length and the width of the sepals and petals, in centimeters.<
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f69f88a4e50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f5738b4cee0&gt;
 </pre></div>
 </div>
 <img alt="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" src="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" />
@@ -980,18 +1007,18 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>1.0</td>
-      <td>4.0</td>
-    </tr>
-    <tr>
-      <th>c1</th>
       <td>1.3</td>
       <td>3.6</td>
     </tr>
     <tr>
+      <th>c1</th>
+      <td>1.8</td>
+      <td>4.8</td>
+    </tr>
+    <tr>
       <th>c2</th>
+      <td>0.2</td>
       <td>1.3</td>
-      <td>4.4</td>
     </tr>
   </tbody>
 </table>
@@ -1014,7 +1041,7 @@ D. Check.<br></p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.7202941017470885
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.459674775249769
 </pre></div>
 </div>
 </div>
@@ -1069,33 +1096,33 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2.816026</td>
       <td>2.549510</td>
-      <td>3.289377</td>
+      <td>3.848376</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2.624881</td>
       <td>2.370654</td>
-      <td>3.101612</td>
+      <td>3.667424</td>
+      <td>0.200000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1105,33 +1132,33 @@ D. Check.<br></p>
     </tr>
     <tr>
       <th>145</th>
-      <td>1.769181</td>
       <td>1.886796</td>
-      <td>1.280625</td>
+      <td>0.640312</td>
+      <td>4.429447</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>1.345362</td>
       <td>1.523155</td>
-      <td>0.848528</td>
+      <td>0.223607</td>
+      <td>4.071855</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>1.562050</td>
       <td>1.746425</td>
-      <td>1.063015</td>
+      <td>0.447214</td>
+      <td>4.295346</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>1.910497</td>
       <td>2.059126</td>
-      <td>1.414214</td>
+      <td>0.781025</td>
+      <td>4.606517</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>1.360147</td>
       <td>1.581139</td>
-      <td>0.860233</td>
+      <td>0.300000</td>
+      <td>4.123106</td>
     </tr>
   </tbody>
 </table>
@@ -1178,33 +1205,33 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2.816026</td>
       <td>2.549510</td>
-      <td>3.289377</td>
+      <td>3.848376</td>
+      <td>0.000000</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>2.624881</td>
       <td>2.370654</td>
-      <td>3.101612</td>
+      <td>3.667424</td>
+      <td>0.200000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>2.720294</td>
       <td>2.459675</td>
-      <td>3.195309</td>
+      <td>3.757659</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1214,33 +1241,33 @@ D. Check.<br></p>
     </tr>
     <tr>
       <th>145</th>
-      <td>1.769181</td>
       <td>1.886796</td>
-      <td>1.280625</td>
+      <td>0.640312</td>
+      <td>4.429447</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>1.345362</td>
       <td>1.523155</td>
-      <td>0.848528</td>
+      <td>0.223607</td>
+      <td>4.071855</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>1.562050</td>
       <td>1.746425</td>
-      <td>1.063015</td>
+      <td>0.447214</td>
+      <td>4.295346</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>1.910497</td>
       <td>2.059126</td>
-      <td>1.414214</td>
+      <td>0.781025</td>
+      <td>4.606517</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>1.360147</td>
       <td>1.581139</td>
-      <td>0.860233</td>
+      <td>0.300000</td>
+      <td>4.123106</td>
     </tr>
   </tbody>
 </table>
@@ -1286,41 +1313,41 @@ center estimates:</p>
       <th>0</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>2.7203</td>
       <td>2.4597</td>
-      <td>3.1953</td>
+      <td>3.7577</td>
+      <td>0.1000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>2.7203</td>
       <td>2.4597</td>
-      <td>3.1953</td>
+      <td>3.7577</td>
+      <td>0.1000</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.2</td>
       <td>1.3</td>
-      <td>2.8160</td>
       <td>2.5495</td>
-      <td>3.2894</td>
+      <td>3.8484</td>
+      <td>0.0000</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.2</td>
       <td>1.5</td>
-      <td>2.6249</td>
       <td>2.3707</td>
-      <td>3.1016</td>
+      <td>3.6674</td>
+      <td>0.2000</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>2.7203</td>
       <td>2.4597</td>
-      <td>3.1953</td>
+      <td>3.7577</td>
+      <td>0.1000</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1334,41 +1361,41 @@ center estimates:</p>
       <th>145</th>
       <td>2.3</td>
       <td>5.2</td>
-      <td>1.7692</td>
       <td>1.8868</td>
-      <td>1.2806</td>
+      <td>0.6403</td>
+      <td>4.4294</td>
     </tr>
     <tr>
       <th>146</th>
       <td>1.9</td>
       <td>5.0</td>
-      <td>1.3454</td>
       <td>1.5232</td>
-      <td>0.8485</td>
+      <td>0.2236</td>
+      <td>4.0719</td>
     </tr>
     <tr>
       <th>147</th>
       <td>2.0</td>
       <td>5.2</td>
-      <td>1.5620</td>
       <td>1.7464</td>
-      <td>1.0630</td>
+      <td>0.4472</td>
+      <td>4.2953</td>
     </tr>
     <tr>
       <th>148</th>
       <td>2.3</td>
       <td>5.4</td>
-      <td>1.9105</td>
       <td>2.0591</td>
-      <td>1.4142</td>
+      <td>0.7810</td>
+      <td>4.6065</td>
     </tr>
     <tr>
       <th>149</th>
       <td>1.8</td>
       <td>5.1</td>
-      <td>1.3601</td>
       <td>1.5811</td>
-      <td>0.8602</td>
+      <td>0.3000</td>
+      <td>4.1231</td>
     </tr>
   </tbody>
 </table>
@@ -1387,17 +1414,17 @@ the point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c1
-1      c1
-2      c1
-3      c1
-4      c1
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c2
+1      c2
+2      c2
+3      c2
+4      c2
        ..
-145    c2
-146    c2
-147    c2
-148    c2
-149    c2
+145    c1
+146    c1
+147    c1
+148    c1
+149    c1
 Length: 150, dtype: object
 </pre></div>
 </div>
@@ -1439,18 +1466,18 @@ just allocated to each cluster.</p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>1.150000</td>
-      <td>3.940000</td>
+      <td>1.192000</td>
+      <td>3.884000</td>
     </tr>
     <tr>
       <th>c1</th>
-      <td>0.350877</td>
-      <td>1.707018</td>
+      <td>1.837333</td>
+      <td>5.246667</td>
     </tr>
     <tr>
       <th>c2</th>
-      <td>1.786747</td>
-      <td>5.145783</td>
+      <td>0.244000</td>
+      <td>1.464000</td>
     </tr>
   </tbody>
 </table>
@@ -1958,6 +1985,8 @@ same - in which case, we have finished the search, and we can stop.</p>
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -1977,7 +2006,7 @@ By Matthew Brett and Peter Rush
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -2001,8 +2030,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
