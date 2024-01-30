@@ -99,7 +99,7 @@ def calc_fitted(params, X):
     return fitted + params[-1]
 ```
 
-Compile Sklearn parameters, and use these to calculated fitted values with our function.  Compare, to show they are (near as dammit) similar.
+Compile Sklearn parameters, and use these to calculate fitted values with our function.  Compare, to show they are (near as dammit) similar.
 
 ```{python}
 params = list(sk_fit.coef_) + [sk_fit.intercept_]
@@ -110,19 +110,37 @@ params
 assert np.allclose(calc_fitted(params, clarity_easiness), fitted)
 ```
 
-## The long and the short of R^2^
+## The long and the short of $R^2$
 
-Sklearn has an `r2_score` metric.
+$R^2$ can also be called the [coefficient of deterimination](https://en.wikipedia.org/wiki/Coefficient_of_determination) Sklearn has an `r2_score` metric.
 
 ```{python}
 skmetrics.r2_score(quality, fitted)
 ```
 
-We already know the formula for R^2^.  We can calculate by hand to show this gives the same answer.
+We already know the formula for $R^2$.   If $f_i$ is the *fitted* value for observation $i$, then the residual error $e_i$ for observation $i$ is $y_i - f_i$, and the residual sum of squares is the sum of squares of the residuals: 
+
+$$
+SS_\text{res}=\sum_i (y_i - f_i)^2=\sum_i e_i^2\
+$$
+
+Write the mean of the observed values $y$ as $\bar{y}$.   Then the total sum of squares is:
+
+$$
+SS_\text{tot}=\sum_i (y_i - \bar{y})^2
+$$
+
+and
+
+$$
+R^2 = 1 - {SS_{\rm res}\over SS_{\rm tot}}
+$$
+
+We can calculate by hand to show this gives the same answer.
 
 ```{python}
-ss_around_mean = ((quality - quality.mean()) ** 2).sum()
-ss_around_mean
+ss_total = ((quality - quality.mean()) ** 2).sum()
+ss_total
 ```
 
 ```{python}
@@ -133,10 +151,10 @@ ss_residuals
 
 ```{python}
 # Calculate R2
-1 - ss_residuals / ss_around_mean
+1 - ss_residuals / ss_total
 ```
 
-### R^2^ for another, reduced model
+### $R^2$ for another, reduced model
 
 Fit a reduced model that is just "Clarity" without "Easiness".
 
@@ -146,7 +164,7 @@ reduced_fit = sklm.LinearRegression().fit(clarity_df, quality)
 reduced_fit.coef_, reduced_fit.intercept_
 ```
 
-Calculate R^2^ for reduced model as compared to our full model.
+Calculate $R^2$ for reduced model as compared to our full model.
 
 ```{python}
 reduced_resid = quality - reduced_fit.predict(clarity_df)
@@ -304,7 +322,9 @@ def sos_ridge(params, X, y, alpha):
 
 ```{python}
 alpha = 1.0
-res_ridge = minimize(sos_ridge, [0, 0, 0], args=(clarity_easiness, quality, alpha))
+# Set solver method and tolerance to get very close to sklearn value.
+res_ridge = minimize(sos_ridge, [0, 0, 0], args=(clarity_easiness, quality, alpha),
+                     method='powell', tol=1e-10)
 res_ridge.x
 ```
 
@@ -377,22 +397,22 @@ res_lasso.x
 Should I add the "Easiness" regressor?
 
 ```{python}
-def drop_and_predict(df, x_cols, y_col, to_drop):
-    out_row = df.loc[to_drop:to_drop]  # Row to drop, as a data frame
-    out_df = df.drop(index=to_drop)  # Dataframe without dropped row.
+def drop_and_predict(df, x_cols, y_col, to_drop_label):
+    dropped_df = df.loc[to_drop_label:to_drop_label]  # Get data frame with single row.
+    rest_df = df.drop(index=to_drop_label)  # Dataframe without dropped row.
     # Fit on everything but the dropped row.
-    fit = sklm.LinearRegression().fit(out_df[x_cols], out_df[y_col])
+    fit = sklm.LinearRegression().fit(rest_df[x_cols], rest_df[y_col])
     # Use fit to predict the dropped row.
-    fitted = fit.predict(out_row[x_cols])
+    fitted = fit.predict(dropped_df[x_cols])
     return fitted[0]
 ```
 
 Fit the larger model, with "Easiness", and drop / predict each "Quality" value.
 
 ```{python}
-out_quality = np.zeros(n)
-for i in range(n):
-    out_quality[i] = drop_and_predict(df, ['Clarity', 'Easiness'], 'Quality', i)
+out_quality = quality.copy().rename('large_prediction')
+for label in df.index:
+    out_quality.loc[label] = drop_and_predict(df, ['Clarity', 'Easiness'], 'Quality', label)
 out_quality
 ```
 
@@ -406,9 +426,9 @@ Fit the smaller model, omitting "Easiness", and drop / predict each "Quality"
 value.
 
 ```{python}
-out_quality_reduced = np.zeros(n)
-for i in range(n):
-    out_quality_reduced[i] = drop_and_predict(df, ['Clarity'], 'Quality', i)
+out_quality_reduced = quality.copy().rename('reduced_prediction')
+for label in df.index:
+    out_quality_reduced.loc[label] = drop_and_predict(df, ['Clarity'], 'Quality', label)
 out_quality_reduced
 ```
 

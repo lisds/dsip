@@ -517,7 +517,7 @@ much inspiration from that page here.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3636/1677209489.py:2: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3661/1677209489.py:2: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -678,7 +678,7 @@ each sample: the length and the width of the sepals and petals, in centimeters.<
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f14a074dfa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f8d25a7eb20&gt;
 </pre></div>
 </div>
 <img alt="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" src="_images/d7510bd068f0e7f24764f6f5e5fa8a480c1058d9899a6922f86dd5cbe9468542.png" />
@@ -849,31 +849,31 @@ similar to the clusters by species.</p>
       <th>0</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.2</td>
       <td>1.3</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.2</td>
       <td>1.5</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -885,31 +885,31 @@ similar to the clusters by species.</p>
       <th>145</th>
       <td>2.3</td>
       <td>5.2</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>146</th>
       <td>1.9</td>
       <td>5.0</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>147</th>
       <td>2.0</td>
       <td>5.2</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>148</th>
       <td>2.3</td>
       <td>5.4</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>149</th>
       <td>1.8</td>
       <td>5.1</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
   </tbody>
 </table>
@@ -924,9 +924,9 @@ similar to the clusters by species.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.244     , 1.464     ],
-       [2.0375    , 5.59583333],
-       [1.34230769, 4.26923077]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.34230769, 4.26923077],
+       [0.244     , 1.464     ],
+       [2.0375    , 5.59583333]])
 </pre></div>
 </div>
 </div>
@@ -946,7 +946,7 @@ species labels, that we have not used here.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/09c8c99fe2c9e7ce8a79d47a6b9529b869ae9479bc3001977a1c86af86334e03.png" src="_images/09c8c99fe2c9e7ce8a79d47a6b9529b869ae9479bc3001977a1c86af86334e03.png" />
+<img alt="_images/6c64b39302fb19f0d82e1c15e4d26f948ebb74c86be0c1c51b8f0590db57320b.png" src="_images/6c64b39302fb19f0d82e1c15e4d26f948ebb74c86be0c1c51b8f0590db57320b.png" />
 </div>
 </div>
 <p>The algorithm of k-means is as follows.  We specify we want <span class="math notranslate nohighlight">\(k\)</span> clusters, then:</p>
@@ -1007,18 +1007,18 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>0.2</td>
-      <td>1.2</td>
+      <td>2.3</td>
+      <td>6.9</td>
     </tr>
     <tr>
       <th>c1</th>
-      <td>1.2</td>
-      <td>4.2</td>
+      <td>2.0</td>
+      <td>5.2</td>
     </tr>
     <tr>
       <th>c2</th>
+      <td>0.1</td>
       <td>1.5</td>
-      <td>4.9</td>
     </tr>
   </tbody>
 </table>
@@ -1041,7 +1041,7 @@ D. Check.<br></p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.19999999999999996
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.88727441181401
 </pre></div>
 </div>
 </div>
@@ -1096,33 +1096,33 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.100000</td>
-      <td>3.067572</td>
-      <td>3.827532</td>
+      <td>5.980803</td>
+      <td>4.295346</td>
+      <td>0.223607</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.300000</td>
-      <td>2.879236</td>
-      <td>3.640055</td>
+      <td>5.793962</td>
+      <td>4.114608</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1132,33 +1132,33 @@ D. Check.<br></p>
     </tr>
     <tr>
       <th>145</th>
-      <td>4.517743</td>
-      <td>1.486607</td>
-      <td>0.854400</td>
+      <td>1.700000</td>
+      <td>0.300000</td>
+      <td>4.304649</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>4.162932</td>
-      <td>1.063015</td>
-      <td>0.412311</td>
+      <td>1.941649</td>
+      <td>0.223607</td>
+      <td>3.935734</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>4.386342</td>
-      <td>1.280625</td>
-      <td>0.583095</td>
+      <td>1.726268</td>
+      <td>0.000000</td>
+      <td>4.159327</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>4.695743</td>
-      <td>1.627882</td>
-      <td>0.943398</td>
+      <td>1.500000</td>
+      <td>0.360555</td>
+      <td>4.477723</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>4.215448</td>
-      <td>1.081665</td>
-      <td>0.360555</td>
+      <td>1.868154</td>
+      <td>0.223607</td>
+      <td>3.981206</td>
     </tr>
   </tbody>
 </table>
@@ -1205,33 +1205,33 @@ D. Check.<br></p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.100000</td>
-      <td>3.067572</td>
-      <td>3.827532</td>
+      <td>5.980803</td>
+      <td>4.295346</td>
+      <td>0.223607</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.300000</td>
-      <td>2.879236</td>
-      <td>3.640055</td>
+      <td>5.793962</td>
+      <td>4.114608</td>
+      <td>0.100000</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.200000</td>
-      <td>2.973214</td>
-      <td>3.733631</td>
+      <td>5.887274</td>
+      <td>4.204759</td>
+      <td>0.141421</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1241,33 +1241,33 @@ D. Check.<br></p>
     </tr>
     <tr>
       <th>145</th>
-      <td>4.517743</td>
-      <td>1.486607</td>
-      <td>0.854400</td>
+      <td>1.700000</td>
+      <td>0.300000</td>
+      <td>4.304649</td>
     </tr>
     <tr>
       <th>146</th>
-      <td>4.162932</td>
-      <td>1.063015</td>
-      <td>0.412311</td>
+      <td>1.941649</td>
+      <td>0.223607</td>
+      <td>3.935734</td>
     </tr>
     <tr>
       <th>147</th>
-      <td>4.386342</td>
-      <td>1.280625</td>
-      <td>0.583095</td>
+      <td>1.726268</td>
+      <td>0.000000</td>
+      <td>4.159327</td>
     </tr>
     <tr>
       <th>148</th>
-      <td>4.695743</td>
-      <td>1.627882</td>
-      <td>0.943398</td>
+      <td>1.500000</td>
+      <td>0.360555</td>
+      <td>4.477723</td>
     </tr>
     <tr>
       <th>149</th>
-      <td>4.215448</td>
-      <td>1.081665</td>
-      <td>0.360555</td>
+      <td>1.868154</td>
+      <td>0.223607</td>
+      <td>3.981206</td>
     </tr>
   </tbody>
 </table>
@@ -1313,41 +1313,41 @@ center estimates:</p>
       <th>0</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0.2000</td>
-      <td>2.9732</td>
-      <td>3.7336</td>
+      <td>5.8873</td>
+      <td>4.2048</td>
+      <td>0.1414</td>
     </tr>
     <tr>
       <th>1</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0.2000</td>
-      <td>2.9732</td>
-      <td>3.7336</td>
+      <td>5.8873</td>
+      <td>4.2048</td>
+      <td>0.1414</td>
     </tr>
     <tr>
       <th>2</th>
       <td>0.2</td>
       <td>1.3</td>
-      <td>0.1000</td>
-      <td>3.0676</td>
-      <td>3.8275</td>
+      <td>5.9808</td>
+      <td>4.2953</td>
+      <td>0.2236</td>
     </tr>
     <tr>
       <th>3</th>
       <td>0.2</td>
       <td>1.5</td>
-      <td>0.3000</td>
-      <td>2.8792</td>
-      <td>3.6401</td>
+      <td>5.7940</td>
+      <td>4.1146</td>
+      <td>0.1000</td>
     </tr>
     <tr>
       <th>4</th>
       <td>0.2</td>
       <td>1.4</td>
-      <td>0.2000</td>
-      <td>2.9732</td>
-      <td>3.7336</td>
+      <td>5.8873</td>
+      <td>4.2048</td>
+      <td>0.1414</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1361,41 +1361,41 @@ center estimates:</p>
       <th>145</th>
       <td>2.3</td>
       <td>5.2</td>
-      <td>4.5177</td>
-      <td>1.4866</td>
-      <td>0.8544</td>
+      <td>1.7000</td>
+      <td>0.3000</td>
+      <td>4.3046</td>
     </tr>
     <tr>
       <th>146</th>
       <td>1.9</td>
       <td>5.0</td>
-      <td>4.1629</td>
-      <td>1.0630</td>
-      <td>0.4123</td>
+      <td>1.9416</td>
+      <td>0.2236</td>
+      <td>3.9357</td>
     </tr>
     <tr>
       <th>147</th>
       <td>2.0</td>
       <td>5.2</td>
-      <td>4.3863</td>
-      <td>1.2806</td>
-      <td>0.5831</td>
+      <td>1.7263</td>
+      <td>0.0000</td>
+      <td>4.1593</td>
     </tr>
     <tr>
       <th>148</th>
       <td>2.3</td>
       <td>5.4</td>
-      <td>4.6957</td>
-      <td>1.6279</td>
-      <td>0.9434</td>
+      <td>1.5000</td>
+      <td>0.3606</td>
+      <td>4.4777</td>
     </tr>
     <tr>
       <th>149</th>
       <td>1.8</td>
       <td>5.1</td>
-      <td>4.2154</td>
-      <td>1.0817</td>
-      <td>0.3606</td>
+      <td>1.8682</td>
+      <td>0.2236</td>
+      <td>3.9812</td>
     </tr>
   </tbody>
 </table>
@@ -1414,17 +1414,17 @@ the point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c0
-1      c0
-2      c0
-3      c0
-4      c0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      c2
+1      c2
+2      c2
+3      c2
+4      c2
        ..
-145    c2
-146    c2
-147    c2
-148    c2
-149    c2
+145    c1
+146    c1
+147    c1
+148    c1
+149    c1
 Length: 150, dtype: object
 </pre></div>
 </div>
@@ -1466,18 +1466,18 @@ just allocated to each cluster.</p>
   <tbody>
     <tr>
       <th>c0</th>
-      <td>0.244000</td>
-      <td>1.464000</td>
+      <td>2.160000</td>
+      <td>6.390000</td>
     </tr>
     <tr>
       <th>c1</th>
-      <td>1.213333</td>
-      <td>3.973333</td>
+      <td>1.642529</td>
+      <td>4.794253</td>
     </tr>
     <tr>
       <th>c2</th>
-      <td>1.874286</td>
-      <td>5.305714</td>
+      <td>0.288679</td>
+      <td>1.562264</td>
     </tr>
   </tbody>
 </table>
@@ -1872,9 +1872,9 @@ same - in which case, we have finished the search, and we can stop.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.244     , 1.464     ],
-       [2.0375    , 5.59583333],
-       [1.34230769, 4.26923077]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1.34230769, 4.26923077],
+       [0.244     , 1.464     ],
+       [2.0375    , 5.59583333]])
 </pre></div>
 </div>
 </div>
