@@ -202,6 +202,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix_notation.html">Expressing the linear model with matrices</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
 <ul class="current nav bd-sidenav">
@@ -512,7 +513,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3707/1649756431.py:2: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3721/1649756431.py:2: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -729,48 +730,48 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>171</th>
-      <td>15.1</td>
+      <th>273</th>
+      <td>15.7</td>
     </tr>
     <tr>
-      <th>229</th>
-      <td>16.3</td>
+      <th>161</th>
+      <td>15.4</td>
     </tr>
     <tr>
-      <th>18</th>
-      <td>18.4</td>
+      <th>189</th>
+      <td>17.3</td>
     </tr>
     <tr>
-      <th>262</th>
-      <td>15.2</td>
+      <th>241</th>
+      <td>17.0</td>
     </tr>
     <tr>
-      <th>289</th>
-      <td>18.1</td>
+      <th>287</th>
+      <td>20.3</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
     </tr>
     <tr>
-      <th>334</th>
-      <td>18.8</td>
+      <th>134</th>
+      <td>17.6</td>
     </tr>
     <tr>
-      <th>42</th>
+      <th>216</th>
+      <td>14.2</td>
+    </tr>
+    <tr>
+      <th>321</th>
       <td>18.5</td>
     </tr>
     <tr>
-      <th>269</th>
-      <td>16.2</td>
+      <th>108</th>
+      <td>17.0</td>
     </tr>
     <tr>
-      <th>330</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>278</th>
-      <td>19.2</td>
+      <th>314</th>
+      <td>16.6</td>
     </tr>
   </tbody>
 </table>
@@ -810,208 +811,236 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>289</th>
-      <td>18.1</td>
-    </tr>
-    <tr>
-      <th>276</th>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>316</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>324</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>341</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>315</th>
-      <td>19.9</td>
-    </tr>
-    <tr>
-      <th>317</th>
-      <td>17.5</td>
-    </tr>
-    <tr>
-      <th>277</th>
-      <td>19.5</td>
+      <th>287</th>
+      <td>20.3</td>
     </tr>
     <tr>
       <th>309</th>
       <td>18.8</td>
     </tr>
     <tr>
-      <th>297</th>
-      <td>17.5</td>
-    </tr>
-    <tr>
-      <th>313</th>
-      <td>20.7</td>
-    </tr>
-    <tr>
-      <th>335</th>
-      <td>19.4</td>
-    </tr>
-    <tr>
-      <th>329</th>
-      <td>19.7</td>
-    </tr>
-    <tr>
-      <th>305</th>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>286</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>279</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>296</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>306</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>290</th>
-      <td>17.1</td>
-    </tr>
-    <tr>
-      <th>319</th>
-      <td>17.0</td>
-    </tr>
-    <tr>
-      <th>338</th>
-      <td>17.0</td>
-    </tr>
-    <tr>
       <th>322</th>
       <td>17.9</td>
     </tr>
     <tr>
-      <th>285</th>
-      <td>19.9</td>
+      <th>302</th>
+      <td>18.4</td>
     </tr>
     <tr>
-      <th>343</th>
+      <th>318</th>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>324</th>
       <td>18.7</td>
-    </tr>
-    <tr>
-      <th>288</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>325</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>312</th>
-      <td>18.3</td>
-    </tr>
-    <tr>
-      <th>331</th>
-      <td>18.8</td>
-    </tr>
-    <tr>
-      <th>323</th>
-      <td>19.6</td>
-    </tr>
-    <tr>
-      <th>295</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>337</th>
-      <td>16.5</td>
-    </tr>
-    <tr>
-      <th>307</th>
-      <td>20.8</td>
-    </tr>
-    <tr>
-      <th>320</th>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>339</th>
-      <td>19.8</td>
-    </tr>
-    <tr>
-      <th>283</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>281</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>293</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>314</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>301</th>
-      <td>19.0</td>
-    </tr>
-    <tr>
-      <th>336</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>300</th>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>342</th>
-      <td>19.0</td>
-    </tr>
-    <tr>
-      <th>294</th>
-      <td>18.6</td>
-    </tr>
-    <tr>
-      <th>326</th>
-      <td>16.4</td>
-    </tr>
-    <tr>
-      <th>282</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>332</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>303</th>
-      <td>19.0</td>
     </tr>
     <tr>
       <th>311</th>
       <td>16.8</td>
     </tr>
     <tr>
-      <th>334</th>
-      <td>18.8</td>
+      <th>317</th>
+      <td>17.5</td>
     </tr>
     <tr>
-      <th>330</th>
+      <th>292</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>320</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>291</th>
+      <td>19.6</td>
+    </tr>
+    <tr>
+      <th>281</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>307</th>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>319</th>
+      <td>17.0</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>328</th>
       <td>17.3</td>
+    </tr>
+    <tr>
+      <th>294</th>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>315</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>18.9</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <th>335</th>
+      <td>19.4</td>
+    </tr>
+    <tr>
+      <th>308</th>
+      <td>16.7</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>312</th>
+      <td>18.3</td>
+    </tr>
+    <tr>
+      <th>293</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>332</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>327</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>280</th>
+      <td>19.8</td>
+    </tr>
+    <tr>
+      <th>343</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>299</th>
+      <td>19.4</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>19.5</td>
     </tr>
     <tr>
       <th>278</th>
       <td>19.2</td>
+    </tr>
+    <tr>
+      <th>289</th>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>342</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>329</th>
+      <td>19.7</td>
+    </tr>
+    <tr>
+      <th>301</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>304</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>305</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>323</th>
+      <td>19.6</td>
+    </tr>
+    <tr>
+      <th>325</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>298</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>326</th>
+      <td>16.4</td>
+    </tr>
+    <tr>
+      <th>288</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>341</th>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <th>334</th>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>282</th>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <th>290</th>
+      <td>17.1</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>337</th>
+      <td>16.5</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>321</th>
+      <td>18.5</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>16.6</td>
     </tr>
   </tbody>
 </table>
@@ -1024,7 +1053,7 @@ split the data into a test and train set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>51
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>58
 </pre></div>
 </div>
 </div>
@@ -1039,7 +1068,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7c04505dfe11b4de09b9d79b3990b51fe24320a1c71fdd66856484b777552ed1.png" src="_images/7c04505dfe11b4de09b9d79b3990b51fe24320a1c71fdd66856484b777552ed1.png" />
+<img alt="_images/7434a6937bd2cf985fbd52e80c426e1f1a848a124ffdba919fb7bddb542f920f.png" src="_images/7434a6937bd2cf985fbd52e80c426e1f1a848a124ffdba919fb7bddb542f920f.png" />
 </div>
 </div>
 <p>We can also mark where the actual points fall on the x-axis, like this:</p>
@@ -1054,7 +1083,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b2db3dd70438889dec3d767da7dcd15f56a050177eb17ed25cdca834e03b772b.png" src="_images/b2db3dd70438889dec3d767da7dcd15f56a050177eb17ed25cdca834e03b772b.png" />
+<img alt="_images/f19dc51cebd903e78b2044ae24843a148b8d72c296ff341fa2d6608bf5cd08e4.png" src="_images/f19dc51cebd903e78b2044ae24843a148b8d72c296ff341fa2d6608bf5cd08e4.png" />
 </div>
 </div>
 <p>Notice this histogram is rather blocky. We could try increasing the number of
@@ -1069,7 +1098,7 @@ bins, but we’ve only got 51 rows to play with:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/be4fc8ba295017dc1a5708282460f81cc887c30d92b65efe9669807d594d7988.png" src="_images/be4fc8ba295017dc1a5708282460f81cc887c30d92b65efe9669807d594d7988.png" />
+<img alt="_images/f76b632f0695e7b910f334648c13d06e8723dcb875d66a3e5de4f61c7a2a35ec.png" src="_images/f76b632f0695e7b910f334648c13d06e8723dcb875d66a3e5de4f61c7a2a35ec.png" />
 </div>
 </div>
 <p>Oops - that’s even worse.  We can see that small variations in the weights are
@@ -1134,7 +1163,7 @@ distributions a standard deviation of (arbitrarily) 0.25.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f45de2f5d325fa8d8344a27ae19b07e0588ee82d56efa2a7f546135da0872d24.png" src="_images/f45de2f5d325fa8d8344a27ae19b07e0588ee82d56efa2a7f546135da0872d24.png" />
+<img alt="_images/0c3a3aff61533ba60e3a80d4c88f37f351210097497abcd805421f278a7fbbc8.png" src="_images/0c3a3aff61533ba60e3a80d4c88f37f351210097497abcd805421f278a7fbbc8.png" />
 </div>
 </div>
 <p>Here we’ve replaced the single point (the maximum) with a spread-out version of
@@ -1155,7 +1184,7 @@ that point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2df57c671e7d29c86fb2bec2f02ccaeebf44cd4b48c6a50117b3c7fc6eab5aee.png" src="_images/2df57c671e7d29c86fb2bec2f02ccaeebf44cd4b48c6a50117b3c7fc6eab5aee.png" />
+<img alt="_images/1033aad17f6efa55d6f1cdfcd64f71d450deeda53be7876d0ae6bb091df84bad.png" src="_images/1033aad17f6efa55d6f1cdfcd64f71d450deeda53be7876d0ae6bb091df84bad.png" />
 </div>
 </div>
 <p>Finally, add up all these normal distributions:</p>
@@ -1179,7 +1208,7 @@ y-axis scaling right, but a few cells down.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7d1f243b3a961fa95e3ac1fbdc60a76c0763198b43d30e41362f320b5159f7af.png" src="_images/7d1f243b3a961fa95e3ac1fbdc60a76c0763198b43d30e41362f320b5159f7af.png" />
+<img alt="_images/385dced43e2122032e478a98c18a41f1717f21b9e853996e56457da553f3772e.png" src="_images/385dced43e2122032e478a98c18a41f1717f21b9e853996e56457da553f3772e.png" />
 </div>
 </div>
 <p>Finally, divide this curve by the area under the curve to get the kernel
@@ -1206,7 +1235,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3e6eec7236272bcd06c942aa39b3ab4f917a206baae95eb6c6821a7f44e1e7ae.png" src="_images/3e6eec7236272bcd06c942aa39b3ab4f917a206baae95eb6c6821a7f44e1e7ae.png" />
+<img alt="_images/8ac7da414022a243588a647991546f5e3a83bbc95d62db97c6025d70423b5cce.png" src="_images/8ac7da414022a243588a647991546f5e3a83bbc95d62db97c6025d70423b5cce.png" />
 </div>
 </div>
 <p>This is our kernel density estimate.</p>
@@ -1232,7 +1261,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/11b1de94f23fa93de0575890b0dc2367b36d6c24da47692a79bd118e4f8af61b.png" src="_images/11b1de94f23fa93de0575890b0dc2367b36d6c24da47692a79bd118e4f8af61b.png" />
+<img alt="_images/2ddf1107cf86978bc76717e5270aaa41b8ea3b964cd16347ba85c27bb9427e7e.png" src="_images/2ddf1107cf86978bc76717e5270aaa41b8ea3b964cd16347ba85c27bb9427e7e.png" />
 </div>
 </div>
 </section>
