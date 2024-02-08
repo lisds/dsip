@@ -57,11 +57,7 @@
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -203,7 +199,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost_functions.html">Fitting models with different cost functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix_notation.html">Expressing the linear model with matrices</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
@@ -527,7 +523,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3528/3969618163.py:2: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3545/3969618163.py:2: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
@@ -1050,7 +1046,7 @@ we’re investigating, along with the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7f36216b2c50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7fb6d4affc50&gt;
 </pre></div>
 </div>
 </div>
@@ -1065,7 +1061,7 @@ model to calculate the least-squares parameters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7f36216bee90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7fb6d4aeec50&gt;
 </pre></div>
 </div>
 </div>
@@ -1091,10 +1087,10 @@ display of the parameters and other calculations from the fit.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   14.53</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 01 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00128</td>
+  <th>Date:</th>             <td>Thu, 08 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00128</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>13:58:09</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
+  <th>Time:</th>                 <td>09:51:37</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   188.7</td>
@@ -1315,7 +1311,7 @@ display of the parameters and other calculations from the fit.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f361f216d10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb6d4ab7190&gt;
 </pre></div>
 </div>
 <img alt="_images/d38865e0727240939b178cc9f735540c55973abe322fab35328ce572bc32319f.png" src="_images/d38865e0727240939b178cc9f735540c55973abe322fab35328ce572bc32319f.png" />
@@ -1342,10 +1338,10 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   21.94</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 01 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>0.000185</td>
+  <th>Date:</th>             <td>Thu, 08 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>0.000185</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>13:58:09</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
+  <th>Time:</th>                 <td>09:51:38</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   184.6</td>
@@ -1405,10 +1401,10 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   8.934</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 01 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00787</td>
+  <th>Date:</th>             <td>Thu, 08 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00787</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>13:58:09</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
+  <th>Time:</th>                 <td>09:51:38</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   192.5</td>
@@ -1582,10 +1578,10 @@ function.  We found that both <code class="docutils literal notranslate"><span c
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   13.85</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 01 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>0.000270</td>
+  <th>Date:</th>             <td>Thu, 08 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>0.000270</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>13:58:09</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
+  <th>Time:</th>                 <td>09:51:38</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   183.3</td>
@@ -2180,10 +2176,10 @@ dtype: float64
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   0.000</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Thu, 01 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>  1.00</td> 
+  <th>Date:</th>             <td>Thu, 08 Feb 2024</td> <th>  Prob (F-statistic):</th>  <td>  1.00</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>13:58:09</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
+  <th>Time:</th>                 <td>09:51:38</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   181.3</td>

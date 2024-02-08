@@ -57,11 +57,7 @@
     <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'arrays_and_images';</script>
     <link rel="canonical" href="https://lisds.github.io/dsip/arrays_and_images.html" />
@@ -201,7 +197,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="weighted_least_squares.html">Fitting models with different cost functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost_functions.html">Fitting models with different cost functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrix_notation.html">Expressing the linear model with matrices</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
@@ -555,7 +551,7 @@ the number of <em>columns</em>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff05ba13950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ebcc0ab90&gt;
 </pre></div>
 </div>
 <img alt="_images/4815515ffebd33dfe7edd89e09a6fde4f3cac18d70ed238976b5e65c9c623eea.png" src="_images/4815515ffebd33dfe7edd89e09a6fde4f3cac18d70ed238976b5e65c9c623eea.png" />
@@ -575,7 +571,7 @@ to show the colormap:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7ff05bab2a10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f1ebcc79710&gt;
 </pre></div>
 </div>
 <img alt="_images/4460afd2234c08e8ba62cf5874886dcf497f2be8046ae1a819e5d0d38b559e29.png" src="_images/4460afd2234c08e8ba62cf5874886dcf497f2be8046ae1a819e5d0d38b559e29.png" />
@@ -591,7 +587,7 @@ to show the colormap:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7ff05b9fb150&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f1ebcb20d90&gt;
 </pre></div>
 </div>
 <img alt="_images/94f147c3af11713abe8221aa26213e50e09f9a2c927b1b0cabd3bed868d4d8e4.png" src="_images/94f147c3af11713abe8221aa26213e50e09f9a2c927b1b0cabd3bed868d4d8e4.png" />
@@ -619,7 +615,7 @@ for the <em>rest of this session</em>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7ff05980a750&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f1ebca11710&gt;
 </pre></div>
 </div>
 <img alt="_images/94f147c3af11713abe8221aa26213e50e09f9a2c927b1b0cabd3bed868d4d8e4.png" src="_images/94f147c3af11713abe8221aa26213e50e09f9a2c927b1b0cabd3bed868d4d8e4.png" />
@@ -686,7 +682,7 @@ for the <code class="docutils literal notranslate"><span class="pre">x</span></c
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff05bbcd610&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f1ebcae7050&gt;]
 </pre></div>
 </div>
 <img alt="_images/952c0347f10a55a28436b20c2f71cfdfb8659e12b54626a34810d9f18e42bf94.png" src="_images/952c0347f10a55a28436b20c2f71cfdfb8659e12b54626a34810d9f18e42bf94.png" />
@@ -705,7 +701,7 @@ assume we mean the x values to be <code class="docutils literal notranslate"><sp
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff05b98de90&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f1ebc91dc90&gt;]
 </pre></div>
 </div>
 <img alt="_images/952c0347f10a55a28436b20c2f71cfdfb8659e12b54626a34810d9f18e42bf94.png" src="_images/952c0347f10a55a28436b20c2f71cfdfb8659e12b54626a34810d9f18e42bf94.png" />
@@ -742,7 +738,7 @@ of flipping the rows and columns (in 2D):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff05972aa90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ebc9d9c50&gt;
 </pre></div>
 </div>
 <img alt="_images/35bbd8f990f2638938957d564d57cb5113b74ecab014e66a13360faa9511d207.png" src="_images/35bbd8f990f2638938957d564d57cb5113b74ecab014e66a13360faa9511d207.png" />
@@ -889,7 +885,7 @@ many bins you want with the <code class="docutils literal notranslate"><span cla
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff0593d9bd0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ebc7f1c50&gt;
 </pre></div>
 </div>
 <img alt="_images/c10522549c9b79256f412cd791e6010b4019548c745d5e0cfef85b33c11ab843.png" src="_images/c10522549c9b79256f412cd791e6010b4019548c745d5e0cfef85b33c11ab843.png" />
@@ -960,7 +956,7 @@ binarizing the image at a threshold (of 50 in this case):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff0596a9b10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ebc69d110&gt;
 </pre></div>
 </div>
 <img alt="_images/4981a54769c3a03ae9b584171c6582c065b06bf47ea1be3825761459449e70ea.png" src="_images/4981a54769c3a03ae9b584171c6582c065b06bf47ea1be3825761459449e70ea.png" />
@@ -978,7 +974,7 @@ that we want to the top 4 rows, and the last 5 columns:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff0594b6910&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1ebc6c9c50&gt;
 </pre></div>
 </div>
 <img alt="_images/e96e164c4cb08455686b911d0ad328b73643733cb3476b51128f396931f0ad1f.png" src="_images/e96e164c4cb08455686b911d0ad328b73643733cb3476b51128f396931f0ad1f.png" />
