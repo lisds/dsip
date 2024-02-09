@@ -629,7 +629,7 @@ Anything multiplied by 0 equals 0, so this effectively "switches off" the probab
 
 $\Large 0.4 * 1 + 0 $
 
-Adding 0 is redundent, this simplifies to:
+Adding 0 is redundant, this simplifies to:
 
 $\Large 0.4 * 1$
 
@@ -708,9 +708,9 @@ def mll_logit_cost_one_predictor(intercept_and_slope, x1, y):
                                                                                                           # happens
     # Use logs to calculate log of the likelihood
     log_likelihood = np.sum(np.log(predicted_probability_of_actual_score))  # here we take the log of the likelihood
-    
+
     # Ask minimize to find maximum by adding minus sign.
-    return -log_likelihood                               # <--- here we convert the likelihood (where higher is better) to *loss* (wehre lower is better)
+    return -log_likelihood                               # <--- here we convert the likelihood (where higher is better) to *loss* (where lower is better)
 ```
 
 ## Logistic regression in 3D (i.e. with two predictors)
@@ -924,7 +924,7 @@ There are actually lots of "pseudo-R Squared"'s for logistic regression ([see he
 
 On the basis of the Pseudo R-squared reported by `statsmodels`, we should prefer the two predictor model.
 
-However, for clarity, we'll focus on one of the pseudo-R squared metrics called "Count R Squared". This isn't the one that statsmodels reports, but this one has the virture of being simple to understand and compute. It also exposes a "Culture One vs Culture Two" difference. In Culture Two, this metric is referred to as "accuracy":
+However, for clarity, we'll focus on one of the pseudo-R squared metrics called "Count R Squared". This isn't the one that Statsmodels reports, but this one has the virtue of being simple to understand and compute. It also exposes a "Culture One vs Culture Two" difference. In Culture Two, this metric is referred to as "accuracy":
 
 $\Large \text{Count R Squared} = \text{accuracy} = \frac{\text{number of correct predictions}}{\text{number of predictions}} $
 
