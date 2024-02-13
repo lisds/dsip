@@ -279,7 +279,7 @@ $$
 
 If $\hat{y}_i$ is the *fitted*
 value for observation $i$, then the residual error $e_i$ for observation
-$i$ is $y_i - \hat{y}_i$, and $SS_{\text{res}}$ is the sum of
+$i$ is $y_i - \hat{y}_i$, and $SS_{\text{resid}}$ is the sum of
 squares of the residuals:
 
 $$
@@ -293,7 +293,7 @@ ss_resid
 
 As you saw above, we write the mean of the observed values $y$ as $\bar{y}$.
 
-The demominator for the standard $R^2$ statistic is the "total sum of squares" $SS_\text{tot}$, written as:
+The denominator for the standard $R^2$ statistic is the "total sum of squares" $SS_\text{tot}$, written as:
 
 $$
 SS_\text{total}=\sum_i (y_i - \bar{y})^2
@@ -349,19 +349,19 @@ You remember, from the discussion of the mean, above, that we can write
 the mean calculation as:
 
 $$
-\bar{y} = \sum_i \frac{1}{n} y_i
+\bar{y} = \frac{1}{n} \sum_i y_i
 $$
 
 In code:
 
 ```{python}
-np.sum(1 / n * y)
+1 / n * np.sum(y)
 ```
 
 Mathematically, because $p * (q + r) = p * q + p * r$ (the [distributive
 property](https://en.wikipedia.org/wiki/Distributive_property) of
-multiplication), we can also do the multiplication by $\frac{1}{n}$
-*inside the brackets*, like this:
+multiplication), we can also do the multiplication by $\frac{1}{n}$ *inside
+the brackets*, like this:
 
 $$
 \bar{y} = \frac{1}{n} y_1 +
@@ -382,8 +382,8 @@ In code:
 np.sum(1 / n * y)
 ```
 
-Think of this - the standard calculation of the mean - as giving each
-value in $y$ the same *weight* - of $\frac{1}{n}$:
+Think of this - the standard calculation of the mean - as giving each value in
+$y$ the same *weight* - of $\frac{1}{n}$:
 
 ```{python}
 weights = np.ones(n) / n
@@ -394,7 +394,10 @@ weights
 np.sum(y * weights)
 ```
 
-We can calculate weights to weight each "Helpfulness" value by the number of professors.  Maybe we would do this on the basis that larger number of professors may give more reliable values.
+We can calculate weights to weight each "Helpfulness" value by the number of
+professors.  Maybe we would do this on the basis that larger number of
+professors may give more reliable values, and should therefore contribute
+relatively more to the mean.
 
 ```{python}
 n_professors = df['Number of Professors']
@@ -406,12 +409,15 @@ total_n_professors = np.sum(n_professors)
 total_n_professors
 ```
 
+Calculate the proportion of professors represented by each discipline:
+
 ```{python}
 prop_professors_by_subject = n_professors / total_n_professors
 prop_professors_by_subject
 ```
 
-Now we have divided each value by the sum of the values, to give the proportions, the proportions must add up to 1:
+Now we have divided each value by the sum of the values, to give the
+proportions, the proportions must add up to 1:
 
 ```{python}
 np.sum(prop_professors_by_subject)

@@ -709,10 +709,10 @@ document.write(`
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   378.0</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 09 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>6.53e-39</td>
+  <th>Date:</th>             <td>Tue, 13 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>6.53e-39</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:02:35</td>     <th>  Log-Likelihood:    </th> <td>  118.24</td>
+  <th>Time:</th>                 <td>10:54:30</td>     <th>  Log-Likelihood:    </th> <td>  118.24</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -230.5</td>
@@ -1553,7 +1553,7 @@ R^2 = 1 - {SS_{\rm resid}\over SS_{\rm total}}
 \]</div>
 <p>If <span class="math notranslate nohighlight">\(\hat{y}_i\)</span> is the <em>fitted</em>
 value for observation <span class="math notranslate nohighlight">\(i\)</span>, then the residual error <span class="math notranslate nohighlight">\(e_i\)</span> for observation
-<span class="math notranslate nohighlight">\(i\)</span> is <span class="math notranslate nohighlight">\(y_i - \hat{y}_i\)</span>, and <span class="math notranslate nohighlight">\(SS_{\text{res}}\)</span> is the sum of
+<span class="math notranslate nohighlight">\(i\)</span> is <span class="math notranslate nohighlight">\(y_i - \hat{y}_i\)</span>, and <span class="math notranslate nohighlight">\(SS_{\text{resid}}\)</span> is the sum of
 squares of the residuals:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1573,7 +1573,7 @@ SS_\text{resid}=\sum_i (y_i - \hat{y}_i)^2=\sum_i e_i^2\
 </div>
 </div>
 <p>As you saw above, we write the mean of the observed values <span class="math notranslate nohighlight">\(y\)</span> as <span class="math notranslate nohighlight">\(\bar{y}\)</span>.</p>
-<p>The demominator for the standard <span class="math notranslate nohighlight">\(R^2\)</span> statistic is the “total sum of squares” <span class="math notranslate nohighlight">\(SS_\text{tot}\)</span>, written as:</p>
+<p>The denominator for the standard <span class="math notranslate nohighlight">\(R^2\)</span> statistic is the “total sum of squares” <span class="math notranslate nohighlight">\(SS_\text{tot}\)</span>, written as:</p>
 <div class="math notranslate nohighlight">
 \[
 SS_\text{total}=\sum_i (y_i - \bar{y})^2
@@ -1672,25 +1672,25 @@ SS_\text{total}=\sum_i (y_i - \bar{y})^2
 the mean calculation as:</p>
 <div class="math notranslate nohighlight">
 \[
-\bar{y} = \sum_i \frac{1}{n} y_i
+\bar{y} = \frac{1}{n} \sum_i y_i
 \]</div>
 <p>In code:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.7581654382954235
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.758165438295424
 </pre></div>
 </div>
 </div>
 </div>
 <p>Mathematically, because <span class="math notranslate nohighlight">\(p * (q + r) = p * q + p * r\)</span> (the <a class="reference external" href="https://en.wikipedia.org/wiki/Distributive_property">distributive
 property</a> of
-multiplication), we can also do the multiplication by <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span>
-<em>inside the brackets</em>, like this:</p>
+multiplication), we can also do the multiplication by <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span> <em>inside
+the brackets</em>, like this:</p>
 <div class="math notranslate nohighlight">
 \[
 \bar{y} = \frac{1}{n} y_1 +
@@ -1716,8 +1716,8 @@ multiplication), we can also do the multiplication by <span class="math notransl
 </div>
 </div>
 </div>
-<p>Think of this - the standard calculation of the mean - as giving each
-value in <span class="math notranslate nohighlight">\(y\)</span> the same <em>weight</em> - of <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span>:</p>
+<p>Think of this - the standard calculation of the mean - as giving each value in
+<span class="math notranslate nohighlight">\(y\)</span> the same <em>weight</em> - of <span class="math notranslate nohighlight">\(\frac{1}{n}\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
@@ -1757,7 +1757,10 @@ value in <span class="math notranslate nohighlight">\(y\)</span> the same <em>we
 </div>
 </div>
 </div>
-<p>We can calculate weights to weight each “Helpfulness” value by the number of professors.  Maybe we would do this on the basis that larger number of professors may give more reliable values.</p>
+<p>We can calculate weights to weight each “Helpfulness” value by the number of
+professors.  Maybe we would do this on the basis that larger number of
+professors may give more reliable values, and should therefore contribute
+relatively more to the mean.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_professors</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Number of Professors&#39;</span><span class="p">]</span>
@@ -1795,6 +1798,7 @@ Name: Number of Professors, Length: 75, dtype: int64
 </div>
 </div>
 </div>
+<p>Calculate the proportion of professors represented by each discipline:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prop_professors_by_subject</span> <span class="o">=</span> <span class="n">n_professors</span> <span class="o">/</span> <span class="n">total_n_professors</span>
@@ -1819,7 +1823,8 @@ Name: Number of Professors, Length: 75, dtype: float64
 </div>
 </div>
 </div>
-<p>Now we have divided each value by the sum of the values, to give the proportions, the proportions must add up to 1:</p>
+<p>Now we have divided each value by the sum of the values, to give the
+proportions, the proportions must add up to 1:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prop_professors_by_subject</span><span class="p">)</span>
@@ -1917,10 +1922,10 @@ regression</a>.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   316.8</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 09 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>2.06e-36</td>
+  <th>Date:</th>             <td>Tue, 13 Feb 2024</td> <th>  Prob (F-statistic):</th> <td>2.06e-36</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:02:35</td>     <th>  Log-Likelihood:    </th> <td>  90.990</td>
+  <th>Time:</th>                 <td>10:54:30</td>     <th>  Log-Likelihood:    </th> <td>  90.990</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    75</td>      <th>  AIC:               </th> <td>  -176.0</td>
@@ -2914,27 +2919,27 @@ forced down to zero):</p>
     <tr>
       <th>0</th>
       <td>3.756147</td>
-      <td>1.211203</td>
+      <td>0.980891</td>
     </tr>
     <tr>
       <th>1</th>
       <td>3.487379</td>
-      <td>-0.341282</td>
+      <td>-2.112144</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3.608331</td>
-      <td>-0.029544</td>
+      <td>1.230462</td>
     </tr>
     <tr>
       <th>3</th>
       <td>3.909520</td>
-      <td>0.004254</td>
+      <td>-0.770237</td>
     </tr>
     <tr>
       <th>4</th>
       <td>3.788818</td>
-      <td>-1.995722</td>
+      <td>-1.506489</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2944,27 +2949,27 @@ forced down to zero):</p>
     <tr>
       <th>70</th>
       <td>3.932991</td>
-      <td>1.129570</td>
+      <td>0.319109</td>
     </tr>
     <tr>
       <th>71</th>
       <td>3.636182</td>
-      <td>0.218789</td>
+      <td>1.441272</td>
     </tr>
     <tr>
       <th>72</th>
       <td>3.749000</td>
-      <td>0.788986</td>
+      <td>-1.590655</td>
     </tr>
     <tr>
       <th>73</th>
       <td>3.441923</td>
-      <td>0.936746</td>
+      <td>-1.299525</td>
     </tr>
     <tr>
       <th>74</th>
       <td>3.927255</td>
-      <td>-0.970081</td>
+      <td>1.421129</td>
     </tr>
   </tbody>
 </table>
@@ -2982,7 +2987,7 @@ forced down to zero):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18670320604411583
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.18695701298790293
 </pre></div>
 </div>
 </div>
@@ -2994,7 +2999,7 @@ forced down to zero):</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0009843198166328837
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0007305128728457844
 </pre></div>
 </div>
 </div>
