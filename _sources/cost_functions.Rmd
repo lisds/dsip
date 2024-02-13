@@ -444,7 +444,9 @@ np.average(y, weights=n_professors)
 
 ## Fitting with weights
 
-Weighted regression differs from standard regression, only in weighting each *residual* $e_i = y - \hat{y}$ by some weight for that observation — call this $w_i$.
+Weighted regression differs from standard regression, only in weighting each
+*squared residual* $e^2_i = (y_i - \hat{y_i})^2$ by some weight for that
+observation — call this $w_i$.
 
 As we saw above in standard regression — AKA "ordinary least squares"
 regression, the cost function is the sum of squares of the residuals
