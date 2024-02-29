@@ -1,0 +1,158 @@
+---
+jupyter:
+  orphan: true
+  jupytext:
+    notebook_metadata_filter: all,-language_info
+    split_at_heading: true
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.16.0
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Time and frequency
+
+```{python}
+import numpy as np
+import pandas as pd
+pd.set_option('mode.copy_on_write', True)
+import matplotlib.pyplot as plt
+# Set default colormap.
+plt.rcParams['image.cmap'] = 'gray'
+```
+
+```{python}
+ecg = pd.read_csv('data/ecg.csv').iloc[:512]
+ecg
+```
+
+```{python}
+plt.plot(ecg)
+```
+
+```{python}
+ecg_arr = np.array(ecg['Amplitude'])
+first_10 = ecg_arr[:10]
+first_10
+```
+
+```{python}
+basis_functions = np.eye(10)
+fig, axes = plt.subplots(10, 1)
+for row_no in range(10):
+    axes[row_no].plot(basis_functions[row_no])
+```
+
+```{python}
+plt.imshow(basis_functions)
+```
+
+```{python}
+first_10_col = first_10[:, None]
+first_10_col
+```
+
+```{python}
+fig, axes = plt.subplots(1, 2)
+axes[0].imshow(first_10_col)
+axes[1].imshow(basis_functions)
+```
+
+```{python}
+multiplied = basis_functions * first_10_col
+multiplied.astype(int)
+```
+
+```{python}
+plt.imshow(multiplied)
+```
+
+```{python}
+reconstructed = multiplied.sum(axis=0)
+reconstructed
+```
+
+```{python}
+first_10
+```
+
+```{python}
+n = len(ecg_arr)
+n
+```
+
+```{python}
+full_basis = np.eye(n)
+plt.imshow(full_basis)
+full_basis.astype(int)
+```
+
+```{python}
+ecg_arr_col = ecg_arr[:, None]
+full_multiplied = full_basis * ecg_arr_col
+full_reconstructed = full_multiplied.sum(axis=0)
+np.all(full_reconstructed == ecg_arr)
+```
+
+```{python}
+ft_ecg = np.fft.rfft(ecg_arr)
+ft_ecg
+```
+
+```{python}
+n_ft_bases = len(ft_ecg)
+n_ft_bases
+```
+
+```{python}
+n
+```
+
+```{python}
+amplitudes = np.abs(ft_ecg)
+amplitudes[:10]
+```
+
+```{python}
+angles = np.angle(ft_ecg)
+angles[:10]
+```
+
+See <https://matthew-brett.github.io/teaching/fourier_basis.html>
+
+```{python}
+ft_basis = np.zeros((n_ft_bases, n))
+ns = np.arange(n)
+one_cycle = 2 * np.pi * ns / n
+for k in range(n_ft_bases):
+    t_k = k * one_cycle
+    ft_basis[k, :] = np.cos(t_k + angles[k])
+```
+
+```{python}
+fig, axes = plt.subplots(10, 1)
+for i in range(10):
+    axes[i].plot(ft_basis[i])
+```
+
+```{python}
+plt.imshow(ft_basis)
+```
+
+```{python}
+ft_multiplied = ft_basis * amplitudes[:, None]
+ft_multiplied
+```
+
+```{python}
+plt.plot(ft_multiplied.sum(axis=0))
+```
+
+```{python}
+plt.plot(ecg_arr)
+```

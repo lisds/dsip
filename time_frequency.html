@@ -1,0 +1,1165 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Time and frequency &#8212; Data Science in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'time_frequency';</script>
+    <link rel="canonical" href="https://lisds.github.io/dsip/time_frequency.html" />
+    <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dsfe_logo.png" class="logo__image only-light" alt="Data Science in Practice - Home"/>
+    <script>document.write(`<img src="_static/dsfe_logo.png" class="logo__image only-dark" alt="Data Science in Practice - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Coding background</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="assert.html">Using <code class="docutils literal notranslate"><span class="pre">assert</span></code> for testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays_and_images.html">Arrays as images, images as arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_and_argmin.html">Where and argmin</a></li>
+<li class="toctree-l1"><a class="reference internal" href="where_2d.html">Where in 2D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_for_optimize.html">2D arrays, images, optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pathlib.html">Using the <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dictionaries.html">Dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pandas_and_dicts.html">Pandas and dictionaries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lambda_functions.html">Lambda functions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lin_regression_multiple_predictors.html">Linear regression notation for models with multiple predictors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="epl_modeling.html">Attack or defense?  An example of multiple regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="linear_regression_categorical_predictors.html">Categorical predictors in linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiple_predictors_statistical_adjustment.html">Statistical Adjustment in Multi-predictor Linear Regression Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logistic_regression_cross_validation.html">Multiple Logistic Regression, Model Selection and Cross-validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cost_functions.html">Fitting models with different cost functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrix_notation.html">Expressing the linear model with matrices</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Classification</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="naive_bayes.html">Naive Bayes classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="k_means.html">k-means clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="kernel_density_estimation.html">Kernel density estimation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Working with data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data_work.html">The problem with data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The tools</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installing on your computer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="the-problem-with-notebooks.html">The joys and sorrows of notebooks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/time_frequency.Rmd" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/time_frequency.Rmd&branch=main" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onJupyterHub"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="_static/images/logo_jupyterhub.svg">
+  </span>
+<span class="btn__text-container">JupyterHub</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip/edit/main/time_frequency.Rmd" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lisds/dsip/issues/new?title=Issue%20on%20page%20%2Ftime_frequency.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/time_frequency.Rmd" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.Rmd</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Time and frequency</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="time-and-frequency">
+<h1>Time and frequency<a class="headerlink" href="#time-and-frequency" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="c1"># Set default colormap.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;image.cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;gray&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/ecg.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">512</span><span class="p">]</span>
+<span class="n">ecg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Amplitude</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-127</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-162</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-197</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-229</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-245</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>507</th>
+      <td>-289</td>
+    </tr>
+    <tr>
+      <th>508</th>
+      <td>-274</td>
+    </tr>
+    <tr>
+      <th>509</th>
+      <td>-267</td>
+    </tr>
+    <tr>
+      <th>510</th>
+      <td>-261</td>
+    </tr>
+    <tr>
+      <th>511</th>
+      <td>-256</td>
+    </tr>
+  </tbody>
+</table>
+<p>512 rows × 1 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecg</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fdd28cdd150&gt;]
+</pre></div>
+</div>
+<img alt="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" src="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ecg</span><span class="p">[</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">])</span>
+<span class="n">first_10</span> <span class="o">=</span> <span class="n">ecg_arr</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="n">first_10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127, -162, -197, -229, -245, -254, -261, -265, -268, -268])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basis_functions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">row_no</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">row_no</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">basis_functions</span><span class="p">[</span><span class="n">row_no</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2434004c994e1bae3612f665dfe790f20596e5cd2a9e953b7ad2d0954438793a.png" src="_images/2434004c994e1bae3612f665dfe790f20596e5cd2a9e953b7ad2d0954438793a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">basis_functions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fdd26ab1790&gt;
+</pre></div>
+</div>
+<img alt="_images/eff542dc65321554bbf0b600c026aa37495f17969c775ef9dfba999ef68c7773.png" src="_images/eff542dc65321554bbf0b600c026aa37495f17969c775ef9dfba999ef68c7773.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_10_col</span> <span class="o">=</span> <span class="n">first_10</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">first_10_col</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-127],
+       [-162],
+       [-197],
+       [-229],
+       [-245],
+       [-254],
+       [-261],
+       [-265],
+       [-268],
+       [-268]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">first_10_col</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">basis_functions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fdd268ec2d0&gt;
+</pre></div>
+</div>
+<img alt="_images/365cde161a394b7f2c0310f647f5a3b33418c3ae05a117c10562c2c23fc37dfa.png" src="_images/365cde161a394b7f2c0310f647f5a3b33418c3ae05a117c10562c2c23fc37dfa.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">multiplied</span> <span class="o">=</span> <span class="n">basis_functions</span> <span class="o">*</span> <span class="n">first_10_col</span>
+<span class="n">multiplied</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-127,    0,    0,    0,    0,    0,    0,    0,    0,    0],
+       [   0, -162,    0,    0,    0,    0,    0,    0,    0,    0],
+       [   0,    0, -197,    0,    0,    0,    0,    0,    0,    0],
+       [   0,    0,    0, -229,    0,    0,    0,    0,    0,    0],
+       [   0,    0,    0,    0, -245,    0,    0,    0,    0,    0],
+       [   0,    0,    0,    0,    0, -254,    0,    0,    0,    0],
+       [   0,    0,    0,    0,    0,    0, -261,    0,    0,    0],
+       [   0,    0,    0,    0,    0,    0,    0, -265,    0,    0],
+       [   0,    0,    0,    0,    0,    0,    0,    0, -268,    0],
+       [   0,    0,    0,    0,    0,    0,    0,    0,    0, -268]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">multiplied</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fdd26824050&gt;
+</pre></div>
+</div>
+<img alt="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" src="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reconstructed</span> <span class="o">=</span> <span class="n">multiplied</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">reconstructed</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127., -162., -197., -229., -245., -254., -261., -265., -268.,
+       -268.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">first_10</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127, -162, -197, -229, -245, -254, -261, -265, -268, -268])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+<span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>512
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">full_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">full_basis</span><span class="p">)</span>
+<span class="n">full_basis</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[1, 0, 0, ..., 0, 0, 0],
+       [0, 1, 0, ..., 0, 0, 0],
+       [0, 0, 1, ..., 0, 0, 0],
+       ...,
+       [0, 0, 0, ..., 1, 0, 0],
+       [0, 0, 0, ..., 0, 1, 0],
+       [0, 0, 0, ..., 0, 0, 1]])
+</pre></div>
+</div>
+<img alt="_images/05d208a8fdf7333b94f357294130d2330b0d31e26bd7b0404ed16dc9e9edd3a4.png" src="_images/05d208a8fdf7333b94f357294130d2330b0d31e26bd7b0404ed16dc9e9edd3a4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_arr_col</span> <span class="o">=</span> <span class="n">ecg_arr</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">full_multiplied</span> <span class="o">=</span> <span class="n">full_basis</span> <span class="o">*</span> <span class="n">ecg_arr_col</span>
+<span class="n">full_reconstructed</span> <span class="o">=</span> <span class="n">full_multiplied</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">full_reconstructed</span> <span class="o">==</span> <span class="n">ecg_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_ecg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+<span class="n">ft_ecg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-3.52050000e+04+0.00000000e+00j, -6.62376908e+04+2.11810383e+04j,
+       -2.60067791e+04-3.19442368e+04j,  5.42283644e+03-1.74397806e+04j,
+        1.02075721e+04-5.22218912e+03j,  1.46823108e+04-1.65363235e+04j,
+        3.03950917e+03-5.80300975e+03j, -5.71787596e+03+1.42463585e+04j,
+        1.17288363e+04-3.61990041e+03j,  1.05803896e+04-5.07849495e+03j,
+       -7.87674197e+03+1.13618464e+04j, -4.08359073e+03+4.12351643e+03j,
+        1.21418408e+04+1.20449702e+03j, -3.96779181e+03-2.08743714e+03j,
+       -1.21397399e+04-9.21375492e+03j,  5.42726889e+03+4.45011064e+03j,
+        5.60113518e+03+4.67333535e+03j, -7.68100482e+02-9.98287455e+03j,
+        1.22285529e+03-1.04612400e+03j, -2.01955523e+03+1.00000928e+04j,
+        4.32769771e+03-3.71996200e+03j,  7.39935671e+03-5.05129445e+03j,
+       -4.06620392e+03+3.70320609e+03j, -3.55602222e+03+1.82608525e+03j,
+        6.65302706e+03+1.20867355e+03j,  1.91609823e+02-6.41202216e+02j,
+       -4.92573057e+03-3.43017634e+03j,  2.48017655e+03+2.58288932e+03j,
+        3.21915994e+03+3.31391374e+03j, -2.84167274e+02-4.44280319e+03j,
+        2.69130039e+02-1.81063905e+03j, -9.71807343e+02+4.49634126e+03j,
+        1.05502122e+03-3.45499289e+02j,  2.70057601e+03-1.93289593e+03j,
+       -1.67381869e+03+1.17678414e+03j, -1.62332334e+03+7.37040391e+02j,
+        2.59500891e+03+3.09647591e+02j,  4.20248182e+02-2.95154380e+02j,
+       -1.62600130e+03-1.24150263e+03j,  5.84513215e+02+5.33414568e+02j,
+        8.45916367e+02+1.02522266e+03j, -1.10723729e+02-1.28703534e+03j,
+       -6.25131096e+00-8.68455262e+02j, -1.62137222e+02+6.04282839e+02j,
+        5.33696238e+02-3.06732372e+02j,  7.14223221e+02-5.40432223e+02j,
+        2.55244092e+01+1.21430671e+02j, -1.63986050e+02+1.16338038e+01j,
+        5.31396514e+02-3.02086418e+01j,  2.98940514e+02-1.17381829e+01j,
+       -3.33808376e+01-4.04194521e+01j,  1.68098790e+02-1.42120146e+02j,
+        1.57869122e+02-2.39252670e+02j,  1.56647765e+02-2.18028615e+02j,
+        1.36038730e+02-1.76976575e+01j,  8.29497788e+01-5.70126317e+01j,
+        1.74307311e+02-1.02342621e+02j,  1.22213898e+01-1.11791985e+02j,
+        2.40980331e+02-1.77296310e+02j,  1.89129525e+02-1.34639168e+02j,
+        6.07231949e+01-1.72687250e+02j, -7.25629455e+00-1.60097178e+02j,
+        1.80314938e+02-4.15106730e+00j,  2.42240123e+02-2.14523083e+02j,
+        1.24648232e+02-1.73015765e+02j,  1.08762517e+02-2.22494495e+02j,
+        2.56068607e+02-9.33563221e+01j,  1.97625173e+02-4.45751361e+01j,
+       -9.02480833e+00-1.34321380e+02j,  8.94990932e+01-1.57304826e+02j,
+        1.12904383e+02-4.40094285e+01j,  2.81714089e+01-2.19074108e+02j,
+        2.22926094e+02-2.22158179e+02j,  9.39388656e+01-9.71110663e+01j,
+        1.01684423e+02-2.79802099e+02j,  3.04009454e+02-2.46075351e+02j,
+        2.79643541e+02+5.15398128e+01j,  2.65459856e+01-4.11219985e+00j,
+        1.41471775e+02-5.69974372e+01j,  5.85373472e+01+4.11514018e+01j,
+       -7.09098702e+01-1.16315810e+02j,  1.81917829e+02-2.95645247e+02j,
+        3.11318417e+01-4.77288610e+01j, -1.11792256e+02-1.95066063e+02j,
+        1.88312930e+02-3.15337146e+02j,  1.26304638e+02-7.53564414e+01j,
+        9.28061013e+01-1.41147060e+02j,  2.03544869e+02-1.79066354e+02j,
+        1.78220815e+02-5.61184708e+01j,  3.96535206e+01-1.85474995e+02j,
+        1.53053296e+02-1.89162650e+02j,  1.91208662e+02-8.44209979e+01j,
+        1.24539033e+02-8.95422521e+01j,  1.58851089e+02-1.52709411e+02j,
+        9.09902051e+01-2.61526628e+01j,  9.17601639e+01-7.18944921e+01j,
+        6.47899142e+01-1.82989415e+02j,  1.15195489e+02-1.64791658e+02j,
+        1.54362845e+02-9.11177025e+01j,  9.97942405e+01-8.93906972e+01j,
+        1.20377947e+02-1.27197410e+02j,  9.35095203e+01-1.32278762e+02j,
+        1.01953199e+02-9.01107517e+01j,  1.79604040e+02-1.56353308e+02j,
+        1.87852798e+02-7.74127474e+01j,  4.65232731e+01-5.12509817e+01j,
+        6.66602974e+01-1.25527162e+02j,  2.03256106e+02-8.71477366e+01j,
+        7.83580408e+01-7.32276078e+01j,  8.50784801e+01-1.27858365e+02j,
+        1.53287895e+02-3.88444463e+01j,  7.51945731e+01-4.89032935e+01j,
+        8.14031187e+01-1.56123986e+02j,  1.40680793e+02-8.47071703e+01j,
+        9.96382432e+01+4.05238734e+00j,  1.06567607e+02-1.07150320e+02j,
+        1.32748449e+02-5.90618412e+01j,  4.05371241e+01-1.37010406e+01j,
+        3.78102459e+01-8.14416313e+01j,  1.23135682e+02-1.00115558e+02j,
+        6.91450183e+01-9.17536292e+01j,  8.66628155e+01-9.17848803e+01j,
+        1.34851605e+02-4.04881096e+01j,  9.60252585e+01-2.97392933e+01j,
+        5.71433544e+01-8.11352619e+01j,  9.36306659e+01-5.77828234e+01j,
+        7.11064633e+01-1.32037060e+01j,  6.03643419e+01-7.48789567e+01j,
+        4.80000000e+01-8.30000000e+01j,  6.19100213e+01-7.49164626e+01j,
+        9.45614389e+01-6.39814310e+01j,  8.53565019e+01-8.47278160e+01j,
+        6.26828384e+01-6.98661773e+01j,  6.81127182e+01-4.85095890e+01j,
+        8.12154948e+01-4.65368384e+01j,  9.31530556e+01-5.96190481e+01j,
+        5.59760722e+01-5.20144813e+01j,  5.74880963e+01-5.43493726e+01j,
+        7.84497018e+01-7.91362877e+01j,  9.96144988e+01-7.74957168e+01j,
+        5.97035354e+01-5.12911746e+01j,  5.30723009e+01-5.31348701e+01j,
+        7.79344395e+01-5.40415003e+01j,  6.58644478e+01-7.36164298e+01j,
+        6.95619440e+01-7.12441154e+01j,  7.55557610e+01-6.44168786e+01j,
+        9.32260646e+01-3.18190167e+01j,  8.92604894e+01-6.81535476e+01j,
+        8.26284595e+01-7.31445385e+01j,  7.27652271e+01-3.11864555e+01j,
+        7.26908529e+01-2.86045233e+01j,  1.07003933e+02-6.83268762e+01j,
+        9.54526609e+01-5.96724559e+01j,  5.62605919e+01-7.84907635e+00j,
+        5.38494134e+01-4.09984592e+01j,  8.21737921e+01-4.88761345e+01j,
+        5.31595125e+01-4.98454946e+01j,  5.55968902e+01-8.32396752e+01j,
+        9.89636079e+01-3.02820795e+01j,  8.72469662e+01-1.93733244e+01j,
+        7.02353390e+01-7.63720995e+01j,  8.98042980e+01-5.37503192e+01j,
+        7.17087759e+01-9.36947471e+00j,  7.87900326e+01-3.64192203e+01j,
+        9.67094436e+01-3.91805068e+01j,  5.68759172e+01-6.29413718e+00j,
+        5.37849280e+01-3.77961620e+01j,  9.01635568e+01-3.01777303e+01j,
+        6.17200636e+01-2.06685904e+01j,  5.13029964e+01-3.74765291e+01j,
+        8.41907889e+01-1.88440905e+01j,  6.62747961e+01-1.85059998e+01j,
+        5.03084322e+01-4.89461865e+01j,  6.10853669e+01-3.80543587e+01j,
+        6.91686739e+01-2.66208686e+01j,  7.59374493e+01-4.47545610e+01j,
+        7.79862285e+01-2.87445807e+01j,  5.04464361e+01-1.19260924e+01j,
+        5.91373799e+01-1.64513265e+01j,  7.00363189e+01-4.19762119e+01j,
+        5.55284168e+01-3.35242130e+01j,  5.64349477e+01-1.05758588e+01j,
+        6.93275896e+01-2.30132662e+01j,  6.90592926e+01-5.19857415e+01j,
+        5.25766456e+01-2.61788052e+01j,  4.42980862e+01-1.43503703e+01j,
+        6.11293969e+01-2.21905903e+01j,  8.03086079e+01-4.46237622e+01j,
+        6.07143656e+01-4.02382088e+01j,  5.65442670e+01-3.70439426e+01j,
+        9.62379403e+01-2.55370097e+01j,  7.25547395e+01-4.21467165e+01j,
+        5.53517677e+01-4.90157646e+01j,  8.21935461e+01-1.77902209e+01j,
+        8.38962123e+01-1.37555281e+01j,  7.37712783e+01-4.26008852e+01j,
+        7.21430413e+01-4.34390818e+01j,  5.91414357e+01-9.90679655e+00j,
+        7.28186849e+01-2.66193381e+01j,  9.50692916e+01-2.69700192e+01j,
+        6.32610484e+01-2.36609034e+01j,  6.07957121e+01-2.06888945e+01j,
+        9.01003228e+01-3.38196639e+01j,  7.14403928e+01-3.43785973e+01j,
+        6.93696097e+01-3.42177350e+01j,  8.73690270e+01-2.61745554e+01j,
+        8.55453895e+01-1.01647895e+01j,  7.83081506e+01-1.17363808e+01j,
+        7.98594548e+01-8.94260375e+00j,  7.90067940e+01-7.41383800e+00j,
+        7.32431269e+01-5.06198034e+00j,  8.44412666e+01-1.34867927e+01j,
+        8.33438158e+01-1.32285559e+01j,  6.98288936e+01-1.07073482e+01j,
+        7.75583225e+01-1.85271656e+01j,  7.94708453e+01-1.14676522e+01j,
+        8.41075365e+01-3.27214943e-01j,  6.89376398e+01-4.19999335e+00j,
+        7.06290803e+01-9.83617852e+00j,  7.14446833e+01-1.28589779e+01j,
+        7.82672330e+01-5.76913992e+00j,  7.55728210e+01-1.35610578e+01j,
+        9.01471324e+01-4.46064931e+00j,  7.15820501e+01-1.25684023e+01j,
+        6.99535301e+01-1.08819737e+01j,  7.74891617e+01-2.14315543e+00j,
+        7.38719411e+01-5.80220811e+00j,  7.23881763e+01-1.70529299e+01j,
+        7.75930016e+01-2.24469653e+00j,  8.47009026e+01-7.60092865e+00j,
+        8.12919843e+01-6.45991927e+00j,  6.57625667e+01-2.33384933e+01j,
+        6.27254992e+01-5.64739411e+00j,  6.84594890e+01-3.98168750e-01j,
+        7.67940918e+01+6.97743794e+00j,  7.18205769e+01-1.56490687e+01j,
+        6.82426558e+01-7.07411383e+00j,  5.45897833e+01-5.25478630e+00j,
+        8.37974419e+01+1.18181294e+00j,  7.27370793e+01-2.93047178e-01j,
+        5.35674267e+01-1.20899752e+01j,  7.17585452e+01-1.46057103e+01j,
+        7.51517098e+01+1.69318733e+00j,  7.23871043e+01-1.45091184e+01j,
+        7.87855574e+01-2.25318706e+01j,  7.03493987e+01+1.85871976e+00j,
+        7.78024860e+01-8.18084382e+00j,  9.07869438e+01-1.13843496e+01j,
+        5.59486645e+01+3.47961131e+00j,  5.86862045e+01-3.46238498e+00j,
+        8.26349040e+01-7.60821625e-01j,  8.07993121e+01+3.62818954e+00j,
+        6.31535642e+01-6.07739766e+00j,  8.16590767e+01+2.52570789e+00j,
+        6.96539564e+01+1.32397562e+00j,  7.88922138e+01-1.70718705e+01j,
+        8.50000000e+01+0.00000000e+00j])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_ft_bases</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ft_ecg</span><span class="p">)</span>
+<span class="n">n_ft_bases</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>257
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>512
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">amplitudes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ft_ecg</span><span class="p">)</span>
+<span class="n">amplitudes</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([35205.        , 69541.84394723, 41192.07235219, 18263.43625034,
+       11465.85309234, 22113.80217539,  6550.84255104, 15350.98808449,
+       12274.74158326, 11736.08770379])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">ft_ecg</span><span class="p">)</span>
+<span class="n">angles</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 3.14159265,  2.83209546, -2.25409427, -1.26932749, -0.47288412,
+       -0.84471651, -1.08830502,  1.952472  , -0.29935761, -0.4475129 ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>See <a class="reference external" href="https://matthew-brett.github.io/teaching/fourier_basis.html">https://matthew-brett.github.io/teaching/fourier_basis.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_ft_bases</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">one_cycle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ns</span> <span class="o">/</span> <span class="n">n</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_ft_bases</span><span class="p">):</span>
+    <span class="n">t_k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">one_cycle</span>
+    <span class="n">ft_basis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t_k</span> <span class="o">+</span> <span class="n">angles</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ft_basis</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0f71be56d66391236629b73428457cb60ed22ae2a18a717ad4373ae6e7adc98e.png" src="_images/0f71be56d66391236629b73428457cb60ed22ae2a18a717ad4373ae6e7adc98e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ft_basis</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fdd2601fdd0&gt;
+</pre></div>
+</div>
+<img alt="_images/6340c8897c36a9bd48a0382d7136ec15553972881bcf677ad42bdb7b0400bbba.png" src="_images/6340c8897c36a9bd48a0382d7136ec15553972881bcf677ad42bdb7b0400bbba.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_multiplied</span> <span class="o">=</span> <span class="n">ft_basis</span> <span class="o">*</span> <span class="n">amplitudes</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="n">ft_multiplied</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-35205.        , -35205.        , -35205.        , ...,
+        -35205.        , -35205.        , -35205.        ],
+       [-66237.69075706, -66492.62710299, -66737.54990386, ...,
+        -65413.19187876, -65697.93250214, -65972.77925855],
+       [-26006.77914047, -25214.99557004, -24408.02342912, ...,
+        -28286.27648393, -27542.88224296, -26782.89719961],
+       ...,
+       [    69.65395638,    -69.6654699 ,     69.63501955, ...,
+           -69.36782828,     69.50509074,    -69.60048593],
+       [    78.89221385,    -78.6767753 ,     78.44948831, ...,
+           -79.46712341,     79.28741766,    -79.09577152],
+       [    85.        ,    -85.        ,     85.        , ...,
+           -85.        ,     85.        ,    -85.        ]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ft_multiplied</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fdd260687d0&gt;]
+</pre></div>
+</div>
+<img alt="_images/3c7b7fe93b7dfa6bba7c26c207953051f6a6048c8ac4c23f1dcac70bb4d9d277.png" src="_images/3c7b7fe93b7dfa6bba7c26c207953051f6a6048c8ac4c23f1dcac70bb4d9d277.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fdd26c93e90&gt;]
+</pre></div>
+</div>
+<img alt="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" src="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" />
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "lisds/dsip",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Matthew Brett and Peter Rush
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
