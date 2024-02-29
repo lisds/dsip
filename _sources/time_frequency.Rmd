@@ -1,6 +1,5 @@
 ---
 jupyter:
-  orphan: true
   jupytext:
     notebook_metadata_filter: all,-language_info
     split_at_heading: true
@@ -13,17 +12,19 @@ jupyter:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
+  orphan: true
 ---
 
 # Time and frequency
 
 ```{python}
 import numpy as np
+np.set_printoptions(precision=2)
 import pandas as pd
 pd.set_option('mode.copy_on_write', True)
 import matplotlib.pyplot as plt
 # Set default colormap.
-plt.rcParams['image.cmap'] = 'gray'
+plt.rc('image', cmap='grey')
 ```
 
 ```{python}
@@ -33,6 +34,8 @@ ecg
 
 ```{python}
 plt.plot(ecg)
+plt.xlabel('Sample no')
+plt.ylabel('Amplitude');
 ```
 
 ```{python}
@@ -41,27 +44,52 @@ first_10 = ecg_arr[:10]
 first_10
 ```
 
+The next idea is that we can think of these 10 observations as being the weighted sum of some basis functions.
+
+First we will make a very dumb set of basis functions.  These basis functions are called *delta* functions because they have one value that is 1 (the delta) and the rest of the values are 0.
+
+Notice we have one basis function for each sample, in this case:
+
 ```{python}
-basis_functions = np.eye(10)
+basis_functions = np.eye(10, dtype=int)
+basis_functions
+```
+
+Show the basis functions as line plots:
+
+```{python}
 fig, axes = plt.subplots(10, 1)
 for row_no in range(10):
     axes[row_no].plot(basis_functions[row_no])
 ```
 
-```{python}
-plt.imshow(basis_functions)
-```
+As a greyscale image:
 
 ```{python}
+plt.imshow(basis_functions);
+```
+
+We are going to multiply each of these basis function rows by a corresponding *weight*.  In our case, the right weights are the original values.
+
+```{python}
+# The first 10 values, as a column.
 first_10_col = first_10[:, None]
 first_10_col
 ```
 
+Here is an image description of the multiplication.  It results in multiplying the first row by `first_10[0]`, the second row by `first_10[1]`, and so on.
+
 ```{python}
-fig, axes = plt.subplots(1, 2)
-axes[0].imshow(first_10_col)
-axes[1].imshow(basis_functions)
+fig, axes = plt.subplots(1, 3)
+axes[0].imshow(basis_functions, aspect='auto')
+axes[1].text(0.5, 0.5, '$*$', fontsize=40)
+axes[1].axis('off')
+axes[2].imshow(first_10_col)
+for ax in axes:
+    ax.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
 ```
+
+The result:
 
 ```{python}
 multiplied = basis_functions * first_10_col
@@ -73,13 +101,39 @@ plt.imshow(multiplied)
 ```
 
 ```{python}
+fig, axes = plt.subplots(1, 5)
+axes[0].imshow(multiplied, aspect='auto')
+axes[1].text(0.2, 0.5, '$=$', fontsize=30)
+axes[1].axis('off')
+axes[2].imshow(basis_functions, aspect='auto')
+axes[3].text(0.2, 0.5, '$*$', fontsize=30)
+axes[3].axis('off')
+axes[4].imshow(first_10_col)
+for ax in axes:
+    ax.tick_params(left=False, labelleft=False, bottom=False, labelbottom=False)
+```
+
+Finally, we reconstruct the original signal by summing our multiplied basis functions along the columns (across rows):
+
+```{python}
 reconstructed = multiplied.sum(axis=0)
 reconstructed
 ```
 
+We get back the same answer we started with:
+
 ```{python}
 first_10
 ```
+
+You can do the multiplication and sum procedure in one stop with the *dot-product* procedure.   See [vectors and dot products](https://matthew-brett.github.io/teaching/on_vectors.html) for a description of the dot product idea, and, and see the links at the top of [this PCA tutorial](https://matthew-brett.github.io/teaching/pca_introduction.html) for helpful resources to explain how the dot product works on 2D arrays - to become matrix multiplication.
+
+```{python}
+# Reconstructing from a basis with the dot product:
+basis_functions.dot(first_10)
+```
+
+Of course, we could do the same procedure with all the values in our ECG time-course:
 
 ```{python}
 n = len(ecg_arr)
@@ -92,38 +146,71 @@ plt.imshow(full_basis)
 full_basis.astype(int)
 ```
 
+Again, the *weights* for each basis function (row) are the original values:
+
 ```{python}
 ecg_arr_col = ecg_arr[:, None]
 full_multiplied = full_basis * ecg_arr_col
 full_reconstructed = full_multiplied.sum(axis=0)
+```
+
+When we apply this basis functions times weights, and sum, we get back the original values, as before:
+
+```{python}
 np.all(full_reconstructed == ecg_arr)
 ```
+
+```{python}
+# Multiply and sum, but using the dot product.
+with_dot = full_basis.dot(ecg_arr)
+np.all(with_dot == ecg_arr)
+```
+
+## The Fourier basis
+
+
+So far our basis functions have been silly - but the Fourier transform uses more interesting basis functions.
+
+To summarize, the Fourier transform finds *sinusoids* as basis functions, and *weights* for each sinusoid.  It can then express the data as a weighted sum of the sinusoids.  The weights express the amount of that sinusoid in the original signal.
+
+Let's start by running a Fourier transform on the data.
 
 ```{python}
 ft_ecg = np.fft.rfft(ecg_arr)
 ft_ecg
 ```
 
+Notice that the resulting weights are *complex numbers*.  This is one way of expressing *both* the phase of the sinusoid (the left-right shift of the cosine wave), and the *amplitude* of the sinusoid.  The first weight corresponds to a sinusoid of frequency 0 (no cycles), the next to a sinusoid of frequency 1 (one cycle over the whole 1D array), and so on.
+
 ```{python}
+# The number of basis functions the Fourier transform has used.
+# This is also the number of sinusoids needed to reconstruct the original data.
 n_ft_bases = len(ft_ecg)
 n_ft_bases
 ```
 
 ```{python}
+# The number of samples in the original data.
 n
 ```
 
+Rather than go into the complex numbers, we get the amplitude and phase information from the complex number weights:
+
 ```{python}
+# One amplitude for each sinusoid.  `np.abs` does this calculation on complex numbers.
 amplitudes = np.abs(ft_ecg)
 amplitudes[:10]
 ```
 
 ```{python}
+# One phase (angle) for each sinusoid.
 angles = np.angle(ft_ecg)
 angles[:10]
 ```
 
 See <https://matthew-brett.github.io/teaching/fourier_basis.html>
+
+The Fourier tranforms is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:
 
 ```{python}
 ft_basis = np.zeros((n_ft_bases, n))
@@ -133,6 +220,8 @@ for k in range(n_ft_bases):
     t_k = k * one_cycle
     ft_basis[k, :] = np.cos(t_k + angles[k])
 ```
+
+Show the first 10 sinusoids:
 
 ```{python}
 fig, axes = plt.subplots(10, 1)
@@ -144,14 +233,23 @@ for i in range(10):
 plt.imshow(ft_basis)
 ```
 
+Remember, the Fourier transform as re-expressed the orignal data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
+
 ```{python}
 ft_multiplied = ft_basis * amplitudes[:, None]
 ft_multiplied
 ```
 
 ```{python}
-plt.plot(ft_multiplied.sum(axis=0))
+plt.imshow(ft_multiplied)
 ```
+
+```{python}
+ft_reconstructed = ft_multiplied.sum(axis=0)
+plt.plot(ft_reconstructed)
+```
+
+As you can see, we still need to do some scaling to reconstruct the exact values of the signal, but we have the original signal shape:
 
 ```{python}
 plt.plot(ecg_arr)
