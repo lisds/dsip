@@ -176,7 +176,7 @@ To summarize, the Fourier transform finds *sinusoids* as basis functions, and *w
 Let's start by running a Fourier transform on the data.
 
 ```{python}
-ft_ecg = np.fft.rfft(ecg_arr)
+ft_ecg = np.fft.fft(ecg_arr)
 ft_ecg
 ```
 
@@ -210,14 +210,16 @@ angles[:10]
 
 See <https://matthew-brett.github.io/teaching/fourier_basis.html>
 
-The Fourier tranforms is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:
+The Fourier tranform is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:
 
 ```{python}
 ft_basis = np.zeros((n_ft_bases, n))
 ns = np.arange(n)
 one_cycle = 2 * np.pi * ns / n
 for k in range(n_ft_bases):
+    # Make an input to cos for this frequency.    
     t_k = k * one_cycle
+    # Use the angle to shift the phase of the sinusoid.
     ft_basis[k, :] = np.cos(t_k + angles[k])
 ```
 
@@ -227,6 +229,8 @@ Show the first 10 sinusoids:
 fig, axes = plt.subplots(10, 1)
 for i in range(10):
     axes[i].plot(ft_basis[i])
+axes[-1].set_xlabel('Samples')
+fig.suptitle('First 10 Fourier transform sinusoid bases');
 ```
 
 ```{python}
@@ -245,12 +249,15 @@ plt.imshow(ft_multiplied)
 ```
 
 ```{python}
-ft_reconstructed = ft_multiplied.sum(axis=0)
+# We have to divide by the number of samples to go back from Fourier
+# to time.
+ft_reconstructed = ft_multiplied.sum(axis=0) / n
 plt.plot(ft_reconstructed)
 ```
 
-As you can see, we still need to do some scaling to reconstruct the exact values of the signal, but we have the original signal shape:
+The result reconstructed from the Fourier coefficients is the same (near as dammit) to the original signal:
 
 ```{python}
 plt.plot(ecg_arr)
+np.allclose(ecg_arr, ft_reconstructed)
 ```
