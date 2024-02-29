@@ -507,6 +507,8 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="time-and-frequency">
 <h1>Time and frequency<a class="headerlink" href="#time-and-frequency" title="Permalink to this heading">#</a></h1>
+<p>The Fourier transform can take the values of a 1D array, and recast these values as weights for sinusoids.</p>
+<p>The key thing to understand in the Fourier transform is the idea of rewriting the input 1D signal as a series of <em>weights</em> for <em>basis functions</em>.   We will start with some very trivial basis functions, and then move on to the much less trivial <a class="reference external" href="https://matthew-brett.github.io/teaching/fourier_basis.html">Fourier basis functions</a>, which are sinusoids.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -520,6 +522,7 @@ document.write(`
 </div>
 </div>
 </div>
+<p>The data are from the <a class="reference external" href="https://github.com/odsti/datasets/tree/main/ecg">first training file in a single-lead ECG dataset</a>.  We select the first 512 samples.  The sampling rate was 300 Hz, so this is just a bit less than 2 seconds of data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/ecg.csv&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">512</span><span class="p">]</span>
@@ -603,14 +606,16 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecg</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sample no&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample single-lead ECG data&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/90b4f9a5ee42ef1b9d5d42e162e5ec6f440a86a85a44a7796117290092d4fd6d.png" src="_images/90b4f9a5ee42ef1b9d5d42e162e5ec6f440a86a85a44a7796117290092d4fd6d.png" />
+<img alt="_images/304d23f06b3b39755fa4c8488713a4be6996dee9834833f5a7cdd9f98a426dd0.png" src="_images/304d23f06b3b39755fa4c8488713a4be6996dee9834833f5a7cdd9f98a426dd0.png" />
 </div>
 </div>
+<p>We first illustrate the idea of recasting the data as basis functions and weights, just using the first 10 values in the array.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ecg</span><span class="p">[</span><span class="s1">&#39;Amplitude&#39;</span><span class="p">])</span>
@@ -625,7 +630,7 @@ document.write(`
 </div>
 </div>
 </div>
-<p>The next idea is that we can think of these 10 observations as being the weighted sum of some basis functions.</p>
+<p>The key idea is that we can think of these 10 observations as being the weighted sum of some basis functions.</p>
 <p>First we will make a very dumb set of basis functions.  These basis functions are called <em>delta</em> functions because they have one value that is 1 (the delta) and the rest of the values are 0.</p>
 <p>Notice we have one basis function for each sample, in this case:</p>
 <div class="cell docutils container">
@@ -745,7 +750,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9368985810&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5bd51dc850&gt;
 </pre></div>
 </div>
 <img alt="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" src="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" />
@@ -1132,14 +1137,14 @@ document.write(`
 </div>
 </div>
 <p>See <a class="reference external" href="https://matthew-brett.github.io/teaching/fourier_basis.html">https://matthew-brett.github.io/teaching/fourier_basis.html</a></p>
-<p>The Fourier tranform is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:</p>
+<p>The Fourier transform is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_ft_bases</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
 <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="n">one_cycle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">ns</span> <span class="o">/</span> <span class="n">n</span>
 <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_ft_bases</span><span class="p">):</span>
-    <span class="c1"># Make an input to cos for this frequency.    </span>
+    <span class="c1"># Make an input to cos for this frequency.</span>
     <span class="n">t_k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">one_cycle</span>
     <span class="c1"># Use the angle to shift the phase of the sinusoid.</span>
     <span class="n">ft_basis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t_k</span> <span class="o">+</span> <span class="n">angles</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
@@ -1169,13 +1174,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9368bcd810&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5bd56c7450&gt;
 </pre></div>
 </div>
 <img alt="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" src="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" />
 </div>
 </div>
-<p>Remember, the Fourier transform as re-expressed the orignal data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it’s corresponding weight, and sum the result over the columns (over weighted sinusoids).</p>
+<p>Remember, the Fourier transform as re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it’s corresponding weight, and sum the result over the columns (over weighted sinusoids).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_multiplied</span> <span class="o">=</span> <span class="n">ft_basis</span> <span class="o">*</span> <span class="n">amplitudes</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
@@ -1208,7 +1213,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f9368ab9e10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f5bd55c0e50&gt;
 </pre></div>
 </div>
 <img alt="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" src="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" />
@@ -1220,20 +1225,19 @@ document.write(`
 <span class="c1"># to time.</span>
 <span class="n">ft_reconstructed</span> <span class="o">=</span> <span class="n">ft_multiplied</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ft_reconstructed</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time-course reconstructed from Fourier coefficients&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f9368a39bd0&gt;]
-</pre></div>
-</div>
-<img alt="_images/796e19d36f95de0e1bf0e27b6138f40f880feaa6c354c858c337bb0dc335ac8f.png" src="_images/796e19d36f95de0e1bf0e27b6138f40f880feaa6c354c858c337bb0dc335ac8f.png" />
+<img alt="_images/aa0598564c71bb8b86b5968bd27fc3aeef51b07df8502ce9ce91848e19e5415b.png" src="_images/aa0598564c71bb8b86b5968bd27fc3aeef51b07df8502ce9ce91848e19e5415b.png" />
 </div>
 </div>
 <p>The result reconstructed from the Fourier coefficients is the same (near as dammit) to the original signal:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original time-course&#39;</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">,</span> <span class="n">ft_reconstructed</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1242,7 +1246,7 @@ document.write(`
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
-<img alt="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" src="_images/a0612000fa89e99da5477f6719eed58c6f8df4eab2821a8c3c1409ffa0b9155e.png" />
+<img alt="_images/744036b2b1bb0f04c52e4a22a5db044bf7bfba7b5c086ed7d91de2648a643214.png" src="_images/744036b2b1bb0f04c52e4a22a5db044bf7bfba7b5c086ed7d91de2648a643214.png" />
 </div>
 </div>
 </section>

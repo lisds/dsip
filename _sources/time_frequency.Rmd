@@ -17,6 +17,11 @@ jupyter:
 
 # Time and frequency
 
+
+The Fourier transform can take the values of a 1D array, and recast these values as weights for sinusoids.
+
+The key thing to understand in the Fourier transform is the idea of rewriting the input 1D signal as a series of *weights* for *basis functions*.   We will start with some very trivial basis functions, and then move on to the much less trivial [Fourier basis functions](https://matthew-brett.github.io/teaching/fourier_basis.html), which are sinusoids.
+
 ```{python}
 import numpy as np
 np.set_printoptions(precision=2)
@@ -27,6 +32,8 @@ import matplotlib.pyplot as plt
 plt.rc('image', cmap='grey')
 ```
 
+The data are from the [first training file in a single-lead ECG dataset](https://github.com/odsti/datasets/tree/main/ecg).  We select the first 512 samples.  The sampling rate was 300 Hz, so this is just a bit less than 2 seconds of data.
+
 ```{python}
 ecg = pd.read_csv('data/ecg.csv').iloc[:512]
 ecg
@@ -35,8 +42,11 @@ ecg
 ```{python}
 plt.plot(ecg)
 plt.xlabel('Sample no')
-plt.ylabel('Amplitude');
+plt.ylabel('Amplitude')
+plt.title('Sample single-lead ECG data');
 ```
+
+We first illustrate the idea of recasting the data as basis functions and weights, just using the first 10 values in the array.
 
 ```{python}
 ecg_arr = np.array(ecg['Amplitude'])
@@ -44,7 +54,7 @@ first_10 = ecg_arr[:10]
 first_10
 ```
 
-The next idea is that we can think of these 10 observations as being the weighted sum of some basis functions.
+The key idea is that we can think of these 10 observations as being the weighted sum of some basis functions.
 
 First we will make a very dumb set of basis functions.  These basis functions are called *delta* functions because they have one value that is 1 (the delta) and the rest of the values are 0.
 
@@ -210,14 +220,14 @@ angles[:10]
 
 See <https://matthew-brett.github.io/teaching/fourier_basis.html>
 
-The Fourier tranform is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:
+The Fourier transform is therefore using all these basis functions - each basis function is a sinusoid.  The sinusoids become faster and faster in frequency as we go from first to last:
 
 ```{python}
 ft_basis = np.zeros((n_ft_bases, n))
 ns = np.arange(n)
 one_cycle = 2 * np.pi * ns / n
 for k in range(n_ft_bases):
-    # Make an input to cos for this frequency.    
+    # Make an input to cos for this frequency.
     t_k = k * one_cycle
     # Use the angle to shift the phase of the sinusoid.
     ft_basis[k, :] = np.cos(t_k + angles[k])
@@ -237,7 +247,7 @@ fig.suptitle('First 10 Fourier transform sinusoid bases');
 plt.imshow(ft_basis)
 ```
 
-Remember, the Fourier transform as re-expressed the orignal data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
+Remember, the Fourier transform as re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
 
 ```{python}
 ft_multiplied = ft_basis * amplitudes[:, None]
@@ -253,11 +263,13 @@ plt.imshow(ft_multiplied)
 # to time.
 ft_reconstructed = ft_multiplied.sum(axis=0) / n
 plt.plot(ft_reconstructed)
+plt.title('Time-course reconstructed from Fourier coefficients');
 ```
 
 The result reconstructed from the Fourier coefficients is the same (near as dammit) to the original signal:
 
 ```{python}
 plt.plot(ecg_arr)
+plt.title('Original time-course')
 np.allclose(ecg_arr, ft_reconstructed)
 ```
