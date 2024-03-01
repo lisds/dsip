@@ -187,7 +187,8 @@ Let's start by running a Fourier transform on the data.
 
 ```{python}
 ft_ecg = np.fft.fft(ecg_arr)
-ft_ecg
+# Show the first 10 coefficients (weights)
+ft_ecg[:10]
 ```
 
 Notice that the resulting weights are *complex numbers*.  This is one way of expressing *both* the phase of the sinusoid (the left-right shift of the cosine wave), and the *amplitude* of the sinusoid.  The first weight corresponds to a sinusoid of frequency 0 (no cycles), the next to a sinusoid of frequency 1 (one cycle over the whole 1D array), and so on.
@@ -247,7 +248,7 @@ fig.suptitle('First 10 Fourier transform sinusoid bases');
 plt.imshow(ft_basis)
 ```
 
-Remember, the Fourier transform as re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
+Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
 
 ```{python}
 ft_multiplied = ft_basis * amplitudes[:, None]
