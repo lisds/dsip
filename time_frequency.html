@@ -750,7 +750,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff549d29e10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff388793650&gt;
 </pre></div>
 </div>
 <img alt="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" src="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" />
@@ -1008,13 +1008,13 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff549fb2e50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff3880b5810&gt;
 </pre></div>
 </div>
 <img alt="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" src="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" />
 </div>
 </div>
-<p>Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it’s corresponding weight, and sum the result over the columns (over weighted sinusoids).</p>
+<p>Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply each sinusoid (basis function) by its corresponding weight, and sum the result over the columns (over the weighted sinusoids).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_multiplied</span> <span class="o">=</span> <span class="n">ft_basis</span> <span class="o">*</span> <span class="n">amplitudes</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
@@ -1047,7 +1047,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff5502c0e50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff3887b9390&gt;
 </pre></div>
 </div>
 <img alt="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" src="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" />

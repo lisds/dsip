@@ -248,7 +248,7 @@ fig.suptitle('First 10 Fourier transform sinusoid bases');
 plt.imshow(ft_basis)
 ```
 
-Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply the sinusoid (basis function) by it's corresponding weight, and sum the result over the columns (over weighted sinusoids).
+Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply each sinusoid (basis function) by its corresponding weight, and sum the result over the columns (over the weighted sinusoids).
 
 ```{python}
 ft_multiplied = ft_basis * amplitudes[:, None]
