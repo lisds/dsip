@@ -1,0 +1,211 @@
+---
+jupyter:
+  jupytext:
+    notebook_metadata_filter: all,-language_info
+    split_at_heading: true
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.16.0
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
+# Classes and inheritance
+
+
+Classes are everywhere in Python.  Every value in Python belongs to a class.  Put another way, every value has a *type* - also known as a *class*.   To say it again, the *type* of a value is also its *class*.
+
+
+Let's start with very basic type --- `int`.
+
+Here's a value of type (class) int:
+
+```{python}
+a = 10.0
+type(a)
+```
+
+The `type` function asks Python to display the *class* of the value.  We're now going to start using the term *object* for the value - but we will use *object* and *value* interchangeably.
+
+The class defines the default behavior of the object.  For example, the  class defines the things that are attached to the object by default.  There can be *data* attached to the object (known as *attributes*), and *functions* attached to the object (known as *methods*).
+
+```{python}
+a.
+```
+
+```{python}
+type(pd.DataFrame(ecg))
+```
+
+```{python}
+ecg.get_filename()
+```
+
+```{python}
+type(ecg)
+```
+
+```{python}
+class MyDataFrame(pd.DataFrame):
+    """ Class MyDataFrame inherits from pd.DataFrame """
+    
+    def get_filename(self):
+        """ A silly method for the new class"""
+        print('OK, I have my object - it is', self)
+        print('Whoops, you have no filename')
+```
+
+```{python}
+my_ecg = MyDataFrame(ecg)
+my_ecg
+```
+
+```{python}
+type(my_ecg)
+```
+
+```{python}
+ecg.get_filename()
+```
+
+```{python}
+my_ecg.get_filename()
+```
+
+```{python}
+MyDataFrame.get_filename(my_ecg)
+```
+
+```{python}
+class MyDFMixin(object):
+    
+    def my_message(self):
+        print('Here is a message')
+```
+
+```{python}
+my_mixin = MyDFMixin() 
+type(my_mixin)
+```
+
+```{python}
+my_mixin.my_message()
+```
+
+```{python}
+class MyMixedDataFrame(pd.DataFrame, MyDFMixin):
+    
+    def another_message(self):
+        print('I got ', self, 'but will not use it')
+        print('Its of type', type(self))
+```
+
+```{python}
+mixed_ecg = MyMixedDataFrame(ecg)
+type(mixed_ecg)
+```
+
+```{python}
+mixed_ecg.get_filename
+```
+
+```{python}
+mixed_ecg.my_message()
+```
+
+```{python}
+a = 'My name'
+type(a)
+```
+
+```{python}
+a.capitalize()
+```
+
+```{python}
+str.capitalize('My name')
+```
+
+```{python}
+mixed_ecg.another_message()
+```
+
+```{python}
+class MyClass(object):
+    
+    def print_message(self):
+        print("I am operating on", self)
+        print("I will print the 'information' attribute of", self)
+        print(self.information)
+```
+
+```{python}
+my_class_value = MyClass()
+type(my_class_value)
+```
+
+```{python}
+my_class_value.print_message()
+```
+
+```{python}
+class MyClass2(object):
+    
+    def __init__(self, information):
+        print('I got information: ', information)
+    
+    def print_message(self):
+        print("I am operating on", self)
+        print("I will print the 'information' attribute of", self)
+        print(self.information)
+```
+
+```{python}
+my_class2 = MyClass2()
+```
+
+```{python}
+my_class_2_again = MyClass2('some information for you')
+```
+
+```{python}
+my_class_2_again.print_message()
+```
+
+```{python}
+class MyClass3(object):
+    
+    def __init__(self, information):
+        print('I got information: ', information)
+        # Attached "information" contents as attribute to object.
+        self.information = information
+    
+    def print_message(self):
+        print("I am operating on", self)
+        print("I will print the 'information' attribute of", self)
+        print(self.information)
+```
+
+```{python}
+my_class3_value = MyClass3()
+```
+
+```{python}
+my_class3_value_again = MyClass3('Some more information')
+```
+
+```{python}
+my_class3_value_again.information
+```
+
+```{python}
+my_class3_value_again.print_message()
+```
+
+```{python}
+
+```
