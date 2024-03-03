@@ -24,7 +24,8 @@ The key thing to understand in the Fourier transform is the idea of rewriting th
 
 ```{python}
 import numpy as np
-np.set_printoptions(precision=2)
+rng = np.random.default_rng()
+np.set_printoptions(suppress=True, precision=2)
 import pandas as pd
 pd.set_option('mode.copy_on_write', True)
 import matplotlib.pyplot as plt
@@ -140,7 +141,7 @@ You can do the multiplication and sum procedure in one stop with the *dot-produc
 
 ```{python}
 # Reconstructing from a basis with the dot product:
-basis_functions.dot(first_10)
+first_10.dot(basis_functions)
 ```
 
 Of course, we could do the same procedure with all the values in our ECG time-course:
@@ -172,7 +173,7 @@ np.all(full_reconstructed == ecg_arr)
 
 ```{python}
 # Multiply and sum, but using the dot product.
-with_dot = full_basis.dot(ecg_arr)
+with_dot = ecg_arr.dot(full_basis)
 np.all(with_dot == ecg_arr)
 ```
 
@@ -263,6 +264,22 @@ plt.imshow(ft_multiplied)
 # We have to divide by the number of samples to go back from Fourier
 # to time.
 ft_reconstructed = ft_multiplied.sum(axis=0) / n
+ft_reconstructed[:10]
+```
+
+```{python}
+# As above, we can use dot to do the same multiply and sum operation:
+recon_with_dot = amplitudes.dot(ft_basis) / n
+recon_with_dot[:10]
+```
+
+```{python}
+np.allclose(ft_reconstructed, recon_with_dot)
+```
+
+Here's the reconstructed array:
+
+```{python}
 plt.plot(ft_reconstructed)
 plt.title('Time-course reconstructed from Fourier coefficients');
 ```
@@ -273,4 +290,90 @@ The result reconstructed from the Fourier coefficients is the same (near as damm
 plt.plot(ecg_arr)
 plt.title('Original time-course')
 np.allclose(ecg_arr, ft_reconstructed)
+```
+
+## The inverse Fourier transform
+
+
+The process above is one way of reversing the Fourier transform (FT) - to take the amplitudes and angles and go back to the original 1D array.
+
+We have used the calculation above to show how the output of the FT relates to the amplitude and angles (phases) of the component sinusoids.  As you saw, we converted the standard output from the FT (complex numbers) to their equivalent amplitude and angle (phase).
+
+The standard way reverse the FT is to use the *inverse* Fourier transform directly on the complex number output of the FT.
+
+```{python}
+# Here is the output of the FT on the original data.
+ft_ecg = np.fft.fft(ecg_arr)
+# Show the first 10 complex outputs:
+ft_ecg[:10]
+```
+
+As you saw above, we can convert these complex numbers to their equivalent amplitude and angle, and multiply by their corresponding sinusoids to reconstruct the original array:
+
+```{python}
+ecg_again = amplitudes.dot(ft_basis) / n
+np.allclose(ecg_again, ecg_arr)
+```
+
+However, we can also do this using the complex numbers, that are the raw output from the FT - using the `ifft` (Inverse Fourier Transform) function:
+
+```{python}
+ecg_again_via_ifft = np.fft.ifft(ft_ecg)
+ecg_again_via_ifft[:10]
+```
+
+Notice that the output of the inverse FT is also complex, but the imaginary coefficients are all (near as dammit) 0:
+
+```{python}
+np.allclose(ecg_again_via_ifft.imag, 0)
+```
+
+This will always be true for the iFT of an FT on not-complex (real) numbers, as we did here: `ecg_arr` were all not-complex (real) numbers.
+
+## The FT and inverse FT work on any array
+
+
+Just to emphasize, it is possible to prove mathematically that any 1 dimensional array can be decomposed into sinusoids with the Fourier transform - it does not require any particular properties of the input array.   For example, we can do the FT and inverse FT on an array of random numbers - it works in exactly the same way:
+
+```{python}
+# 128 values selected at random from the range 0 through 1.
+random_arr = rng.uniform(size=128)
+random_arr[:10]
+```
+
+```{python}
+ft_rand_arr = np.fft.fft(random_arr)
+ft_rand_arr[:10]
+```
+
+```{python}
+rand_back = np.fft.ifft(ft_rand_arr)
+rand_back[:10]
+```
+
+```{python}
+# The real components of the inverse FT are the original array values.
+np.allclose(random_arr, rand_back.real)
+```
+
+We could also have gone the long way round with our original calculation:
+
+```{python}
+rand_amplitudes = np.abs(ft_rand_arr)
+rand_angles = np.angle(ft_rand_arr)
+rand_n = len(ft_rand_arr)
+```
+
+```{python}
+rand_ft_basis = np.zeros((rand_n, rand_n))
+rand_ns = np.arange(rand_n)
+one_cycle = 2 * np.pi * rand_ns / rand_n
+for k in range(rand_n):
+    t_k = k * one_cycle
+    rand_ft_basis[k, :] = np.cos(t_k + rand_angles[k])
+```
+
+```{python}
+rand_back_long = rand_amplitudes.dot(rand_ft_basis) / rand_n
+np.allclose(rand_back_long, random_arr)
 ```

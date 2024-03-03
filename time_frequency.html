@@ -494,6 +494,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fourier-basis">The Fourier basis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-inverse-fourier-transform">The inverse Fourier transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ft-and-inverse-ft-work-on-any-array">The FT and inverse FT work on any array</a></li>
 </ul>
             </nav>
         </div>
@@ -512,7 +514,8 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -750,7 +753,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff388793650&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7488c88850&gt;
 </pre></div>
 </div>
 <img alt="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" src="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" />
@@ -806,7 +809,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reconstructing from a basis with the dot product:</span>
-<span class="n">basis_functions</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">first_10</span><span class="p">)</span>
+<span class="n">first_10</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">basis_functions</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -877,7 +880,7 @@ document.write(`
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiply and sum, but using the dot product.</span>
-<span class="n">with_dot</span> <span class="o">=</span> <span class="n">full_basis</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+<span class="n">with_dot</span> <span class="o">=</span> <span class="n">ecg_arr</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">full_basis</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">with_dot</span> <span class="o">==</span> <span class="n">ecg_arr</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1008,7 +1011,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff3880b5810&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7489131a90&gt;
 </pre></div>
 </div>
 <img alt="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" src="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" />
@@ -1047,7 +1050,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff3887b9390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f7489099510&gt;
 </pre></div>
 </div>
 <img alt="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" src="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" />
@@ -1058,7 +1061,48 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We have to divide by the number of samples to go back from Fourier</span>
 <span class="c1"># to time.</span>
 <span class="n">ft_reconstructed</span> <span class="o">=</span> <span class="n">ft_multiplied</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ft_reconstructed</span><span class="p">)</span>
+<span class="n">ft_reconstructed</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127., -162., -197., -229., -245., -254., -261., -265., -268.,
+       -268.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># As above, we can use dot to do the same multiply and sum operation:</span>
+<span class="n">recon_with_dot</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ft_basis</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+<span class="n">recon_with_dot</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127., -162., -197., -229., -245., -254., -261., -265., -268.,
+       -268.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ft_reconstructed</span><span class="p">,</span> <span class="n">recon_with_dot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s the reconstructed array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ft_reconstructed</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time-course reconstructed from Fourier coefficients&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1081,6 +1125,167 @@ document.write(`
 </pre></div>
 </div>
 <img alt="_images/744036b2b1bb0f04c52e4a22a5db044bf7bfba7b5c086ed7d91de2648a643214.png" src="_images/744036b2b1bb0f04c52e4a22a5db044bf7bfba7b5c086ed7d91de2648a643214.png" />
+</div>
+</div>
+</section>
+<section id="the-inverse-fourier-transform">
+<h2>The inverse Fourier transform<a class="headerlink" href="#the-inverse-fourier-transform" title="Permalink to this heading">#</a></h2>
+<p>The process above is one way of reversing the Fourier transform (FT) - to take the amplitudes and angles and go back to the original 1D array.</p>
+<p>We have used the calculation above to show how the output of the FT relates to the amplitude and angles (phases) of the component sinusoids.  As you saw, we converted the standard output from the FT (complex numbers) to their equivalent amplitude and angle (phase).</p>
+<p>The standard way reverse the FT is to use the <em>inverse</em> Fourier transform directly on the complex number output of the FT.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here is the output of the FT on the original data.</span>
+<span class="n">ft_ecg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">ecg_arr</span><span class="p">)</span>
+<span class="c1"># Show the first 10 complex outputs:</span>
+<span class="n">ft_ecg</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-35205.      +0.j  , -66237.69+21181.04j, -26006.78-31944.24j,
+         5422.84-17439.78j,  10207.57 -5222.19j,  14682.31-16536.32j,
+         3039.51 -5803.01j,  -5717.88+14246.36j,  11728.84 -3619.9j ,
+        10580.39 -5078.49j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As you saw above, we can convert these complex numbers to their equivalent amplitude and angle, and multiply by their corresponding sinusoids to reconstruct the original array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_again</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ft_basis</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ecg_again</span><span class="p">,</span> <span class="n">ecg_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we can also do this using the complex numbers, that are the raw output from the FT - using the <code class="docutils literal notranslate"><span class="pre">ifft</span></code> (Inverse Fourier Transform) function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecg_again_via_ifft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">ft_ecg</span><span class="p">)</span>
+<span class="n">ecg_again_via_ifft</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-127.+0.j, -162.+0.j, -197.+0.j, -229.+0.j, -245.+0.j, -254.+0.j,
+       -261.-0.j, -265.+0.j, -268.-0.j, -268.+0.j])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the output of the inverse FT is also complex, but the imaginary coefficients are all (near as dammit) 0:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ecg_again_via_ifft</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>This will always be true for the iFT of an FT on not-complex (real) numbers, as we did here: <code class="docutils literal notranslate"><span class="pre">ecg_arr</span></code> were all not-complex (real) numbers.</p>
+</section>
+<section id="the-ft-and-inverse-ft-work-on-any-array">
+<h2>The FT and inverse FT work on any array<a class="headerlink" href="#the-ft-and-inverse-ft-work-on-any-array" title="Permalink to this heading">#</a></h2>
+<p>Just to emphasize, it is possible to prove mathematically that any 1 dimensional array can be decomposed into sinusoids with the Fourier transform - it does not require any particular properties of the input array.   For example, we can do the FT and inverse FT on an array of random numbers - it works in exactly the same way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 128 values selected at random from the range 0 through 1.</span>
+<span class="n">random_arr</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">random_arr</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.  , 0.43, 0.11, 0.23, 0.09, 0.68, 0.92, 0.55, 0.3 , 0.47])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ft_rand_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">random_arr</span><span class="p">)</span>
+<span class="n">ft_rand_arr</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([71.49+0.j  , -3.95-1.3j , -0.81-0.9j , -2.79+0.77j, -4.48+0.11j,
+        2.17+1.97j,  0.3 +1.5j ,  1.01-1.75j,  1.45+1.29j, -3.14+1.94j])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_back</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">ft_rand_arr</span><span class="p">)</span>
+<span class="n">rand_back</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.  +0.j, 0.43+0.j, 0.11-0.j, 0.23+0.j, 0.09-0.j, 0.68+0.j,
+       0.92-0.j, 0.55+0.j, 0.3 +0.j, 0.47-0.j])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The real components of the inverse FT are the original array values.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">random_arr</span><span class="p">,</span> <span class="n">rand_back</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>We could also have gone the long way round with our original calculation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_amplitudes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">ft_rand_arr</span><span class="p">)</span>
+<span class="n">rand_angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">ft_rand_arr</span><span class="p">)</span>
+<span class="n">rand_n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ft_rand_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_ft_basis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">rand_n</span><span class="p">,</span> <span class="n">rand_n</span><span class="p">))</span>
+<span class="n">rand_ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rand_n</span><span class="p">)</span>
+<span class="n">one_cycle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">rand_ns</span> <span class="o">/</span> <span class="n">rand_n</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rand_n</span><span class="p">):</span>
+    <span class="n">t_k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">one_cycle</span>
+    <span class="n">rand_ft_basis</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t_k</span> <span class="o">+</span> <span class="n">rand_angles</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_back_long</span> <span class="o">=</span> <span class="n">rand_amplitudes</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rand_ft_basis</span><span class="p">)</span> <span class="o">/</span> <span class="n">rand_n</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">rand_back_long</span><span class="p">,</span> <span class="n">random_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
 </div>
 </div>
 </section>
@@ -1133,6 +1338,8 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-fourier-basis">The Fourier basis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-inverse-fourier-transform">The inverse Fourier transform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ft-and-inverse-ft-work-on-any-array">The FT and inverse FT work on any array</a></li>
 </ul>
   </nav></div>
 
