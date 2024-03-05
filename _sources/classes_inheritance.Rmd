@@ -405,12 +405,12 @@ class MyClass2(object):
 If I try to construct an object of type `MyClass2` without passing the information value, I get an error:
 
 ```{python tags=c("raises-exception")}
-# The MyClass2() contructor call now needs an argument, because of the __init__
-# method.
+# The MyClass2() constructor call now needs an argument, because of the
+# __init__ method.
 my_class2_object = MyClass2()
 ```
 
-So, let's provide the `inforation` value:
+So, let's provide the `information` value:
 
 
 ```{python}

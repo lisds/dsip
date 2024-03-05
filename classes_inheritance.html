@@ -1034,8 +1034,8 @@ class.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I am operating on &lt;__main__.MyClass object at 0x7f27a49b8410&gt;
-I will print the &#39;information&#39; attribute of &lt;__main__.MyClass object at 0x7f27a49b8410&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I am operating on &lt;__main__.MyClass object at 0x7f8eccd7b610&gt;
+I will print the &#39;information&#39; attribute of &lt;__main__.MyClass object at 0x7f8eccd7b610&gt;
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
@@ -1114,8 +1114,8 @@ do with such arguments.</p>
 <p>If I try to construct an object of type <code class="docutils literal notranslate"><span class="pre">MyClass2</span></code> without passing the information value, I get an error:</p>
 <div class="cell tag_raises-exception docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The MyClass2() contructor call now needs an argument, because of the __init__</span>
-<span class="c1"># method.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The MyClass2() constructor call now needs an argument, because of the</span>
+<span class="c1"># __init__ method.</span>
 <span class="n">my_class2_object</span> <span class="o">=</span> <span class="n">MyClass2</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1124,8 +1124,8 @@ do with such arguments.</p>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">35</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># The MyClass2() contructor call now needs an argument, because of the __init__</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># method.</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># The MyClass2() constructor call now needs an argument, because of the</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># __init__ method.</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">my_class2_object</span> <span class="o">=</span> <span class="n">MyClass2</span><span class="p">()</span>
 
 <span class="ne">TypeError</span>: MyClass2.__init__() missing 1 required positional argument: &#39;information&#39;
@@ -1133,7 +1133,7 @@ do with such arguments.</p>
 </div>
 </div>
 </div>
-<p>So, let’s provide the <code class="docutils literal notranslate"><span class="pre">inforation</span></code> value:</p>
+<p>So, let’s provide the <code class="docutils literal notranslate"><span class="pre">information</span></code> value:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_class2_object</span> <span class="o">=</span> <span class="n">MyClass2</span><span class="p">(</span><span class="s1">&#39;any kind of value&#39;</span><span class="p">)</span>
@@ -1162,8 +1162,8 @@ do with such arguments.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I am operating on &lt;__main__.MyClass2 object at 0x7f27a4b991d0&gt;
-I will print the &#39;information&#39; attribute of &lt;__main__.MyClass2 object at 0x7f27a4b991d0&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I am operating on &lt;__main__.MyClass2 object at 0x7f8eccc78890&gt;
+I will print the &#39;information&#39; attribute of &lt;__main__.MyClass2 object at 0x7f8eccc78890&gt;
 any kind of value
 </pre></div>
 </div>
