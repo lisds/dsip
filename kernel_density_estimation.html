@@ -186,9 +186,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="on_vectors.html">Vectors and dot products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_projection.html">Vector projection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
 <ul class="nav bd-sidenav">
@@ -714,48 +716,48 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>261</th>
-      <td>15.1</td>
+      <th>58</th>
+      <td>16.6</td>
     </tr>
     <tr>
-      <th>242</th>
-      <td>15.0</td>
+      <th>204</th>
+      <td>14.4</td>
     </tr>
     <tr>
-      <th>312</th>
-      <td>18.3</td>
+      <th>134</th>
+      <td>17.6</td>
     </tr>
     <tr>
-      <th>40</th>
+      <th>129</th>
       <td>18.0</td>
     </tr>
     <tr>
-      <th>110</th>
-      <td>16.5</td>
+      <th>243</th>
+      <td>17.1</td>
     </tr>
     <tr>
       <th>...</th>
       <td>...</td>
     </tr>
     <tr>
-      <th>227</th>
-      <td>16.0</td>
+      <th>82</th>
+      <td>18.8</td>
     </tr>
     <tr>
-      <th>63</th>
+      <th>282</th>
       <td>18.2</td>
     </tr>
     <tr>
-      <th>84</th>
-      <td>17.8</td>
+      <th>342</th>
+      <td>19.0</td>
     </tr>
     <tr>
-      <th>196</th>
-      <td>15.9</td>
+      <th>116</th>
+      <td>17.0</td>
     </tr>
     <tr>
-      <th>20</th>
-      <td>18.3</td>
+      <th>33</th>
+      <td>18.9</td>
     </tr>
   </tbody>
 </table>
@@ -795,216 +797,204 @@ split the data into a test and train set.</p>
   </thead>
   <tbody>
     <tr>
-      <th>312</th>
-      <td>18.3</td>
+      <th>309</th>
+      <td>18.8</td>
     </tr>
     <tr>
-      <th>319</th>
-      <td>17.0</td>
-    </tr>
-    <tr>
-      <th>332</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>321</th>
-      <td>18.5</td>
-    </tr>
-    <tr>
-      <th>290</th>
-      <td>17.1</td>
-    </tr>
-    <tr>
-      <th>305</th>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>300</th>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>293</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>277</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>320</th>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>288</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>296</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>318</th>
-      <td>19.1</td>
-    </tr>
-    <tr>
-      <th>294</th>
-      <td>18.6</td>
-    </tr>
-    <tr>
-      <th>278</th>
-      <td>19.2</td>
-    </tr>
-    <tr>
-      <th>310</th>
-      <td>18.6</td>
-    </tr>
-    <tr>
-      <th>341</th>
-      <td>18.2</td>
+      <th>335</th>
+      <td>19.4</td>
     </tr>
     <tr>
       <th>331</th>
       <td>18.8</td>
     </tr>
     <tr>
-      <th>308</th>
-      <td>16.7</td>
-    </tr>
-    <tr>
-      <th>326</th>
-      <td>16.4</td>
-    </tr>
-    <tr>
-      <th>330</th>
-      <td>17.3</td>
-    </tr>
-    <tr>
-      <th>299</th>
-      <td>19.4</td>
-    </tr>
-    <tr>
-      <th>313</th>
-      <td>20.7</td>
-    </tr>
-    <tr>
-      <th>297</th>
-      <td>17.5</td>
-    </tr>
-    <tr>
-      <th>286</th>
-      <td>17.8</td>
-    </tr>
-    <tr>
-      <th>292</th>
-      <td>20.0</td>
-    </tr>
-    <tr>
-      <th>306</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>333</th>
-      <td>19.9</td>
-    </tr>
-    <tr>
-      <th>340</th>
-      <td>18.1</td>
-    </tr>
-    <tr>
-      <th>317</th>
-      <td>17.5</td>
-    </tr>
-    <tr>
-      <th>284</th>
-      <td>18.9</td>
-    </tr>
-    <tr>
-      <th>336</th>
-      <td>19.5</td>
-    </tr>
-    <tr>
-      <th>280</th>
-      <td>19.8</td>
-    </tr>
-    <tr>
-      <th>285</th>
-      <td>19.9</td>
-    </tr>
-    <tr>
-      <th>315</th>
-      <td>19.9</td>
-    </tr>
-    <tr>
-      <th>279</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>302</th>
-      <td>18.4</td>
-    </tr>
-    <tr>
-      <th>298</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
-      <th>339</th>
-      <td>19.8</td>
-    </tr>
-    <tr>
-      <th>324</th>
-      <td>18.7</td>
-    </tr>
-    <tr>
-      <th>314</th>
-      <td>16.6</td>
-    </tr>
-    <tr>
       <th>304</th>
       <td>17.8</td>
     </tr>
     <tr>
-      <th>303</th>
-      <td>19.0</td>
+      <th>287</th>
+      <td>20.3</td>
     </tr>
     <tr>
-      <th>295</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>307</th>
-      <td>20.8</td>
-    </tr>
-    <tr>
-      <th>283</th>
-      <td>18.2</td>
-    </tr>
-    <tr>
-      <th>329</th>
-      <td>19.7</td>
+      <th>323</th>
+      <td>19.6</td>
     </tr>
     <tr>
       <th>322</th>
       <td>17.9</td>
     </tr>
     <tr>
-      <th>342</th>
+      <th>315</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>310</th>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>306</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>325</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>291</th>
+      <td>19.6</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>18.9</td>
+    </tr>
+    <tr>
+      <th>289</th>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>280</th>
+      <td>19.8</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>19.1</td>
+    </tr>
+    <tr>
+      <th>321</th>
+      <td>18.5</td>
+    </tr>
+    <tr>
+      <th>305</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>311</th>
+      <td>16.8</td>
+    </tr>
+    <tr>
+      <th>326</th>
+      <td>16.4</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>19.2</td>
+    </tr>
+    <tr>
+      <th>290</th>
+      <td>17.1</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>303</th>
       <td>19.0</td>
     </tr>
     <tr>
-      <th>338</th>
-      <td>17.0</td>
+      <th>336</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>292</th>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>18.2</td>
+    </tr>
+    <tr>
+      <th>296</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>332</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>337</th>
+      <td>16.5</td>
+    </tr>
+    <tr>
+      <th>316</th>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>334</th>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>286</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>330</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>302</th>
+      <td>18.4</td>
+    </tr>
+    <tr>
+      <th>288</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>328</th>
+      <td>17.3</td>
+    </tr>
+    <tr>
+      <th>339</th>
+      <td>19.8</td>
+    </tr>
+    <tr>
+      <th>298</th>
+      <td>16.6</td>
+    </tr>
+    <tr>
+      <th>308</th>
+      <td>16.7</td>
+    </tr>
+    <tr>
+      <th>293</th>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>18.7</td>
+    </tr>
+    <tr>
+      <th>327</th>
+      <td>19.0</td>
     </tr>
     <tr>
       <th>282</th>
       <td>18.2</td>
     </tr>
     <tr>
-      <th>301</th>
+      <th>342</th>
       <td>19.0</td>
-    </tr>
-    <tr>
-      <th>328</th>
-      <td>17.3</td>
     </tr>
   </tbody>
 </table>
@@ -1017,7 +1007,7 @@ split the data into a test and train set.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>53
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50
 </pre></div>
 </div>
 </div>
@@ -1032,7 +1022,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/87d7b05cbe3c2935a2ed7b82561b1b93ddcbaa121f1f121f99bc77cef0c87a35.png" src="_images/87d7b05cbe3c2935a2ed7b82561b1b93ddcbaa121f1f121f99bc77cef0c87a35.png" />
+<img alt="_images/99e2346df5e81c3a2b3c2605f9c0bdde5a1bf4b8d3fb30a6769a2543ca97131f.png" src="_images/99e2346df5e81c3a2b3c2605f9c0bdde5a1bf4b8d3fb30a6769a2543ca97131f.png" />
 </div>
 </div>
 <p>We can also mark where the actual points fall on the x-axis, like this:</p>
@@ -1047,7 +1037,7 @@ the density version of the histogram, normalized to a bar area of 1:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/f8503346ace684c173a7928a661623e0eeb583431c4a063c189874899fb5217d.png" src="_images/f8503346ace684c173a7928a661623e0eeb583431c4a063c189874899fb5217d.png" />
+<img alt="_images/5f69deffb98634fbfea27e3a3d9e56ea1474574aaaf820c8bfd4b876932ef30d.png" src="_images/5f69deffb98634fbfea27e3a3d9e56ea1474574aaaf820c8bfd4b876932ef30d.png" />
 </div>
 </div>
 <p>Notice this histogram is rather blocky. We could try increasing the number of
@@ -1062,7 +1052,7 @@ bins, but we’ve only got 51 rows to play with:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a7121acd3650d6800e85d2ce5ee0fcabba1f5971eda4392fe61fd517bc1fa107.png" src="_images/a7121acd3650d6800e85d2ce5ee0fcabba1f5971eda4392fe61fd517bc1fa107.png" />
+<img alt="_images/f233e47201a2ad9ea764bfdc0a8a323931f788291c9ca18d90e1e64a1df570ac.png" src="_images/f233e47201a2ad9ea764bfdc0a8a323931f788291c9ca18d90e1e64a1df570ac.png" />
 </div>
 </div>
 <p>Oops - that’s even worse.  We can see that small variations in the weights are
@@ -1090,7 +1080,7 @@ distributions a standard deviation of (arbitrarily) 0.25.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.8
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>20.3
 </pre></div>
 </div>
 </div>
@@ -1127,7 +1117,7 @@ distributions a standard deviation of (arbitrarily) 0.25.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9c553f5c1d5e8c801c4cb91310d249ad9cf322b1a0735e97d1089e395addc0f9.png" src="_images/9c553f5c1d5e8c801c4cb91310d249ad9cf322b1a0735e97d1089e395addc0f9.png" />
+<img alt="_images/828e65310692d08fe1ed26e18cc7bf932c278aa156495293ff3928226d5bd75c.png" src="_images/828e65310692d08fe1ed26e18cc7bf932c278aa156495293ff3928226d5bd75c.png" />
 </div>
 </div>
 <p>Here we’ve replaced the single point (the maximum) with a spread-out version of
@@ -1148,7 +1138,7 @@ that point.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/34db49b77b75b503f76c9aee15aa5963c8029cfef210d0972befe5e1bed8cc09.png" src="_images/34db49b77b75b503f76c9aee15aa5963c8029cfef210d0972befe5e1bed8cc09.png" />
+<img alt="_images/c16c035206df5c25a24526ce2d7e49a9913f9b140aef98423cf08a943cfc3240.png" src="_images/c16c035206df5c25a24526ce2d7e49a9913f9b140aef98423cf08a943cfc3240.png" />
 </div>
 </div>
 <p>Finally, add up all these normal distributions:</p>
@@ -1172,7 +1162,7 @@ y-axis scaling right, but a few cells down.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/3119f65195d63f2926211bfdc9f2b8a505d9565e944ebf18ebedbd2a1493878d.png" src="_images/3119f65195d63f2926211bfdc9f2b8a505d9565e944ebf18ebedbd2a1493878d.png" />
+<img alt="_images/9e35d9ab641249eb49c2d2db6ecd4177cb1beb82be1221fcc1b429c5888fab9e.png" src="_images/9e35d9ab641249eb49c2d2db6ecd4177cb1beb82be1221fcc1b429c5888fab9e.png" />
 </div>
 </div>
 <p>Finally, divide this curve by the area under the curve to get the kernel
@@ -1199,7 +1189,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/60ffb7ce01d6d6a2a63a2541ce980f7ea61bb4394fdf633079354640a12847d0.png" src="_images/60ffb7ce01d6d6a2a63a2541ce980f7ea61bb4394fdf633079354640a12847d0.png" />
+<img alt="_images/7321e2cec78e3c14a91aeb8906aff748288bee9a9b721e24382f1b4dea38df67.png" src="_images/7321e2cec78e3c14a91aeb8906aff748288bee9a9b721e24382f1b4dea38df67.png" />
 </div>
 </div>
 <p>This is our kernel density estimate.</p>
@@ -1225,7 +1215,7 @@ density estimate.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/461dae4dbefb5cc4fbd209a04889e235fafdce7d26fa4ee7400f66429071a4a5.png" src="_images/461dae4dbefb5cc4fbd209a04889e235fafdce7d26fa4ee7400f66429071a4a5.png" />
+<img alt="_images/1d4354d2277d4d28e9e45697814812c92a39f5b5d5b51470ba295627285b350b.png" src="_images/1d4354d2277d4d28e9e45697814812c92a39f5b5d5b51470ba295627285b350b.png" />
 </div>
 </div>
 </section>

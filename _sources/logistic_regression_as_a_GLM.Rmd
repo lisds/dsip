@@ -107,7 +107,7 @@ def plotly_3D_with_plane(dataset, x1_string, x2_string, y_string, hover_string_l
     scatter_3d.show()
 ```
 
-## More Logistic Regression 
+## More Logistic Regression
 
 The dataset we will use for this page is a historical social science dataset about the [Titanic disaster](https://en.wikipedia.org/wiki/Sinking_of_the_Titanic). Information about the dataset can be found [here](https://matthew-brett.github.io/cfd2020/data/titanic.html). A description of the variables in the dataset is below:
 
@@ -1255,7 +1255,7 @@ for model in model_list:
     # select the current model
     X_current_model = X[model].values
 
-    jupyprint(f'### Model: survived ~ {" + ".join(model)}')
+    jupyprint(f'*** Model: survived ~ {" + ".join(model)}')
 
     current_model_cross_val_score = cross_val_score(LogisticRegression(),
                                                       X_current_model,
@@ -1328,7 +1328,7 @@ results_df = pd.DataFrame()
 for model in model_list:
     X_current_model = X[model].values
 
-    jupyprint('### Naive Bayes Classifier')
+    jupyprint('*** Naive Bayes Classifier')
     jupyprint(f'Model: survived ~ {" + ".join(model)}')
 
     current_model_cross_val_score = cross_val_score(GaussianNB(),

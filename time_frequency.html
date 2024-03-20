@@ -188,9 +188,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Reading formulae</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="on_vectors.html">Vectors and dot products</a></li>
 <li class="toctree-l1"><a class="reference internal" href="numpy_and_vectors.html">Numpy, arrays, and vectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algebra_of_sums.html">Some algebra with summation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_projection.html">Vector projection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
 <ul class="nav bd-sidenav">
@@ -529,7 +531,7 @@ are sinusoids.</p>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;mode.copy_on_write&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="c1"># Set default colormap.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -694,7 +696,7 @@ coefficients (weights), just using the first 10 values in the array.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eff542dc65321554bbf0b600c026aa37495f17969c775ef9dfba999ef68c7773.png" src="_images/eff542dc65321554bbf0b600c026aa37495f17969c775ef9dfba999ef68c7773.png" />
+<img alt="_images/987b7caa0d87b72641d2123891e89872555f681c3838a62122851d19383e83a5.png" src="_images/987b7caa0d87b72641d2123891e89872555f681c3838a62122851d19383e83a5.png" />
 </div>
 </div>
 <p>We are going to multiply each of these basis function rows by a corresponding <em>weight</em>.  In our case, the right coefficients are the original values.</p>
@@ -735,7 +737,7 @@ coefficients (weights), just using the first 10 values in the array.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/50a50df843cf9d156ff500ec2e2dea526af7e73c40ad9037d23996f8780a380d.png" src="_images/50a50df843cf9d156ff500ec2e2dea526af7e73c40ad9037d23996f8780a380d.png" />
+<img alt="_images/9057239edd7c08bf7766c40ffe333dac9639432c87cc200735cb664cf9d34f6d.png" src="_images/9057239edd7c08bf7766c40ffe333dac9639432c87cc200735cb664cf9d34f6d.png" />
 </div>
 </div>
 <p>The result:</p>
@@ -768,10 +770,10 @@ coefficients (weights), just using the first 10 values in the array.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f2e9064cf10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8c5c6ed250&gt;
 </pre></div>
 </div>
-<img alt="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" src="_images/12a8c167ee70648abfe3519a1f63c0fbe647ed6b087eddbde1996bd521d09eec.png" />
+<img alt="_images/7d8297bded9b3343ca52b3aa517b00c79b8e7c78f75146509c85bc9388deba72.png" src="_images/7d8297bded9b3343ca52b3aa517b00c79b8e7c78f75146509c85bc9388deba72.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -790,7 +792,7 @@ coefficients (weights), just using the first 10 values in the array.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/40e6e22995047f908eb62c0088754dd2caefd5e8e49879df70a4f7f0d4007f23.png" src="_images/40e6e22995047f908eb62c0088754dd2caefd5e8e49879df70a4f7f0d4007f23.png" />
+<img alt="_images/eef7ef7d83ef1e5fafd9a4ef49be9d4b55a0b9c13de68c299c865af6c2d2be08.png" src="_images/eef7ef7d83ef1e5fafd9a4ef49be9d4b55a0b9c13de68c299c865af6c2d2be08.png" />
 </div>
 </div>
 <p>Finally, we reconstruct the original signal by summing our multiplied basis functions along the columns (across rows):</p>
@@ -866,7 +868,7 @@ coefficients (weights), just using the first 10 values in the array.</p>
        [0, 0, 0, ..., 0, 0, 1]])
 </pre></div>
 </div>
-<img alt="_images/05d208a8fdf7333b94f357294130d2330b0d31e26bd7b0404ed16dc9e9edd3a4.png" src="_images/05d208a8fdf7333b94f357294130d2330b0d31e26bd7b0404ed16dc9e9edd3a4.png" />
+<img alt="_images/2a32912dfc41edfb0a81d850bfad8155e453627e9d095ac0f26bbe312d2ae73f.png" src="_images/2a32912dfc41edfb0a81d850bfad8155e453627e9d095ac0f26bbe312d2ae73f.png" />
 </div>
 </div>
 <p>Again, the <em>coefficients</em> for each basis function (row) are the original values:</p>
@@ -1035,10 +1037,10 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f2e90c43950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8c5cab8a90&gt;
 </pre></div>
 </div>
-<img alt="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" src="_images/86deee9bd8766d1b9fbc8bb34a3514e1b272752c46a7a2e2eb69b02a0e457306.png" />
+<img alt="_images/f10a7067989259eee1b6d3546c8c0aab0149c300ed75c04d603a648e01cae25b.png" src="_images/f10a7067989259eee1b6d3546c8c0aab0149c300ed75c04d603a648e01cae25b.png" />
 </div>
 </div>
 <p>Remember, the Fourier transform has re-expressed the original data as the weighted sum of this collection of sinusoids (basis functions).  To reconstruct the original data, we multiply each sinusoid (basis function) by its corresponding weight, and sum the result over the columns (over the weighted sinusoids).</p>
@@ -1074,10 +1076,10 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f2e90b66910&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f8c5cadd810&gt;
 </pre></div>
 </div>
-<img alt="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" src="_images/dc067b143dc11d9cbcd0af6499a5f18048a9700b01f305d6a6c99c364e7af941.png" />
+<img alt="_images/2859df067ae0a8e4dbba6f46f9ecbb61596ac25eb9686fd946e52bb088881b9c.png" src="_images/2859df067ae0a8e4dbba6f46f9ecbb61596ac25eb9686fd946e52bb088881b9c.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1231,7 +1233,7 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.37, 0.9 , 0.88, 0.2 , 0.71, 0.17, 0.4 , 0.79, 0.87, 0.01])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.13, 0.6 , 0.4 , 0.42, 0.93, 0.37, 0.81, 0.75, 0.94, 0.08])
 </pre></div>
 </div>
 </div>
@@ -1244,8 +1246,8 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([56.09+0.j  ,  1.38-2.45j,  3.65+3.39j,  2.15-2.47j,  4.1 +1.17j,
-       -2.32+2.34j,  1.41+1.53j, -0.54+1.29j, -1.26-4.09j, -3.89+0.89j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([65.84+0.j  ,  0.28-0.79j, -1.07-1.4j ,  1.9 +1.85j,  2.22-0.49j,
+       -3.64-0.86j, -2.9 -2.59j, -3.03-3.69j, -0.11+1.05j, -2.88-0.44j])
 </pre></div>
 </div>
 </div>
@@ -1258,8 +1260,8 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.37-0.j, 0.9 +0.j, 0.88-0.j, 0.2 +0.j, 0.71-0.j, 0.17+0.j,
-       0.4 +0.j, 0.79-0.j, 0.87-0.j, 0.01-0.j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.13+0.j, 0.6 +0.j, 0.4 +0.j, 0.42-0.j, 0.93-0.j, 0.37+0.j,
+       0.81-0.j, 0.75-0.j, 0.94-0.j, 0.08+0.j])
 </pre></div>
 </div>
 </div>
