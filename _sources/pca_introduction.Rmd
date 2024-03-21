@@ -36,15 +36,6 @@ Check that you understand:
 
 ## Setting the scene
 
-Let’s say I have some data in a 2D array $\mathbf{X}$.
-
-I have taken two different measures for each sample, and 50 samples.  We can
-also call the measures *variables* or *features*.  So, I have two *features*
-and 50 *samples*.
-
-I arrange the data so each column is one sample (I have 50 columns). Each row
-is one feature (or measure or variable) (I have two rows).
-
 Start by loading the libraries we need, and doing some configuration:
 <!-- #endregion -->
 
@@ -60,16 +51,21 @@ pd.set_option('mode.copy_on_write', True)
 import matplotlib.pyplot as plt
 ```
 
-We are going to use the Premier League table data for this example:
+We are going to use the English Premier League (EPL) table data for this example.
+See [the EPL dataset
+page](https://github.com/odsti/datasets/tree/main/premier_league) for more on this dataset.
 
 ```{python}
 df = pd.read_csv('data/premier_league_2021.csv')
 df.head()
 ```
 
+Notice we have spending data on `defense`, `midfield` and `forward`.  As we will see, these are highly correlated, one with another.
+
 Our particular interest is to see whether we can extract some summary of the defense and forward spending.  We suspect there is something common there, and we want to see if we can summarize it better.
 
-While we're at it, let's convert the wages to units of 10 million GBPs, to make them a bit easier to read:
+While we're at it, let's convert the wages to units of 10 million GBPs (£), to
+make the numbers a bit easier to read at a glance.
 
 ```{python}
 data = df[['defense', 'forward']] / 10_000
@@ -83,19 +79,26 @@ X = np.array(data)
 X
 ```
 
-We will call the rows *samples* and the columns *features*.
+```{python}
+n_rows = len(X)
+n_rows
+```
+
+We will call the rows *samples* and the columns *features*.  In our case the
+samples are EPL clubs, and the features are `defense` and `forward` spending.
 
 
 To make things simpler, we will subtract the mean across samples from each
-feature.  As each feature is one column, I need to subtract the mean of each column,
-from each value in the column:
+feature.  As each feature is one column, we need to subtract the mean of each
+column, from each value in the column:
 
 ```{python}
 # Subtract mean across samples (mean of each feature)
-x_mean = X.mean(axis=0)
+x_mean = np.mean(X, axis=0)
 X[:, 0] = X[:, 0] - x_mean[0]  # Subtract mean of defense.
 X[:, 1] = X[:, 1] - x_mean[1]  # Subtract mean of forward
-X
+# The columns now have means near as dammit to 0.
+np.mean(X, axis=0)
 ```
 
 The values for the two features (columns) in $\mathbf{X}$ are highly
@@ -104,8 +107,8 @@ correlated:
 ```{python}
 plt.scatter(X[:, 0], X[:, 1])
 plt.axis('equal')
-plt.xlabel('Defense (feature 1) (standard units)')
-plt.ylabel('Forward (feature 2) (standard units)');
+plt.xlabel('Defense (feature 1)')
+plt.ylabel('Forward (feature 2)')
 ```
 
 We want to explain the variation in these data.
@@ -119,14 +122,14 @@ print(np.sum(squares))
 ```
 
 The sums of squares of the data can be thought of as the squared lengths of
-the 50 2D vectors in the *rows* of $\mathbf{X}$.
+the 20 2D vectors in the *rows* of $\mathbf{X}$.
 
 We can think of each sample as being a point on a 2D coordinate system, where
 the first feature is the position on the x axis, and the second is the
 position on the y axis. In fact, this is how we just plotted the values in the
 scatter plot. We can also think of each *row* as a 2D *vector*. Call
 $\vec{v_j}$ the vector contained in row $j$ of matrix
-$\mathbf{X}$, where $j \in 1..50$.
+$\mathbf{X}$, where $j \in 1..20$.
 
 The sum of squares across the features, is also the squared distance of the
 point (row) from the origin (0, 0). That is the same as saying that the sum
@@ -145,7 +148,7 @@ v1
 x, y = v1
 # Make subplots for vectors and text
 fig, (vec_ax, txt_ax) = plt.subplots(2, 1)
-font_sz = 18
+font_sz = 14
 # Plot 0, 0
 vec_ax.plot(0, 0, 'ro')
 # Show vectors as arrows
@@ -162,7 +165,7 @@ vec_ax.annotate(r'$\vec{{x}} = ({x:.2f}, 0)$'.format(x=x),
 vec_ax.annotate(r'$\vec{{y}} = (0, {y:.2f})$'.format(y=y),
                 (x + 0.2, y / 2 - 0.1), fontsize=font_sz)
 # Make sure axes are correct lengths
-# vec_ax.axis((-1, 6, -1, 3))
+vec_ax.axis((-1, 4, -1, 5))
 vec_ax.set_aspect('equal', adjustable='box')
 vec_ax.set_title(r'x- and y- axis components of $\vec{v_1}$')
 vec_ax.axis('off')
@@ -186,6 +189,7 @@ for point in X:  # iterate over rows
 plt.axis('equal')
 plt.xlabel('Feature 1 (defense)')
 plt.ylabel('Feature 2 (forward)')
+plt.title('Distances from 0, 0');
 ```
 
 Put another way, we are trying to explain the squares of the lengths of the
@@ -241,7 +245,8 @@ np.sum(u_guessed ** 2)
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1])
-plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.01, color='r')
+plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.01, color='r',
+         label='Guessed unit vector')
 plt.axis('equal')
 plt.title('Guessed unit vector')
 plt.xlabel('Feature 1')
@@ -663,11 +668,11 @@ $$
 \sum_j x^2 + \sum_j y^2 = \\
 \sum_j \left( x^2 + y^2 \right) = \\
 \sum_j \|\vec{v_1}\|^2 = \\
-\sum_j \left( \|proj_1\vec{v_1}\|^2 + \|proj_2\vec{v_1}\|^2 \right) = \\
+\sum_j \left( \|proj_1\vec{v_1}\|^2 + \|proj_2\vec{v_1}\|^2 \ri/ght) = \\
 \sum_j \|proj_1\vec{v_1}\|^2 + \sum_j \|proj_2\vec{v_1}\|^2 \\
 $$
 
-where $j$ indexes samples - $j \in 1..50$ in our case.
+where $j$ indexes samples - $j \in 1..20$ in our case.
 
 The first line shows the partition of the sum of squares into standard x and y
 coordinates, and the last line shows the partition into the first and second
