@@ -1872,17 +1872,18 @@ variant in NumPy:</p>
 </div>
 </div>
 <p>By the definition of the SVD, <span class="math notranslate nohighlight">\(\U\)</span> and <span class="math notranslate nohighlight">\(\V^T\)</span> are orthogonal matrices, so
-<span class="math notranslate nohighlight">\(\U^T\)</span> is the inverse of <span class="math notranslate nohighlight">\(\U\)</span> and <span class="math notranslate nohighlight">\(\U^T \U = I\)</span>.  Therefore:</p>
+<span class="math notranslate nohighlight">\(\V\)</span> is the inverse of <span class="math notranslate nohighlight">\(\V^T\)</span> and <span class="math notranslate nohighlight">\(\V^T \V = I\)</span>.  Therefore:</p>
 <div class="math notranslate nohighlight">
 \[
 \X = \U \Sigma \V^T \implies
-\U^T \X = \Sigma \V^T
+\X \V = \U \Sigma
 \]</div>
-<p>You may recognize <span class="math notranslate nohighlight">\(\U^T \X\)</span> as the matrix of scalar projections <span class="math notranslate nohighlight">\(\C\)</span> above:</p>
+<p>You may recognize <span class="math notranslate nohighlight">\(\X \V\)</span> as the matrix of scalar projections <span class="math notranslate nohighlight">\(\C\)</span> above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">VT</span><span class="p">),</span> <span class="n">C</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implement the formula above.</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">VT</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -1892,11 +1893,11 @@ variant in NumPy:</p>
 </div>
 </div>
 </div>
-<p>Because <span class="math notranslate nohighlight">\(\V^T\)</span> is also an orthogonal matrix, it has row lengths of 1, and we
+<p>Because <span class="math notranslate nohighlight">\(\U\)</span> is also an orthogonal matrix, it has row lengths of 1, and we
 can get the values in <span class="math notranslate nohighlight">\(\S\)</span> from the row lengths of <span class="math notranslate nohighlight">\(\C\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_from_C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">C</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_from_C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">C</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">S_from_C</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1907,12 +1908,24 @@ can get the values in <span class="math notranslate nohighlight">\(\S\)</span> f
 </div>
 </div>
 </div>
-<p>Now we can reconstruct <span class="math notranslate nohighlight">\(\V^T\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">S_from_C</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([13.084282,  2.352664])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can reconstruct <span class="math notranslate nohighlight">\(\U\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Divide out reconstructed S values</span>
-<span class="n">S_as_column</span> <span class="o">=</span> <span class="n">S_from_C</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="n">S_as_column</span><span class="p">,</span> <span class="n">VT</span><span class="p">)</span>
+<span class="n">S_as_row</span> <span class="o">=</span> <span class="n">S_from_C</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="n">S_as_row</span><span class="p">,</span> <span class="n">U</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1930,28 +1943,28 @@ matrix of the features.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \U \S \V^T = \X \\
-(\U \S \V^T)(\U \S \V^T)^T = \X \X^T
+(\U \S \V^T)^T(\U \S \V^T) = \X^T \X
 \end{split}\]</div>
-<p>By the matrix transpose rule and associativity of matrix multiplication:</p>
+<p>By the multiplication property of the matrix transpose and associativity of matrix multiplication:</p>
 <div class="math notranslate nohighlight">
 \[
-\U \S \V^T \V \S^T \U^T = \X \X^T
+\V \S^T \U^T \U \S \V^T = \X^T \X
 \]</div>
-<p><span class="math notranslate nohighlight">\(\V^T\)</span> is an orthogonal matrix, so <span class="math notranslate nohighlight">\(\V^T = \V^{-1}\)</span> and <span class="math notranslate nohighlight">\(\V^T \V = I\)</span>. <span class="math notranslate nohighlight">\(\S\)</span> is
-a diagonal matrix so <span class="math notranslate nohighlight">\(\S \S^T = \S^2\)</span>, where <span class="math notranslate nohighlight">\(\S^2\)</span> is a square diagonal
+<p><span class="math notranslate nohighlight">\(\U\)</span> is an orthogonal matrix, so <span class="math notranslate nohighlight">\(\U^T = \U^{-1}\)</span> and <span class="math notranslate nohighlight">\(\U^T \U = I\)</span>. <span class="math notranslate nohighlight">\(\S\)</span> is
+a diagonal matrix so <span class="math notranslate nohighlight">\(\S^T \S = \S^2\)</span>, where <span class="math notranslate nohighlight">\(\S^2\)</span> is a square diagonal
 matrix shape <span class="math notranslate nohighlight">\(M\)</span> by <span class="math notranslate nohighlight">\(M\)</span> containing the squares of the singular values from
 <span class="math notranslate nohighlight">\(\S\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-\U \S^2 \U^T = \X \X^T
+\V \S^2 \V^T = \X^T \X
 \]</div>
-<p>This last formula is the formula for the SVD of <span class="math notranslate nohighlight">\(\X \X^T\)</span>. So, we can get our
-<span class="math notranslate nohighlight">\(\U\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> from the SVD on <span class="math notranslate nohighlight">\(\X \X^T\)</span>.</p>
+<p>This last formula is the formula for the SVD of <span class="math notranslate nohighlight">\(\X^T \X\)</span>. So, we can get our
+<span class="math notranslate nohighlight">\(\V^T\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> from the SVD on <span class="math notranslate nohighlight">\(\X^T \X\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Finding principal components using SVD on X X^T</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Finding principal components using SVD on X^T X</span>
 <span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">U_vcov</span><span class="p">,</span> <span class="n">S_vcov</span><span class="p">,</span> <span class="n">VT_vcov</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+<span class="n">V_vcov</span><span class="p">,</span> <span class="n">S_vcov</span><span class="p">,</span> <span class="n">VT_vcov</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
 <span class="n">VT_vcov</span>
 </pre></div>
 </div>
@@ -1965,22 +1978,20 @@ matrix shape <span class="math notranslate nohighlight">\(M\)</span> by <span cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">VT_vcov</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># VT_vcov equal to VT from SVD on X.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">VT_vcov</span><span class="p">,</span> <span class="n">VT</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.49759 , -0.867412],
-       [-0.867412,  0.49759 ]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>
 </div>
-<p>We know from the derivation above that <code class="docutils literal notranslate"><span class="pre">VT_vcov</span></code> is just the transpose of
-<span class="math notranslate nohighlight">\(\U\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">VT</span><span class="p">,</span> <span class="n">VT_vcov</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">V_vcov</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">VT_vcov</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

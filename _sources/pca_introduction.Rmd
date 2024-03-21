@@ -754,34 +754,39 @@ VT.shape
 ```
 
 By the definition of the SVD, $\U$ and $\V^T$ are orthogonal matrices, so
-$\U^T$ is the inverse of $\U$ and $\U^T \U = I$.  Therefore:
+$\V$ is the inverse of $\V^T$ and $\V^T \V = I$.  Therefore:
 
 $$
 \X = \U \Sigma \V^T \implies
-\U^T \X = \Sigma \V^T
+\X \V = \U \Sigma
 $$
 
-You may recognize $\U^T \X$ as the matrix of scalar projections $\C$ above:
+You may recognize $\X \V$ as the matrix of scalar projections $\C$ above:
 
 ```{python}
-C = U.T.dot(X)
-np.allclose(np.diag(S).dot(VT), C)
+# Implement the formula above.
+C = X.dot(VT.T)
+np.allclose(C, U.dot(np.diag(S)))
 ```
 
-Because $\V^T$ is also an orthogonal matrix, it has row lengths of 1, and we
+Because $\U$ is also an orthogonal matrix, it has row lengths of 1, and we
 can get the values in $\S$ from the row lengths of $\C$:
 
 ```{python}
-S_from_C = np.sqrt(np.sum(C ** 2, axis=1))
+S_from_C = np.sqrt(np.sum(C ** 2, axis=0))
 np.allclose(S_from_C, S)
 ```
 
-Now we can reconstruct $\V^T$:
+```{python}
+S_from_C
+```
+
+Now we can reconstruct $\U$:
 
 ```{python}
 # Divide out reconstructed S values
-S_as_column = S_from_C.reshape((2, 1))
-np.allclose(C / S_as_column, VT)
+S_as_row = S_from_C.reshape((1, 2))
+np.allclose(C / S_as_row, U)
 ```
 
 The SVD is quick to compute for a small matrix like `X`, but when the larger
@@ -793,43 +798,41 @@ Here’s why that works:
 
 $$
 \U \S \V^T = \X \\
-(\U \S \V^T)(\U \S \V^T)^T = \X \X^T
+(\U \S \V^T)^T(\U \S \V^T) = \X^T \X
 $$
 
-By the matrix transpose rule and associativity of matrix multiplication:
+By the multiplication property of the matrix transpose and associativity of matrix multiplication:
 
 $$
-\U \S \V^T \V \S^T \U^T = \X \X^T
+\V \S^T \U^T \U \S \V^T = \X^T \X
 $$
 
-$\V^T$ is an orthogonal matrix, so $\V^T = \V^{-1}$ and $\V^T \V = I$. $\S$ is
-a diagonal matrix so $\S \S^T = \S^2$, where $\S^2$ is a square diagonal
+$\U$ is an orthogonal matrix, so $\U^T = \U^{-1}$ and $\U^T \U = I$. $\S$ is
+a diagonal matrix so $\S^T \S = \S^2$, where $\S^2$ is a square diagonal
 matrix shape $M$ by $M$ containing the squares of the singular values from
 $\S$:
 
 $$
-\U \S^2 \U^T = \X \X^T
+\V \S^2 \V^T = \X^T \X
 $$
 
-This last formula is the formula for the SVD of $\X \X^T$. So, we can get our
-$\U$ and $\S$ from the SVD on $\X \X^T$.
+This last formula is the formula for the SVD of $\X^T \X$. So, we can get our
+$\V^T$ and $\S$ from the SVD on $\X^T \X$.
 
 ```{python}
-# Finding principal components using SVD on X X^T
+# Finding principal components using SVD on X^T X
 unscaled_cov = X.T.dot(X)
-U_vcov, S_vcov, VT_vcov = npl.svd(unscaled_cov)
+V_vcov, S_vcov, VT_vcov = npl.svd(unscaled_cov)
 VT_vcov
 ```
 
 ```{python}
-VT_vcov
+# VT_vcov equal to VT from SVD on X.
+np.allclose(VT_vcov, VT)
 ```
 
-We know from the derivation above that `VT_vcov` is just the transpose of
-$\U$:
-
 ```{python}
-np.allclose(VT, VT_vcov.T)
+np.allclose(V_vcov.T, VT_vcov)
 ```
 
 The returned vector `S_vcov` from the SVD on $\X \X^T$ now contains the
