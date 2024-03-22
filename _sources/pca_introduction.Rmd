@@ -245,12 +245,17 @@ np.sum(u_guessed ** 2)
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1])
-plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.01, color='r',
-         label='Guessed unit vector')
+plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.2, color='r',
+          label='Vector')
 plt.axis('equal')
-plt.title('Guessed unit vector')
+plt.title('Guessed unit vector and resulting line')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2');
+y_limits = np.array(plt.ylim())
+y_slope = u_guessed[0] / u_guessed[1]  # y rise over run.
+line_x, line_y = y_limits * y_slope, y_limits
+plt.plot(line_x, line_y, ':k', label='Guessed line')
+plt.legend()
 ```
 
 Let’s project all the points onto that line:
@@ -274,6 +279,7 @@ for i in range(len(X)):  # For each row
     plt.plot([proj_pt[0], actual_pt[0]],
              [proj_pt[1], actual_pt[1]], 'k')
 plt.axis('equal')
+plt.plot(line_x, line_y, ':k', label='Guessed line')
 plt.legend(loc='upper left')
 plt.title("Actual and projected points for guessed $\hat{u}$")
 plt.xlabel('Feature 1')
@@ -397,8 +403,12 @@ I plot the data with the new unit vector I found:
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1])
-plt.arrow(0, 0, u_best[0], u_best[1], width=0.01, color='r')
+plt.arrow(0, 0, u_best[0], u_best[1], width=0.2, color='r')
 plt.axis('equal')
+y_limits = np.array(plt.ylim())
+y_slope = u_best[0] / u_best[1]  # y rise over run.
+line_x, line_y = y_limits * y_slope, y_limits
+plt.plot(line_x, line_y, ':k', label='Best line')
 plt.title('Best unit vector')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2')
@@ -420,6 +430,7 @@ for i in range(len(X)):  # Iterate over rows.
     actual_pt = X[i, :]
     plt.plot([proj_pt[0], actual_pt[0]], [proj_pt[1], actual_pt[1]], 'k')
 plt.axis('equal')
+plt.plot(line_x, line_y, ':k', label='Best line')
 plt.legend(loc='upper left')
 plt.title("Actual and projected points for $\hat{u_{best}}$")
 plt.xlabel('Feature 1')
@@ -506,10 +517,10 @@ projected_onto_orth_again = line_projection(u_best_orth, X)
 np.allclose(projected_onto_orth_again, projected_onto_orth)
 ```
 
-$\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}\newcommand{\C}{\mathbf{C}}$
+$\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}\newcommand{\C}{\mathbf{C}}\newcommand{\W}{\mathbf{W}}$
 For the same reason, I can calculate the scalar projections $c$ for both
 components at the same time, by doing matrix multiplication. First assemble
-the components into the columns of a 2 by 2 array $\U$:
+the components into the columns of a 2 by 2 array $\W$:
 
 ```{python}
 print('Best first u', u_best)
@@ -517,48 +528,47 @@ print('Best second u', u_best_orth)
 ```
 
 ```{python}
-# Components as columns in a 2 by 2 array
-U = np.stack([u_best, u_best_orth], axis=1)
-U
+# Components as rows in a 2 by 2 array
+W = np.vstack([u_best, u_best_orth])
+W
 ```
 
 Call the 20 by 2 scalar projection values matrix $\C$. I can calculate $\C$ in
 one shot by matrix multiplication:
 
 $$
-\C = \X \U
+\C = \X \W^T
 $$
 
 ```{python}
-C = X.dot(U)
+C = X.dot(W.T)
 C
 ```
 
 The first column of $\C$ has the scalar projections for the first component (the
-first component is the first column of $\U$).  The second row has the scalar
+first component is the first column of $\W$).  The second row has the scalar
 projections for the second component.
 
 Finally, we can get the projections of the vectors in $\X$ onto the components
-in $\U$ by taking the dot products of the columns in $\U$ with the scalar
-projections in $\C$:
+in $\W$ by taking the dot products of the scalar projections in $\C$ with the columns in $\W$.
 
 ```{python}
 # Result of projecting on first component, via array dot
 # np.outer does the equivalent of a matrix multiply of a column vector
 # with a row vector, to give a matrix.
-projected_onto_1 = np.outer(C[:, 0], U[:, 0])
+projected_onto_1 = np.outer(C[:, 0], W[0, :])
 # The same as doing the original calculation
 np.allclose(projected_onto_1, line_projection(u_best, X))
 ```
 
 ```{python}
 # Result of projecting on second component, via np.outer
-projected_onto_2 = np.outer(C[:, 1], U[:, 1])
+projected_onto_2 = np.outer(C[:, 1], W[1, :])
 # The same as doing the original calculation
 np.allclose(projected_onto_2, line_projection(u_best_orth, X))
 ```
 
-# The principal component lines are new axes to express the data
+## Principal components are new axes to express the data
 
 My original points were expressed in the orthogonal, standard x and y axes. My
 principal components give new orthogonal axes. When I project, I have just
@@ -595,7 +605,7 @@ vec_ax.annotate(('$proj_2\\vec{{v_1}} =$\n'
                     '$({x:.2f}, {y:.2f})$').format(x=p2_x, y=p2_y),
                 (x + 0.3, y - 1.2), fontsize=font_sz)
 # Make sure axes are right lengths
-vec_ax.axis((-1, 6.5, -1, 3))
+vec_ax.axis((-1, 4, -1, 5))
 vec_ax.set_aspect('equal', adjustable='box')
 vec_ax.set_title(r'first and and second principal components of $\vec{v_1}$')
 vec_ax.axis('off')
@@ -624,16 +634,16 @@ np.allclose(projected_onto_1 + projected_onto_2, X)
 ```
 
 Doing the sum above is the same operation as matrix multiplication of the
-scalar projects $\C$ with the (transposed) components $\U$.  Seeing that this is so
+scalar projects $\C$ with the (transposed) components $\W$.  Seeing that this is so
 involves writing out a few cells of the matrix multiplication in symbols and
 staring at it for a while.
 
 ```{python}
-data_again = C.dot(U.T)
+data_again = C.dot(W)
 np.allclose(data_again, X)
 ```
 
-# The components partition the sums of squares
+## The components partition the sums of squares
 
 Notice also that I have partitioned the sums of squares of the data into a
 part that can be explained by the first component, and a part that can be
@@ -668,7 +678,7 @@ $$
 \sum_j x^2 + \sum_j y^2 = \\
 \sum_j \left( x^2 + y^2 \right) = \\
 \sum_j \|\vec{v_1}\|^2 = \\
-\sum_j \left( \|proj_1\vec{v_1}\|^2 + \|proj_2\vec{v_1}\|^2 \ri/ght) = \\
+\sum_j \left( \|proj_1\vec{v_1}\|^2 + \|proj_2\vec{v_1}\|^2 \right) = \\
 \sum_j \|proj_1\vec{v_1}\|^2 + \sum_j \|proj_2\vec{v_1}\|^2 \\
 $$
 
@@ -678,7 +688,7 @@ The first line shows the partition of the sum of squares into standard x and y
 coordinates, and the last line shows the partition into the first and second
 principal components.
 
-# Finding the principal components with SVD
+## Finding the principal components with SVD
 
 You now know what a principal component analysis is.
 
@@ -698,22 +708,27 @@ $$
 \X = \U \Sigma \V^T
 $$
 
+We will write $\V^T$ as $\W$:
+
+$$
+\X = \U \Sigma \W
+$$
+
 If $\X$ is shape $M$ by $N$ then $\U$ is an $M$ by $M$ [orthogonal
 matrix](https://en.wikipedia.org/wiki/Orthogonal_matrix), $\S$ is a
 [diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix) shape $M$
-by $N$, and $\V^T$ is an $N$ by $N$ orthogonal matrix.
+by $N$, and $\W$ is an $N$ by $N$ orthogonal matrix.
 <!-- #endregion -->
 
 ```{python}
-U, S, VT = npl.svd(X)
-U.shape
-VT.shape
+U, S, W = npl.svd(X)
+U.shape, W.shape
 ```
 
-The components are in the columns of the returned matrix $\V^T$.
+The components are in the columns of the returned matrix $\W$.
 
 ```{python}
-VT
+W
 ```
 
 Remember that a vector $\vec{r}$ defines the same line as the
@@ -740,32 +755,31 @@ S ** 2
 The formula above is for the “full” SVD.  When the number of rows in $\X$
 ($= M$) is less than the number of columns ($= N$) the SVD formula above
 requires an $M$ by $N$ matrix $\S$ padded on the right with $N - M$ all zero
-columns, and an $N$ by $N$ matrix $\V^T$, where the last $N - M$ rows will be
+columns, and an $N$ by $N$ matrix $\W$ (often written as $\V^T$), where the last $N - M$ rows will be
 discarded by matrix multiplication with the all zero rows in $\S$.  A variant
 of the full SVD is the [thin SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition#Thin_SVD), where
 we discard the useless columns and rows and return $\S$ as a diagonal matrix
-$M x M$ and $\V^T$ with shape $M x N$.  This is the `full_matrices=False`
+$M x M$ and $\W$ with shape $M x N$.  This is the `full_matrices=False`
 variant in NumPy:
 
 ```{python}
-U, S, VT = npl.svd(X, full_matrices=False)
-U.shape
-VT.shape
+U, S, W = npl.svd(X, full_matrices=False)
+U.shape, W.shape
 ```
 
-By the definition of the SVD, $\U$ and $\V^T$ are orthogonal matrices, so
-$\V$ is the inverse of $\V^T$ and $\V^T \V = I$.  Therefore:
+By the definition of the SVD, $\U$ and $\W$ are orthogonal matrices, so
+$\W^T$ is the inverse of $\W$ and $\W^T \W = I$.  Therefore:
 
 $$
-\X = \U \Sigma \V^T \implies
-\X \V = \U \Sigma
+\X = \U \Sigma \W \implies
+\X \W^T = \U \Sigma
 $$
 
-You may recognize $\X \V$ as the matrix of scalar projections $\C$ above:
+You may recognize $\X \W^T$ as the matrix of scalar projections $\C$ above:
 
 ```{python}
 # Implement the formula above.
-C = X.dot(VT.T)
+C = X.dot(W.T)
 np.allclose(C, U.dot(np.diag(S)))
 ```
 
@@ -789,22 +803,75 @@ S_as_row = S_from_C.reshape((1, 2))
 np.allclose(C / S_as_row, U)
 ```
 
+
+## PCA using scikit-learn
+
+```{python}
+from sklearn.decomposition import PCA
+
+pca = PCA()
+pca = pca.fit(X)
+
+pca.components_
+```
+
+Notice the components contain the same vectors as $\W$ above, but with the components in the *rows*, and the signs flipped.  The sign flip doesn't change the line (component) defined by the vector:
+
+```{python}
+np.allclose(pca.components_.T, W * -1)
+```
+
+```{python}
+np.allclose(pca.singular_values_, S)
+```
+
+```{python}
+data3 = df[['defense', 'midfield', 'forward']]
+X3 = np.array(data3) / 10_000
+# Subtract mean
+X3 = X3 - np.mean(X3, axis=0)
+X3
+```
+
+```{python}
+U3, S3, W3 = npl.svd(X3, full_matrices=False)
+W3
+```
+
+```{python}
+np.allclose(U3 @ np.diag(S3) @ W3, X3)
+```
+
+```{python}
+pca3 = PCA()
+pca3 = pca3.fit(X3)
+
+pca3.components_
+```
+
+```{python}
+np.allclose(pca3.singular_values_, S3)
+```
+
+## Efficient SVD using covariance of $\X$
+
+
 The SVD is quick to compute for a small matrix like `X`, but when the larger
 dimension of $\X$ becomes large, it is more efficient in CPU time and memory
-to calculate $\U$ and $\S$ by doing the SVD on the variance / covariance
+to calculate $\W$ and $\S$ by doing the SVD on the variance / covariance
 matrix of the features.
 
 Here’s why that works:
 
 $$
-\U \S \V^T = \X \\
-(\U \S \V^T)^T(\U \S \V^T) = \X^T \X
+\U \S \W = \X \\
+(\U \S \W)^T(\U \S \W) = \X^T \X
 $$
 
 By the multiplication property of the matrix transpose and associativity of matrix multiplication:
 
 $$
-\V \S^T \U^T \U \S \V^T = \X^T \X
+\W^T \S^T \U^T \U \S \W = \X^T \X
 $$
 
 $\U$ is an orthogonal matrix, so $\U^T = \U^{-1}$ and $\U^T \U = I$. $\S$ is
@@ -813,29 +880,29 @@ matrix shape $M$ by $M$ containing the squares of the singular values from
 $\S$:
 
 $$
-\V \S^2 \V^T = \X^T \X
+\W^T \S^2 \W = \X^T \X
 $$
 
 This last formula is the formula for the SVD of $\X^T \X$. So, we can get our
-$\V^T$ and $\S$ from the SVD on $\X^T \X$.
+$\W$ and $\S$ from the SVD on $\X^T \X$.
 
 ```{python}
 # Finding principal components using SVD on X^T X
 unscaled_cov = X.T.dot(X)
-V_vcov, S_vcov, VT_vcov = npl.svd(unscaled_cov)
-VT_vcov
+WT_vcov, S_vcov, W_vcov = npl.svd(unscaled_cov)
+W_vcov
 ```
 
 ```{python}
-# VT_vcov equal to VT from SVD on X.
-np.allclose(VT_vcov, VT)
+# W_vcov equal to W from SVD on X.
+np.allclose(W_vcov, W)
 ```
 
 ```{python}
-np.allclose(V_vcov.T, VT_vcov)
+np.allclose(WT_vcov.T, W_vcov)
 ```
 
-The returned vector `S_vcov` from the SVD on $\X \X^T$ now contains the
+The returned vector `S_vcov` from the SVD on $\X^T \X$ now contains the
 explained sum of squares for each component:
 
 ```{python}
@@ -888,8 +955,8 @@ from the fact that the lengths of the components are always scaled to 1
 (unit vectors):
 
 ```{python}
-scaled_U, scaled_S, scaled_VT = npl.svd(np.cov(X.T))
-np.allclose(scaled_U, VT), np.allclose(scaled_VT, VT_vcov)
+scaled_U, scaled_S, scaled_W = npl.svd(np.cov(X.T))
+np.allclose(scaled_U, W), np.allclose(scaled_W, W_vcov)
 ```
 
 The difference is only in the *singular values* in the vector `S`:
