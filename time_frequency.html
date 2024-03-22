@@ -194,6 +194,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vector_projection.html">Vector projection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pca_introduction.html">Introducing principal component analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pca_dimension_reduction.html">Dimension reduction with Principal Component Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
 <ul class="nav bd-sidenav">
@@ -771,7 +772,7 @@ coefficients (weights), just using the first 10 values in the array.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f795f6dee10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fcd689cf6d0&gt;
 </pre></div>
 </div>
 <img alt="_images/7d8297bded9b3343ca52b3aa517b00c79b8e7c78f75146509c85bc9388deba72.png" src="_images/7d8297bded9b3343ca52b3aa517b00c79b8e7c78f75146509c85bc9388deba72.png" />
@@ -1038,7 +1039,7 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f795f9dd810&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fcd68b60a90&gt;
 </pre></div>
 </div>
 <img alt="_images/f10a7067989259eee1b6d3546c8c0aab0149c300ed75c04d603a648e01cae25b.png" src="_images/f10a7067989259eee1b6d3546c8c0aab0149c300ed75c04d603a648e01cae25b.png" />
@@ -1077,7 +1078,7 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f795fa0d650&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7fcd687e1e10&gt;
 </pre></div>
 </div>
 <img alt="_images/2859df067ae0a8e4dbba6f46f9ecbb61596ac25eb9686fd946e52bb088881b9c.png" src="_images/2859df067ae0a8e4dbba6f46f9ecbb61596ac25eb9686fd946e52bb088881b9c.png" />
@@ -1234,7 +1235,7 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.41, 0.26, 0.21, 0.9 , 0.28, 0.92, 0.34, 0.38, 0.62, 0.07])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.66, 0.47, 0.68, 0.96, 0.61, 0.36, 0.79, 0.9 , 0.39, 0.21])
 </pre></div>
 </div>
 </div>
@@ -1247,8 +1248,8 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([65.87+0.j  , -0.81-1.18j,  2.36-1.04j, -2.78-0.06j,  1.47+1.19j,
-        1.31+3.36j, -1.39+1.93j, -3.81-1.34j,  1.16+2.38j,  2.76-1.14j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([64.93+0.j  , -2.65-1.41j,  3.18-1.61j,  2.18-3.02j,  1.48+0.26j,
+       -1.6 -0.36j,  0.68-1.71j,  1.86-1.43j,  4.13-1.55j,  3.88-1.33j])
 </pre></div>
 </div>
 </div>
@@ -1261,8 +1262,8 @@ information from the complex number coefficients:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.41+0.j, 0.26-0.j, 0.21+0.j, 0.9 +0.j, 0.28-0.j, 0.92-0.j,
-       0.34-0.j, 0.38-0.j, 0.62+0.j, 0.07+0.j])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.66+0.j, 0.47+0.j, 0.68+0.j, 0.96+0.j, 0.61+0.j, 0.36-0.j,
+       0.79+0.j, 0.9 +0.j, 0.39+0.j, 0.21+0.j])
 </pre></div>
 </div>
 </div>

@@ -66,7 +66,7 @@
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Linear regression notation for models with multiple predictors" href="lin_regression_multiple_predictors.html" />
+    <link rel="next" title="Dimension reduction with Principal Component Analysis" href="pca_dimension_reduction.html" />
     <link rel="prev" title="Vector projection" href="vector_projection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -194,6 +194,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vector_projection.html">Vector projection</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introducing principal component analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pca_dimension_reduction.html">Dimension reduction with Principal Component Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
 <ul class="nav bd-sidenav">
@@ -1045,7 +1046,7 @@ degrees angle to the x axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb99f7eab10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fca240b09d0&gt;
 </pre></div>
 </div>
 <img alt="_images/50bfb527dc507429c66fd553d17a6e2ee2645a6955a77b08c3f32168dad9aa3e.png" src="_images/50bfb527dc507429c66fd553d17a6e2ee2645a6955a77b08c3f32168dad9aa3e.png" />
@@ -1194,7 +1195,7 @@ onto a line defined by a unit vector <span class="math notranslate nohighlight">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">line_projection</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Return columns of X projected onto line defined by u</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># A column vector</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Reshape to a column vector</span>
     <span class="n">c_values</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>  <span class="c1"># c values for scaling u</span>
     <span class="n">projected</span> <span class="o">=</span> <span class="n">c_values</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">projected</span>
@@ -1233,49 +1234,52 @@ projections:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">n_angles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
-<span class="n">u_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">u_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">u_vectors</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2, 10000)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10000, 2)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;+&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;End points of vectors to try&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+          <span class="n">length_includes_head</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original guessed vector&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b6ae5d26496f96623b7153e4a2bc013f5290ea7df63fdaf0122990e9d5487b8c.png" src="_images/b6ae5d26496f96623b7153e4a2bc013f5290ea7df63fdaf0122990e9d5487b8c.png" />
+<img alt="_images/fdf61719022c6124e0944a4eb3cb1765cb34d11d8fd21a56360408fc348df56d.png" src="_images/fdf61719022c6124e0944a4eb3cb1765cb34d11d8fd21a56360408fc348df56d.png" />
 </div>
 </div>
 <p>I then get the remaining sum of squares after projecting onto each of these
 unit vectors:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">remaining_ss</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">u_vectors</span><span class="o">.</span><span class="n">T</span><span class="p">:</span> <span class="c1"># iterate over columns</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">remaining_ss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_angles</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_angles</span><span class="p">):</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">u_vectors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get vector corresponding to angle.</span>
     <span class="n">remaining</span> <span class="o">=</span> <span class="n">line_remaining</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
-    <span class="n">remaining_ss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">remaining_ss</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">remaining_ss</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Angle of unit vector&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Remaining sum of squares&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Remaining sum of squares&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Remaining sum of squares&#39;)
-</pre></div>
-</div>
 <img alt="_images/4a8c01f52e807e79e530df0f89174260ae801d5c2fe97cc4a43a8499e28aa953.png" src="_images/4a8c01f52e807e79e530df0f89174260ae801d5c2fe97cc4a43a8499e28aa953.png" />
 </div>
 </div>
@@ -1297,7 +1301,7 @@ radians:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_best</span> <span class="o">=</span> <span class="n">u_vectors</span><span class="p">[:,</span> <span class="n">min_i</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_best</span> <span class="o">=</span> <span class="n">u_vectors</span><span class="p">[</span><span class="n">min_i</span><span class="p">]</span>
 <span class="n">u_best</span>
 </pre></div>
 </div>
@@ -1425,7 +1429,7 @@ remaining direction along which the variation can occur.</p>
 orthogonal to <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">u_best</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_best_orth</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">u_best</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_best_orth</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1500,7 +1504,7 @@ from the original array <span class="math notranslate nohighlight">\(\mathbf{X}\
 </div>
 </div>
 </div>
-<p><span class="math notranslate nohighlight">\(\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}\newcommand{\C}{\mathbf{C}}\newcommand{\W}{\mathbf{W}}\)</span>
+<p><span class="math notranslate nohighlight">\(\newcommand{\X}{\mathbf{X}}\newcommand{\U}{\mathbf{U}}\newcommand{\S}{\mathbf{\Sigma}}\newcommand{\V}{\mathbf{V}}\newcommand{\C}{\mathbf{C}}\newcommand{\W}{\mathbf{W}}\newcommand{\Vh}{\mathbf{V*}}\)</span>
 For the same reason, I can calculate the scalar projections <span class="math notranslate nohighlight">\(c\)</span> for both
 components at the same time, by doing matrix multiplication. First assemble
 the components into the columns of a 2 by 2 array <span class="math notranslate nohighlight">\(\W\)</span>:</p>
@@ -1572,10 +1576,10 @@ one shot by matrix multiplication:</p>
 </div>
 </div>
 <p>The first column of <span class="math notranslate nohighlight">\(\C\)</span> has the scalar projections for the first component (the
-first component is the first column of <span class="math notranslate nohighlight">\(\W\)</span>).  The second row has the scalar
+first component is the first row of <span class="math notranslate nohighlight">\(\W\)</span>).  The second column has the scalar
 projections for the second component.</p>
 <p>Finally, we can get the projections of the vectors in <span class="math notranslate nohighlight">\(\X\)</span> onto the components
-in <span class="math notranslate nohighlight">\(\W\)</span> by taking the dot products of the scalar projections in <span class="math notranslate nohighlight">\(\C\)</span> with the columns in <span class="math notranslate nohighlight">\(\W\)</span>.</p>
+in <span class="math notranslate nohighlight">\(\W\)</span> by taking the dot products of the scalar projections in <span class="math notranslate nohighlight">\(\C\)</span> with the rows in <span class="math notranslate nohighlight">\(\W\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Result of projecting on first component, via array dot</span>
@@ -1642,17 +1646,17 @@ the projections onto the principal component axes:</p>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$(0, 0)$&#39;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
 <span class="c1"># Label vectors</span>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\vec{{v_1}} = (</span><span class="si">{x:.2f}</span><span class="s1">, </span><span class="si">{y:.2f}</span><span class="s1">)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">),</span>
-                <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">2.2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">((</span><span class="s1">&#39;$proj_1</span><span class="se">\\</span><span class="s1">vec{{v_1}} = $</span><span class="se">\n</span><span class="s1">&#39;</span>
                     <span class="s1">&#39;$(</span><span class="si">{x:.2f}</span><span class="s1">, </span><span class="si">{y:.2f}</span><span class="s1">)$&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">p1_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">p1_y</span><span class="p">),</span>
-                <span class="p">(</span><span class="n">p1_x</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">p1_y</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">1.8</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">p1_x</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">4.1</span><span class="p">,</span> <span class="n">p1_y</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">((</span><span class="s1">&#39;$proj_2</span><span class="se">\\</span><span class="s1">vec{{v_1}} =$</span><span class="se">\n</span><span class="s1">&#39;</span>
                     <span class="s1">&#39;$(</span><span class="si">{x:.2f}</span><span class="s1">, </span><span class="si">{y:.2f}</span><span class="s1">)$&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">p2_x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">p2_y</span><span class="p">),</span>
-                <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">1.2</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">/</span> <span class="mi">4</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">font_sz</span><span class="p">)</span>
 <span class="c1"># Make sure axes are right lengths</span>
-<span class="n">vec_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">vec_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">((</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
-<span class="n">vec_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;first and and second principal components of $\vec</span><span class="si">{v_1}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">vec_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;First and second principal components of $\vec</span><span class="si">{v_1}</span><span class="s1">$&#39;</span><span class="p">)</span>
 <span class="n">vec_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 <span class="c1"># Text about length</span>
 <span class="n">txt_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
@@ -1666,7 +1670,7 @@ the projections onto the principal component axes:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ba877dc3ea6c9422ac03f1342d3b466f5b927619696369f322831c4300f7c067.png" src="_images/ba877dc3ea6c9422ac03f1342d3b466f5b927619696369f322831c4300f7c067.png" />
+<img alt="_images/5852b50fdeea8edec78f1d7130fed288218b6c0aeb6204594a8877298162d942.png" src="_images/5852b50fdeea8edec78f1d7130fed288218b6c0aeb6204594a8877298162d942.png" />
 </div>
 </details>
 </div>
@@ -1690,18 +1694,18 @@ data projected onto the second, I get back the original data:</p>
 </div>
 </div>
 <p>Doing the sum above is the same operation as matrix multiplication of the
-scalar projects <span class="math notranslate nohighlight">\(\C\)</span> with the (transposed) components <span class="math notranslate nohighlight">\(\W\)</span>.  Seeing that this is so
-involves writing out a few cells of the matrix multiplication in symbols and
-staring at it for a while.</p>
+scalar projects <span class="math notranslate nohighlight">\(\C\)</span> with the (transposed) components <span class="math notranslate nohighlight">\(\W\)</span>.  Seeing that this
+is so involves writing out a few cells of the matrix multiplication in symbols
+and staring at it for a while.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_again</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_again</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">data_again</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
 </pre></div>
 </div>
 </div>
@@ -1778,19 +1782,19 @@ using <a class="reference external" href="https://en.wikipedia.org/wiki/Singular
 \[
 \X = \U \Sigma \V^T
 \]</div>
-<p>We will write <span class="math notranslate nohighlight">\(\V^T\)</span> as <span class="math notranslate nohighlight">\(\W\)</span>:</p>
+<p>To avoid the distraction of the transpose in the <span class="math notranslate nohighlight">\(V^T\)</span> notation, we will write <span class="math notranslate nohighlight">\(\V^T\)</span> as <span class="math notranslate nohighlight">\(\Vh\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-\X = \U \Sigma \W
+\X = \U \Sigma \Vh
 \]</div>
 <p>If <span class="math notranslate nohighlight">\(\X\)</span> is shape <span class="math notranslate nohighlight">\(M\)</span> by <span class="math notranslate nohighlight">\(N\)</span> then <span class="math notranslate nohighlight">\(\U\)</span> is an <span class="math notranslate nohighlight">\(M\)</span> by <span class="math notranslate nohighlight">\(M\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Orthogonal_matrix">orthogonal
 matrix</a>, <span class="math notranslate nohighlight">\(\S\)</span> is a
 <a class="reference external" href="https://en.wikipedia.org/wiki/Diagonal_matrix">diagonal matrix</a> shape <span class="math notranslate nohighlight">\(M\)</span>
-by <span class="math notranslate nohighlight">\(N\)</span>, and <span class="math notranslate nohighlight">\(\W\)</span> is an <span class="math notranslate nohighlight">\(N\)</span> by <span class="math notranslate nohighlight">\(N\)</span> orthogonal matrix.</p>
+by <span class="math notranslate nohighlight">\(N\)</span>, and <span class="math notranslate nohighlight">\(\Vh\)</span> is an <span class="math notranslate nohighlight">\(N\)</span> by <span class="math notranslate nohighlight">\(N\)</span> orthogonal matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vstar</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Vstar</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1800,10 +1804,10 @@ by <span class="math notranslate nohighlight">\(N\)</span>, and <span class="mat
 </div>
 </div>
 </div>
-<p>The components are in the columns of the returned matrix <span class="math notranslate nohighlight">\(\W\)</span>.</p>
+<p>The components are in the rows of the returned matrix <span class="math notranslate nohighlight">\(\Vh\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Vstar</span>
 </pre></div>
 </div>
 </div>
@@ -1860,16 +1864,17 @@ the square root of the explained sum of squares for each component:</p>
 <p>The formula above is for the “full” SVD.  When the number of rows in <span class="math notranslate nohighlight">\(\X\)</span>
 (<span class="math notranslate nohighlight">\(= M\)</span>) is less than the number of columns (<span class="math notranslate nohighlight">\(= N\)</span>) the SVD formula above
 requires an <span class="math notranslate nohighlight">\(M\)</span> by <span class="math notranslate nohighlight">\(N\)</span> matrix <span class="math notranslate nohighlight">\(\S\)</span> padded on the right with <span class="math notranslate nohighlight">\(N - M\)</span> all zero
-columns, and an <span class="math notranslate nohighlight">\(N\)</span> by <span class="math notranslate nohighlight">\(N\)</span> matrix <span class="math notranslate nohighlight">\(\W\)</span> (often written as <span class="math notranslate nohighlight">\(\V^T\)</span>), where the last <span class="math notranslate nohighlight">\(N - M\)</span> rows will be
+columns, and an <span class="math notranslate nohighlight">\(N\)</span> by <span class="math notranslate nohighlight">\(N\)</span> matrix <span class="math notranslate nohighlight">\(\Vh\)</span> (often written as <span class="math notranslate nohighlight">\(\V^T\)</span>), where the
+last <span class="math notranslate nohighlight">\(N - M\)</span> rows will be
 discarded by matrix multiplication with the all zero rows in <span class="math notranslate nohighlight">\(\S\)</span>.  A variant
 of the full SVD is the <a class="reference external" href="https://en.wikipedia.org/wiki/Singular_value_decomposition#Thin_SVD">thin SVD</a>, where
 we discard the useless columns and rows and return <span class="math notranslate nohighlight">\(\S\)</span> as a diagonal matrix
-<span class="math notranslate nohighlight">\(M x M\)</span> and <span class="math notranslate nohighlight">\(\W\)</span> with shape <span class="math notranslate nohighlight">\(M x N\)</span>.  This is the <code class="docutils literal notranslate"><span class="pre">full_matrices=False</span></code>
+<span class="math notranslate nohighlight">\(M x M\)</span> and <span class="math notranslate nohighlight">\(\Vh\)</span> with shape <span class="math notranslate nohighlight">\(M x N\)</span>.  This is the <code class="docutils literal notranslate"><span class="pre">full_matrices=False</span></code>
 variant in NumPy:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vstar</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Vstar</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -1879,18 +1884,18 @@ variant in NumPy:</p>
 </div>
 </div>
 </div>
-<p>By the definition of the SVD, <span class="math notranslate nohighlight">\(\U\)</span> and <span class="math notranslate nohighlight">\(\W\)</span> are orthogonal matrices, so
-<span class="math notranslate nohighlight">\(\W^T\)</span> is the inverse of <span class="math notranslate nohighlight">\(\W\)</span> and <span class="math notranslate nohighlight">\(\W^T \W = I\)</span>.  Therefore:</p>
+<p>By the definition of the SVD, <span class="math notranslate nohighlight">\(\U\)</span> and <span class="math notranslate nohighlight">\(\Vh\)</span> are orthogonal matrices, so
+<span class="math notranslate nohighlight">\(\Vh^T\)</span> is the inverse of <span class="math notranslate nohighlight">\(\Vh\)</span> and <span class="math notranslate nohighlight">\(\Vh^T \V = I\)</span>.  Therefore:</p>
 <div class="math notranslate nohighlight">
 \[
-\X = \U \Sigma \W \implies
-\X \W^T = \U \Sigma
+\X = \U \Sigma \Vh \implies
+\X \Vh^T = \U \Sigma
 \]</div>
-<p>You may recognize <span class="math notranslate nohighlight">\(\X \W^T\)</span> as the matrix of scalar projections <span class="math notranslate nohighlight">\(\C\)</span> above:</p>
+<p>You may recognize <span class="math notranslate nohighlight">\(\X \Vh^T\)</span> as the matrix of scalar projections <span class="math notranslate nohighlight">\(\C\)</span> above:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implement the formula above.</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Vstar</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">U</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -1953,6 +1958,7 @@ can get the values in <span class="math notranslate nohighlight">\(\S\)</span> f
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
+<span class="c1"># Scikit-learn&#39;s components.</span>
 <span class="n">pca</span><span class="o">.</span><span class="n">components_</span>
 </pre></div>
 </div>
@@ -1964,19 +1970,21 @@ can get the values in <span class="math notranslate nohighlight">\(\S\)</span> f
 </div>
 </div>
 </div>
-<p>Notice the components contain the same vectors as <span class="math notranslate nohighlight">\(\W\)</span> above, but with the components in the <em>rows</em>, and the signs flipped.  The sign flip doesn’t change the line (component) defined by the vector:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">W</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Vstar</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.49759 , -0.867412],
+       [-0.867412,  0.49759 ]])
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice the components contain the same vectors as <span class="math notranslate nohighlight">\(\Vh\)</span> above, with the components in the rows - but where the components can have their signs flipped.  The sign flip doesn’t change the line (component) defined by the vector.</p>
+<p>The weights that we called <code class="docutils literal notranslate"><span class="pre">S</span></code> are in <code class="docutils literal notranslate"><span class="pre">singular_values_</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">singular_values_</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
@@ -1989,93 +1997,67 @@ can get the values in <span class="math notranslate nohighlight">\(\S\)</span> f
 </div>
 </div>
 </div>
+<p>Scikit-learn gives the scalar projections for the components with the <code class="docutils literal notranslate"><span class="pre">fit_transform</span></code> method:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;defense&#39;</span><span class="p">,</span> <span class="s1">&#39;midfield&#39;</span><span class="p">,</span> <span class="s1">&#39;forward&#39;</span><span class="p">]]</span>
-<span class="n">X3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10_000</span>
-<span class="c1"># Subtract mean</span>
-<span class="n">X3</span> <span class="o">=</span> <span class="n">X3</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">X3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sk_C</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">sk_C</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 3.207965,  0.39264 ,  4.02992 ],
-       [ 1.829965,  2.67464 ,  0.57912 ],
-       [ 2.297965,  3.05264 ,  3.79792 ],
-       [ 0.127565,  1.01064 ,  0.88992 ],
-       [ 0.878365,  0.67264 ,  1.07892 ],
-       [ 3.223965,  1.63464 ,  7.82192 ],
-       [ 0.061965, -1.03936 , -0.75208 ],
-       [-0.020035, -0.25036 , -0.91208 ],
-       [-1.060035, -0.83036 , -1.77708 ],
-       [-0.750435, -0.74936 , -0.77408 ],
-       [-0.096435, -0.35216 , -1.05208 ],
-       [-0.731035, -0.15936 , -0.85608 ],
-       [-1.955435, -1.23536 , -2.49408 ],
-       [-0.208035, -0.61936 ,  0.19092 ],
-       [-1.610335, -0.48536 , -1.30308 ],
-       [ 0.327165,  1.07464 ,  0.47492 ],
-       [-1.509035, -1.65936 , -1.64168 ],
-       [-1.330035, -1.26936 , -1.94508 ],
-       [-1.336035, -0.52836 , -2.52808 ],
-       [-1.348035, -1.33436 , -2.82808 ]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 5.091854,  0.777381],
+       [ 1.412908,  1.29917 ],
+       [ 4.437807,  0.103477],
+       [ 0.835403, -0.332164],
+       [ 1.372934,  0.225045],
+       [ 8.389043, -1.095601],
+       [-0.62153 ,  0.427977],
+       [-0.801119,  0.436463],
+       [-2.068924, -0.035231],
+       [-1.044855, -0.265762],
+       [-0.960572,  0.439855],
+       [-1.10633 , -0.208132],
+       [-3.136401, -0.45514 ],
+       [ 0.06209 , -0.275452],
+       [-1.931594, -0.748425],
+       [ 0.574746,  0.047472],
+       [-2.174894, -0.492072],
+       [-2.348999, -0.185837],
+       [-2.857685,  0.099054],
+       [-3.12388 ,  0.237922]])
 </pre></div>
 </div>
 </div>
 </div>
+<p>Notice these are the same as our <code class="docutils literal notranslate"><span class="pre">C</span></code>, but allowing for the sign flips of the components:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">U3</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">W3</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X3</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">W3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.474226, -0.33551 , -0.813967],
-       [ 0.150192,  0.880157, -0.450296],
-       [ 0.867497, -0.335794, -0.367003]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">U3</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S3</span><span class="p">)</span> <span class="o">@</span> <span class="n">W3</span><span class="p">,</span> <span class="n">X3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca3</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span>
-<span class="n">pca3</span> <span class="o">=</span> <span class="n">pca3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X3</span><span class="p">)</span>
-
-<span class="n">pca3</span><span class="o">.</span><span class="n">components_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.474226,  0.33551 ,  0.813967],
-       [ 0.150192,  0.880157, -0.450296],
-       [ 0.867497, -0.335794, -0.367003]])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">pca3</span><span class="o">.</span><span class="n">singular_values_</span><span class="p">,</span> <span class="n">S3</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-5.091854, -0.777381],
+       [-1.412908, -1.29917 ],
+       [-4.437807, -0.103477],
+       [-0.835403,  0.332164],
+       [-1.372934, -0.225045],
+       [-8.389043,  1.095601],
+       [ 0.62153 , -0.427977],
+       [ 0.801119, -0.436463],
+       [ 2.068924,  0.035231],
+       [ 1.044855,  0.265762],
+       [ 0.960572, -0.439855],
+       [ 1.10633 ,  0.208132],
+       [ 3.136401,  0.45514 ],
+       [-0.06209 ,  0.275452],
+       [ 1.931594,  0.748425],
+       [-0.574746, -0.047472],
+       [ 2.174894,  0.492072],
+       [ 2.348999,  0.185837],
+       [ 2.857685, -0.099054],
+       [ 3.12388 , -0.237922]])
 </pre></div>
 </div>
 </div>
@@ -2085,18 +2067,18 @@ can get the values in <span class="math notranslate nohighlight">\(\S\)</span> f
 <h2>Efficient SVD using covariance of <span class="math notranslate nohighlight">\(\X\)</span><a class="headerlink" href="#efficient-svd-using-covariance-of-x" title="Permalink to this heading">#</a></h2>
 <p>The SVD is quick to compute for a small matrix like <code class="docutils literal notranslate"><span class="pre">X</span></code>, but when the larger
 dimension of <span class="math notranslate nohighlight">\(\X\)</span> becomes large, it is more efficient in CPU time and memory
-to calculate <span class="math notranslate nohighlight">\(\W\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> by doing the SVD on the variance / covariance
+to calculate <span class="math notranslate nohighlight">\(\Vh\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> by doing the SVD on the variance / covariance
 matrix of the features.</p>
 <p>Here’s why that works:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\U \S \W = \X \\
-(\U \S \W)^T(\U \S \W) = \X^T \X
+\U \S \Vh = \X \\
+(\U \S \Vh)^T(\U \S \Vh) = \X^T \X
 \end{split}\]</div>
 <p>By the multiplication property of the matrix transpose and associativity of matrix multiplication:</p>
 <div class="math notranslate nohighlight">
 \[
-\W^T \S^T \U^T \U \S \W = \X^T \X
+\Vh^T \S^T \U^T \U \S \Vh = \X^T \X
 \]</div>
 <p><span class="math notranslate nohighlight">\(\U\)</span> is an orthogonal matrix, so <span class="math notranslate nohighlight">\(\U^T = \U^{-1}\)</span> and <span class="math notranslate nohighlight">\(\U^T \U = I\)</span>. <span class="math notranslate nohighlight">\(\S\)</span> is
 a diagonal matrix so <span class="math notranslate nohighlight">\(\S^T \S = \S^2\)</span>, where <span class="math notranslate nohighlight">\(\S^2\)</span> is a square diagonal
@@ -2104,16 +2086,16 @@ matrix shape <span class="math notranslate nohighlight">\(M\)</span> by <span cl
 <span class="math notranslate nohighlight">\(\S\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-\W^T \S^2 \W = \X^T \X
+\Vh^T \S^2 \Vh = \X^T \X
 \]</div>
 <p>This last formula is the formula for the SVD of <span class="math notranslate nohighlight">\(\X^T \X\)</span>. So, we can get our
-<span class="math notranslate nohighlight">\(\W\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> from the SVD on <span class="math notranslate nohighlight">\(\X^T \X\)</span>.</p>
+<span class="math notranslate nohighlight">\(\Vh\)</span> and <span class="math notranslate nohighlight">\(\S\)</span> from the SVD on <span class="math notranslate nohighlight">\(\X^T \X\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Finding principal components using SVD on X^T X</span>
 <span class="n">unscaled_cov</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="n">WT_vcov</span><span class="p">,</span> <span class="n">S_vcov</span><span class="p">,</span> <span class="n">W_vcov</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
-<span class="n">W_vcov</span>
+<span class="n">Vs_T_vcov</span><span class="p">,</span> <span class="n">S_vcov</span><span class="p">,</span> <span class="n">Vs_vcov</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">unscaled_cov</span><span class="p">)</span>
+<span class="n">Vs_vcov</span>
 </pre></div>
 </div>
 </div>
@@ -2126,8 +2108,8 @@ matrix shape <span class="math notranslate nohighlight">\(M\)</span> by <span cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># W_vcov equal to W from SVD on X.</span>
-<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">W_vcov</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Vs_vcov equal to Vstar from SVD on X.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">Vs_vcov</span><span class="p">,</span> <span class="n">Vstar</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2139,7 +2121,7 @@ matrix shape <span class="math notranslate nohighlight">\(M\)</span> by <span cl
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">WT_vcov</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">W_vcov</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">Vs_T_vcov</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Vs_vcov</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2212,8 +2194,8 @@ from the fact that the lengths of the components are always scaled to 1
 (unit vectors):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">scaled_S</span><span class="p">,</span> <span class="n">scaled_W</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">W</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_W</span><span class="p">,</span> <span class="n">W_vcov</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">scaled_S</span><span class="p">,</span> <span class="n">scaled_Vs</span> <span class="o">=</span> <span class="n">npl</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_U</span><span class="p">,</span> <span class="n">Vstar</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">scaled_Vs</span><span class="p">,</span> <span class="n">Vs_vcov</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2313,11 +2295,11 @@ these two is the scaling of the <code class="docutils literal notranslate"><span
       </div>
     </a>
     <a class="right-next"
-       href="lin_regression_multiple_predictors.html"
+       href="pca_dimension_reduction.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Linear regression notation for models with multiple predictors</p>
+        <p class="prev-next-title">Dimension reduction with Principal Component Analysis</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

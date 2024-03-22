@@ -194,6 +194,7 @@
 <li class="toctree-l1"><a class="reference internal" href="lin_regression_notation.html">Notation for linear regression models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vector_projection.html">Vector projection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pca_introduction.html">Introducing principal component analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pca_dimension_reduction.html">Dimension reduction with Principal Component Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Intermediate regression</span></p>
 <ul class="nav bd-sidenav">
@@ -705,7 +706,7 @@ Handbook</a>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fa430aa2a50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f22f31fb690&gt;
 </pre></div>
 </div>
 <img alt="_images/b7536d36a65efda4eeea904b84c31dc433bf5dcc94e96137e3a32e5752e41dad.png" src="_images/b7536d36a65efda4eeea904b84c31dc433bf5dcc94e96137e3a32e5752e41dad.png" />
@@ -1015,7 +1016,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fa4289041d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f22ed000250&gt;]
 </pre></div>
 </div>
 <img alt="_images/4d8942034416cd1324af0eae0185f28456657993f9794d9b7318cd84669cfb0f.png" src="_images/4d8942034416cd1324af0eae0185f28456657993f9794d9b7318cd84669cfb0f.png" />
@@ -1030,7 +1031,7 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fa428a63990&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f22eceb1010&gt;]
 </pre></div>
 </div>
 <img alt="_images/5d0454adb79262adf309c649a8ae90fb0c8f8b16289cfcb8e189cddd4437cc57.png" src="_images/5d0454adb79262adf309c649a8ae90fb0c8f8b16289cfcb8e189cddd4437cc57.png" />
@@ -2797,8 +2798,8 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7fa422dc1f10&gt;,
- &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7fa422dcfb50&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f22e9973750&gt;,
+ &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f22e94e3b90&gt;}
 </pre></div>
 </div>
 </div>
@@ -3876,19 +3877,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   </thead>
   <tbody>
     <tr>
-      <th>196</th>
-      <td>5550.0</td>
-      <td>15.9</td>
+      <th>294</th>
+      <td>3450.0</td>
+      <td>18.6</td>
     </tr>
     <tr>
-      <th>337</th>
-      <td>3650.0</td>
-      <td>16.5</td>
-    </tr>
-    <tr>
-      <th>266</th>
-      <td>4375.0</td>
-      <td>14.1</td>
+      <th>186</th>
+      <td>5150.0</td>
+      <td>14.8</td>
     </tr>
     <tr>
       <th>297</th>
@@ -3896,9 +3892,14 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <td>17.5</td>
     </tr>
     <tr>
-      <th>276</th>
-      <td>3500.0</td>
-      <td>17.9</td>
+      <th>180</th>
+      <td>4600.0</td>
+      <td>14.3</td>
+    </tr>
+    <tr>
+      <th>269</th>
+      <td>6000.0</td>
+      <td>16.2</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3906,29 +3907,29 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <td>...</td>
     </tr>
     <tr>
-      <th>316</th>
+      <th>161</th>
+      <td>5150.0</td>
+      <td>15.4</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>4700.0</td>
+      <td>14.2</td>
+    </tr>
+    <tr>
+      <th>327</th>
       <td>3950.0</td>
+      <td>19.0</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>5550.0</td>
+      <td>15.3</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>3900.0</td>
       <td>19.5</td>
-    </tr>
-    <tr>
-      <th>312</th>
-      <td>3850.0</td>
-      <td>18.3</td>
-    </tr>
-    <tr>
-      <th>322</th>
-      <td>3400.0</td>
-      <td>17.9</td>
-    </tr>
-    <tr>
-      <th>326</th>
-      <td>3325.0</td>
-      <td>16.4</td>
-    </tr>
-    <tr>
-      <th>302</th>
-      <td>3400.0</td>
-      <td>18.4</td>
     </tr>
   </tbody>
 </table>
@@ -4399,7 +4400,7 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/55fa6c766112229b2e4fcd0b1236ec34711878db7c8f90e2e2104413bc19d14a.png" src="_images/55fa6c766112229b2e4fcd0b1236ec34711878db7c8f90e2e2104413bc19d14a.png" />
+<img alt="_images/97f4266db237e9aefa6afe123360ab77ec8cbfb10c1b1c5b3274a6be103bf682.png" src="_images/97f4266db237e9aefa6afe123360ab77ec8cbfb10c1b1c5b3274a6be103bf682.png" />
 </div>
 </div>
 </section>
