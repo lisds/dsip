@@ -59,6 +59,8 @@
     <script src="_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'pca_dimension_reduction';</script>
     <link rel="canonical" href="https://lisds.github.io/dsip/pca_dimension_reduction.html" />
     <link rel="shortcut icon" href="_static/dsfe_favicon.ico"/>
@@ -877,7 +879,7 @@ this dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f8c81f4b210&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f842830e450&gt;]
 </pre></div>
 </div>
 <img alt="_images/22aec31e27f46e81143e6080c9f36ee5656af540b75e740508dd8228207074f0.png" src="_images/22aec31e27f46e81143e6080c9f36ee5656af540b75e740508dd8228207074f0.png" />
@@ -1097,7 +1099,9 @@ this dataset.</p>
 </div>
 <p>We can use these four columns instead of the original four columns as
 regressors, and this gives exactly the same model - in the sense that we get
-the same fitted values when we fit the model:</p>
+the same fitted values when we fit the model.  Think of the component scores
+(values) as being a re-expression of the original four columns, that keeps all
+the same information.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comp_vals</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -1200,7 +1204,8 @@ the same fitted values when we fit the model:</p>
 </div>
 </div>
 </div>
-<p>Until we get the full R2 with all four components (which gives the same underling model as using the original four regressors):</p>
+<p>Until we get the full <span class="math notranslate nohighlight">\(R^2\)</span> with all four components (which gives the same
+underling model as using the original four regressors):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comp_vals</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>

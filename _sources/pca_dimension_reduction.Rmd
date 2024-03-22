@@ -116,7 +116,9 @@ demeaned_X.dot(pca.components_.T)
 
 We can use these four columns instead of the original four columns as
 regressors, and this gives exactly the same model - in the sense that we get
-the same fitted values when we fit the model:
+the same fitted values when we fit the model.  Think of the component scores
+(values) as being a re-expression of the original four columns, that keeps all
+the same information.
 
 ```{python}
 comp_reg = LinearRegression().fit(comp_vals, y)
@@ -157,7 +159,8 @@ comp123_reg = LinearRegression().fit(comp_vals[:, :3], y)
 r2_score(y, comp123_reg.predict(comp_vals[:, :3]))
 ```
 
-Until we get the full R2 with all four components (which gives the same underling model as using the original four regressors):
+Until we get the full $R^2$ with all four components (which gives the same
+underling model as using the original four regressors):
 
 ```{python}
 comp_reg = LinearRegression().fit(comp_vals, y)
