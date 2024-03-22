@@ -879,7 +879,7 @@ this dataset.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f842830e450&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f4652598990&gt;]
 </pre></div>
 </div>
 <img alt="_images/22aec31e27f46e81143e6080c9f36ee5656af540b75e740508dd8228207074f0.png" src="_images/22aec31e27f46e81143e6080c9f36ee5656af540b75e740508dd8228207074f0.png" />
@@ -1098,14 +1098,14 @@ this dataset.</p>
 </div></div></div>
 </div>
 <p>We can use these four columns instead of the original four columns as
-regressors, and this gives exactly the same model - in the sense that we get
-the same fitted values when we fit the model.  Think of the component scores
-(values) as being a re-expression of the original four columns, that keeps all
-the same information.</p>
+regressors. Think of the component scores (values) as being a re-expression of
+the original four columns, that keeps all the same information.  When we fit this model, the component scores will get their own coefficients, but because those columns contain the same information as the original columns, the resulting fitted values will be the same as for the original model (within the precision of the calculations).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comp_vals</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">comp_fitted</span> <span class="o">=</span> <span class="n">comp_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">comp_vals</span><span class="p">)</span>
+<span class="c1"># The columns and parameters are different, but the fitted values</span>
+<span class="c1"># are the same.</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">comp_fitted</span><span class="p">,</span> <span class="n">fitted</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1116,7 +1116,9 @@ the same information.</p>
 </div>
 </div>
 </div>
-<p>But now we’ve seen the scree-plot, we might conclude that only the first component is important, and we can discard the others.  We then just include the first component values a new model.</p>
+<p>Now we’ve seen the scree-plot, we might conclude that only the first component
+is important, and we can discard the others.  We then just include the first
+component values a new model.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp1_vals</span> <span class="o">=</span> <span class="n">comp_vals</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># A 2D array with one column</span>
@@ -1162,7 +1164,9 @@ the same information.</p>
 </div>
 </div>
 </div>
-<p>We still have a decent model fit with just the first component:</p>
+<p>We don’t have quite the same quality of model fit — as measured by <span class="math notranslate nohighlight">\(R^2\)</span>, for
+example, but we have recovered most of the <span class="math notranslate nohighlight">\(R^2\)</span> using this single regressor
+instead of the original four.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp1_fitted</span> <span class="o">=</span> <span class="n">comp1_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">comp1_vals</span><span class="p">)</span>
@@ -1176,7 +1180,7 @@ the same information.</p>
 </div>
 </div>
 </div>
-<p>We could improve it a little by adding the second component:</p>
+<p>We could improve the fit a little by adding the second component:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp12_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">comp_vals</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>

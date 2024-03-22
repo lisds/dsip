@@ -115,18 +115,20 @@ demeaned_X.dot(pca.components_.T)
 ```
 
 We can use these four columns instead of the original four columns as
-regressors, and this gives exactly the same model - in the sense that we get
-the same fitted values when we fit the model.  Think of the component scores
-(values) as being a re-expression of the original four columns, that keeps all
-the same information.
+regressors. Think of the component scores (values) as being a re-expression of
+the original four columns, that keeps all the same information.  When we fit this model, the component scores will get their own coefficients, but because those columns contain the same information as the original columns, the resulting fitted values will be the same as for the original model (within the precision of the calculations).
 
 ```{python}
 comp_reg = LinearRegression().fit(comp_vals, y)
 comp_fitted = comp_reg.predict(comp_vals)
+# The columns and parameters are different, but the fitted values
+# are the same.
 np.allclose(comp_fitted, fitted)
 ```
 
-But now we've seen the scree-plot, we might conclude that only the first component is important, and we can discard the others.  We then just include the first component values a new model.
+Now we've seen the scree-plot, we might conclude that only the first component
+is important, and we can discard the others.  We then just include the first
+component values a new model.
 
 ```{python}
 comp1_vals = comp_vals[:, :1]  # A 2D array with one column
@@ -138,14 +140,16 @@ comp1_reg = LinearRegression().fit(comp1_vals, y)
 comp1_reg.coef_
 ```
 
-We still have a decent model fit with just the first component:
+We don't have quite the same quality of model fit — as measured by $R^2$, for
+example, but we have recovered most of the $R^2$ using this single regressor
+instead of the original four.
 
 ```{python}
 comp1_fitted = comp1_reg.predict(comp1_vals)
 r2_score(y, comp1_fitted)
 ```
 
-We could improve it a little by adding the second component:
+We could improve the fit a little by adding the second component:
 
 ```{python}
 comp12_reg = LinearRegression().fit(comp_vals[:, :2], y)
