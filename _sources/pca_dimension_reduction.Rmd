@@ -114,7 +114,9 @@ demeaned_X = X - np.mean(X, axis=0)
 demeaned_X.dot(pca.components_.T)
 ```
 
-We can use these four columns instead of the orignal four columns as regressors, and this gives exactly the same model - in the sense that we get the same fitted values when we fit the model:
+We can use these four columns instead of the original four columns as
+regressors, and this gives exactly the same model - in the sense that we get
+the same fitted values when we fit the model:
 
 ```{python}
 comp_reg = LinearRegression().fit(comp_vals, y)
