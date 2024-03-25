@@ -1031,25 +1031,30 @@ degrees angle to the x axis:</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
-          <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Vector&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Guessed unit vector and resulting line&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">);</span>
-<span class="n">y_limits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())</span>
-<span class="n">y_slope</span> <span class="o">=</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># y rise over run.</span>
-<span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span> <span class="o">=</span> <span class="n">y_limits</span> <span class="o">*</span> <span class="n">y_slope</span><span class="p">,</span> <span class="n">y_limits</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="s1">&#39;:k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Guessed line&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">plot_vec_line</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">label_suffix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Plot vector and line corresponding to unit vector `u`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">u_x</span><span class="p">,</span> <span class="n">u_y</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_x</span><span class="p">,</span> <span class="n">u_y</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+              <span class="n">label</span><span class="o">=</span><span class="n">label_suffix</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
+              <span class="n">length_includes_head</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">y_lims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())</span>
+    <span class="n">y_slope</span> <span class="o">=</span> <span class="n">u_x</span> <span class="o">/</span> <span class="n">u_y</span>  <span class="c1"># x rise over y run.</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_lims</span> <span class="o">*</span> <span class="n">y_slope</span><span class="p">,</span> <span class="n">y_lims</span><span class="p">,</span> <span class="s1">&#39;:k&#39;</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Line for &#39;</span> <span class="o">+</span> <span class="n">label_suffix</span><span class="p">)</span>
+
+<span class="n">plot_vec_line</span><span class="p">(</span><span class="n">u_guessed</span><span class="p">,</span> <span class="s1">&#39;guessed vector&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb64b4e83d0&gt;
-</pre></div>
-</div>
-<img alt="_images/50bfb527dc507429c66fd553d17a6e2ee2645a6955a77b08c3f32168dad9aa3e.png" src="_images/50bfb527dc507429c66fd553d17a6e2ee2645a6955a77b08c3f32168dad9aa3e.png" />
+<img alt="_images/0a250a8de8cd3fa3931473023d2e8dba8693b841d3992bd6b99ec131f14ae951.png" src="_images/0a250a8de8cd3fa3931473023d2e8dba8693b841d3992bd6b99ec131f14ae951.png" />
 </div>
 </details>
 </div>
@@ -1058,9 +1063,9 @@ degrees angle to the x axis:</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">u_col</span> <span class="o">=</span> <span class="n">u_guessed</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># A column vector</span>
 <span class="n">c_values</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_col</span><span class="p">)</span>  <span class="c1"># c values for scaling u</span>
-<span class="c1"># scale u by values to get projection</span>
-<span class="n">projected</span> <span class="o">=</span> <span class="n">c_values</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_col</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-<span class="n">projected</span>
+<span class="c1"># Scale u by values to get projection for this guessed vector.</span>
+<span class="n">projected_g</span> <span class="o">=</span> <span class="n">c_values</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_col</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">projected_g</span>
 </pre></div>
 </div>
 </div>
@@ -1097,16 +1102,18 @@ degrees angle to the x axis:</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;actual&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">projected</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projected</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">projected_g</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">projected_g</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;projected&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>  <span class="c1"># For each row</span>
     <span class="c1"># Plot line between projected and actual point</span>
-    <span class="n">proj_pt</span> <span class="o">=</span> <span class="n">projected</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">proj_pt</span> <span class="o">=</span> <span class="n">projected_g</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
     <span class="n">actual_pt</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">proj_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">actual_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
              <span class="p">[</span><span class="n">proj_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">actual_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="s1">&#39;:k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Guessed line&#39;</span><span class="p">)</span>
+
+<span class="n">plot_vec_line</span><span class="p">(</span><span class="n">u_guessed</span><span class="p">,</span> <span class="s1">&#39;guessed vector&#39;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Actual and projected points for guessed $\hat</span><span class="si">{u}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
@@ -1115,7 +1122,7 @@ degrees angle to the x axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/715e22dd6bf6bac22841630b70288387c38bf2b0420c62330d2057f868173b85.png" src="_images/715e22dd6bf6bac22841630b70288387c38bf2b0420c62330d2057f868173b85.png" />
+<img alt="_images/ac0e1836977cf43371dcc02593af5e9a9483e8732e890a0cf611bce1999c36df.png" src="_images/ac0e1836977cf43371dcc02593af5e9a9483e8732e890a0cf611bce1999c36df.png" />
 </div>
 </details>
 </div>
@@ -1124,7 +1131,7 @@ explained by projection onto the guessed line defined by <span class="math notra
 red projected points also have their own sum of squares:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">projected</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">projected_g</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1157,9 +1164,10 @@ have been explained by projection onto <span class="math notranslate nohighlight
 the actual points from the projected points:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">remaining</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">projected</span>
-<span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">distances</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">remaining_g</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">projected_g</span>
+<span class="c1"># As-crow-flies distances between actual and projected points.</span>
+<span class="n">distances_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining_g</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">distances_g</span>
 </pre></div>
 </div>
 </div>
@@ -1174,10 +1182,10 @@ the actual points from the projected points:</p>
 </div>
 <p>I can also express the overall (squared) remaining distance as the sum of
 squares.  The following is the code version of the formula <span class="math notranslate nohighlight">\(\sum_j{d_j^2}\)</span>
-that you saw <a class="reference external" href="https://matthew-brett.github.io/teaching/pca_introduction.html#distance-formula">above</a>:</p>
+that you saw above.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">remaining_g</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1250,7 +1258,8 @@ projections:</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;End points of vectors to try&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">u_vectors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+         <span class="n">label</span><span class="o">=</span><span class="s1">&#39;End points of vectors to try&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_guessed</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
           <span class="n">length_includes_head</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original guessed vector&#39;</span><span class="p">)</span>
@@ -1321,23 +1330,20 @@ radians:</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+          <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Best vector&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">y_limits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">())</span>
-<span class="n">y_slope</span> <span class="o">=</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># y rise over run.</span>
-<span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span> <span class="o">=</span> <span class="n">y_limits</span> <span class="o">*</span> <span class="n">y_slope</span><span class="p">,</span> <span class="n">y_limits</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="s1">&#39;:k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Best line&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Best unit vector&#39;</span><span class="p">)</span>
+
+<span class="n">plot_vec_line</span><span class="p">(</span><span class="n">u_best</span><span class="p">,</span> <span class="s2">&quot;Best line&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Data and line for best unit vector&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Feature 2&#39;)
-</pre></div>
-</div>
-<img alt="_images/980950cbcb16552d603474a85bfd68288cf10654936f9ccb26fbfb3178d56ee7.png" src="_images/980950cbcb16552d603474a85bfd68288cf10654936f9ccb26fbfb3178d56ee7.png" />
+<img alt="_images/759ef3b7f82886afdc182d43758889e73b3431e9520afb996d60bd0060234fbd.png" src="_images/759ef3b7f82886afdc182d43758889e73b3431e9520afb996d60bd0060234fbd.png" />
 </div>
 </details>
 </div>
@@ -1365,16 +1371,18 @@ radians:</p>
     <span class="n">actual_pt</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">proj_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">actual_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">proj_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">actual_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">line_x</span><span class="p">,</span> <span class="n">line_y</span><span class="p">,</span> <span class="s1">&#39;:k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Best line&#39;</span><span class="p">)</span>
+
+<span class="n">plot_vec_line</span><span class="p">(</span><span class="n">u_best</span><span class="p">,</span> <span class="s1">&#39;best vector&#39;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Actual and projected points for $\hat{u_</span><span class="si">{best}</span><span class="s2">}$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Actual and projected points for $\hat</span><span class="si">{u}</span><span class="s2">_</span><span class="si">{best}</span><span class="s2">$&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/7bb77877ec5ae70c7b24fda680683b555822da31c5d3a15a49e5406c97305118.png" src="_images/7bb77877ec5ae70c7b24fda680683b555822da31c5d3a15a49e5406c97305118.png" />
+<img alt="_images/b7f4244a5b4d42f6650e0a5be2cb48bda31e5156fc82e01dade7f79bcbb8104f.png" src="_images/b7f4244a5b4d42f6650e0a5be2cb48bda31e5156fc82e01dade7f79bcbb8104f.png" />
 </div>
 </details>
 </div>
@@ -1397,7 +1405,7 @@ between the projected and actual points.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">remaining</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">remaining</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;remaining&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat{u_</span><span class="si">{best}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="n">u_best</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat</span><span class="si">{u}</span><span class="s1">_</span><span class="si">{best}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">u_best</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span>
 <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
@@ -1407,16 +1415,16 @@ between the projected and actual points.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/22226d66349f3fcc674f26ffe93a601a848c0bde638a2d92d868c5500bbf242a.png" src="_images/22226d66349f3fcc674f26ffe93a601a848c0bde638a2d92d868c5500bbf242a.png" />
+<img alt="_images/8a74f995d8497b71d9bd28663343121259aa4203569cd9848835b4f202e6c3c7.png" src="_images/8a74f995d8497b71d9bd28663343121259aa4203569cd9848835b4f202e6c3c7.png" />
 </div>
 </details>
 </div>
 <p>What is the next line we need to best explain the remaining sum of squares? We
 want another unit vector orthogonal to the first.  This is because we have
 already explained everything that can be explained along the direction of
-<span class="math notranslate nohighlight">\(\hat{u_{best}}\)</span>, and we only have two dimensions, so there is only one
+<span class="math notranslate nohighlight">\(\hat{u}_{best}\)</span>, and we only have two dimensions, so there is only one
 remaining direction along which the variation can occur.</p>
-<p>I get the new <span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span> vector with a rotation by 90 degrees (<span class="math notranslate nohighlight">\(\pi /
+<p>I get the new <span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span> vector with a rotation by 90 degrees (<span class="math notranslate nohighlight">\(\pi /
 2\)</span>):</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1425,8 +1433,8 @@ remaining direction along which the variation can occur.</p>
 </div>
 </div>
 </div>
-<p>Within error due to the floating point calculations, <span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span> is
-orthogonal to <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</span>:</p>
+<p>Within error due to the floating point calculations, <span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span> is
+orthogonal to <span class="math notranslate nohighlight">\(\hat{u}_{best}\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">u_best</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_best_orth</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
@@ -1449,8 +1457,15 @@ orthogonal to <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</spa
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">remaining</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">remaining</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;remaining&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_best</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">u_best_orth</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">u_best_orth</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat{u_</span><span class="si">{best}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="n">u_best</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat{u_</span><span class="si">{orth}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="n">u_best_orth</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat</span><span class="si">{u}</span><span class="s1">_</span><span class="si">{best}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">u_best</span><span class="p">,</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">),</span>
+             <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;$\hat</span><span class="si">{u}</span><span class="s1">_</span><span class="si">{orth}</span><span class="s1">$&#39;</span><span class="p">,</span>
+             <span class="n">u_best_orth</span><span class="p">,</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+             <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span>
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">);</span>
@@ -1458,13 +1473,13 @@ orthogonal to <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8b89361b5910aa4d34855d566616c8672124c310e6fb04caf1c12d307892e922.png" src="_images/8b89361b5910aa4d34855d566616c8672124c310e6fb04caf1c12d307892e922.png" />
+<img alt="_images/e0c50f07a4fe534505a4cc60e45b7184bb3b82c89c14738396e925845b0c07be.png" src="_images/e0c50f07a4fe534505a4cc60e45b7184bb3b82c89c14738396e925845b0c07be.png" />
 </div>
 </details>
 </div>
-<p>The projections onto <span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span> are the same as the remaining
+<p>The projections onto <span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span> are the same as the remaining
 points, because the remaining points already lie along the line defined by
-<span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span>.</p>
+<span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">projected_onto_orth</span> <span class="o">=</span> <span class="n">line_projection</span><span class="p">(</span><span class="n">u_best_orth</span><span class="p">,</span> <span class="n">remaining</span><span class="p">)</span>
@@ -1478,15 +1493,15 @@ points, because the remaining points already lie along the line defined by
 </div>
 </div>
 </div>
-<p>If we have really found the line <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</span> that removes the most
+<p>If we have really found the line <span class="math notranslate nohighlight">\(\hat{u}_{best}\)</span> that removes the most
 sum of squares from the remaining points, then this is the <em>first principal
-component</em> of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>. <span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span> will be the second
+component</em> of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>. <span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span> will be the second
 principal component of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p>
 <p>Now for a trick. Remember that the two principal components are orthogonal to
 one another. That means, that if I project the data onto the second principal
-component <span class="math notranslate nohighlight">\(\hat{u_{orth}}\)</span>, I will (by the definition of orthogonal)
+component <span class="math notranslate nohighlight">\(\hat{u}_{orth}\)</span>, I will (by the definition of orthogonal)
 pick up no component of the columns of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> that is colinear
-(predictable via projection) with <span class="math notranslate nohighlight">\(\hat{u_{best}}\)</span>.</p>
+(predictable via projection) with <span class="math notranslate nohighlight">\(\hat{u}_{best}\)</span>.</p>
 <p>This means that I can go straight to the projection onto the second component,
 from the original array <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p>
 <div class="cell docutils container">
@@ -1694,18 +1709,20 @@ data projected onto the second, I get back the original data:</p>
 </div>
 </div>
 <p>Doing the sum above is the same operation as matrix multiplication of the
-scalar projects <span class="math notranslate nohighlight">\(\C\)</span> with the (transposed) components <span class="math notranslate nohighlight">\(\W\)</span>.  Seeing that this
+scalar projects <span class="math notranslate nohighlight">\(\C\)</span> with the components <span class="math notranslate nohighlight">\(\W\)</span>.  Seeing that this
 is so involves writing out a few cells of the matrix multiplication in symbols
-and staring at it for a while.</p>
+and staring at it for a while.  Alternatively, you might be able to see that
+<span class="math notranslate nohighlight">\(\W\)</span> is an <em>orthogonal</em> matrix, and therefore, <span class="math notranslate nohighlight">\(\W\)</span> is the inverse of <span class="math notranslate nohighlight">\(\W^T\)</span>.
+Above we have <span class="math notranslate nohighlight">\(\C = \X \W^T\)</span> so <span class="math notranslate nohighlight">\(\C \W = \X\)</span>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_again</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_again</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">W</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">data_again</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
 </pre></div>
 </div>
 </div>

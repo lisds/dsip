@@ -245,17 +245,25 @@ np.sum(u_guessed ** 2)
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1])
-plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.2, color='r',
-          label='Vector')
 plt.axis('equal')
 plt.title('Guessed unit vector and resulting line')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2');
-y_limits = np.array(plt.ylim())
-y_slope = u_guessed[0] / u_guessed[1]  # y rise over run.
-line_x, line_y = y_limits * y_slope, y_limits
-plt.plot(line_x, line_y, ':k', label='Guessed line')
-plt.legend()
+
+def plot_vec_line(u, label_suffix):
+    """ Plot vector and line corresponding to unit vector `u`
+    """
+    u_x, u_y = u
+    plt.arrow(0, 0, u_x, u_y, width=0.1, color='r',
+              label=label_suffix.capitalize(),
+              length_includes_head=True)
+    y_lims = np.array(plt.ylim())
+    y_slope = u_x / u_y  # x rise over y run.
+    plt.plot(y_lims * y_slope, y_lims, ':k',
+             label='Line for ' + label_suffix)
+
+plot_vec_line(u_guessed, 'guessed vector')
+plt.legend();
 ```
 
 Let’s project all the points onto that line:
@@ -263,23 +271,25 @@ Let’s project all the points onto that line:
 ```{python}
 u_col = u_guessed.reshape(2, 1)  # A column vector
 c_values = X.dot(u_col)  # c values for scaling u
-# scale u by values to get projection
-projected = c_values.dot(u_col.T)
-projected
+# Scale u by values to get projection for this guessed vector.
+projected_g = c_values.dot(u_col.T)
+projected_g
 ```
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1], label='actual')
-plt.scatter(projected[:, 0], projected[:, 1],
+plt.scatter(projected_g[:, 0], projected_g[:, 1],
             color='r', label='projected')
 for i in range(len(X)):  # For each row
     # Plot line between projected and actual point
-    proj_pt = projected[i, :]
+    proj_pt = projected_g[i, :]
     actual_pt = X[i, :]
     plt.plot([proj_pt[0], actual_pt[0]],
              [proj_pt[1], actual_pt[1]], 'k')
 plt.axis('equal')
-plt.plot(line_x, line_y, ':k', label='Guessed line')
+
+plot_vec_line(u_guessed, 'guessed vector')
+
 plt.legend(loc='upper left')
 plt.title("Actual and projected points for guessed $\hat{u}$")
 plt.xlabel('Feature 1')
@@ -291,7 +301,7 @@ explained by projection onto the guessed line defined by $\hat{u}$. The
 red projected points also have their own sum of squares:
 
 ```{python}
-print(np.sum(projected ** 2))
+print(np.sum(projected_g ** 2))
 ```
 
 Because we are projecting onto a unit vector, $\|c\hat{u}\|^2 = c\hat{u}
@@ -311,17 +321,18 @@ Once I have the projected points, I can calculate the remaining distance of
 the actual points from the projected points:
 
 ```{python}
-remaining = X - projected
-distances = np.sqrt(np.sum(remaining ** 2, axis=1))
-distances
+remaining_g = X - projected_g
+# As-crow-flies distances between actual and projected points.
+distances_g = np.sqrt(np.sum(remaining_g ** 2, axis=1))
+distances_g
 ```
 
 I can also express the overall (squared) remaining distance as the sum of
 squares.  The following is the code version of the formula $\sum_j{d_j^2}$
-that you saw [above](https://matthew-brett.github.io/teaching/pca_introduction.html#distance-formula):
+that you saw above.
 
 ```{python}
-print(np.sum(remaining ** 2))
+print(np.sum(remaining_g ** 2))
 ```
 
 I’m going to try a whole lot of different values for $\hat{u}$, so
@@ -368,7 +379,8 @@ u_vectors.shape
 ```
 
 ```{python}
-plt.plot(u_vectors[:, 0], u_vectors[:, 1], 'x', label='End points of vectors to try')
+plt.plot(u_vectors[:, 0], u_vectors[:, 1], 'x',
+         label='End points of vectors to try')
 plt.arrow(0, 0, u_guessed[0], u_guessed[1], width=0.02, color='r',
           length_includes_head=True,
           label='Original guessed vector')
@@ -409,15 +421,15 @@ I plot the data with the new unit vector I found:
 
 ```{python tags=c("hide-cell")}
 plt.scatter(X[:, 0], X[:, 1])
-plt.arrow(0, 0, u_best[0], u_best[1], width=0.2, color='r')
+plt.arrow(0, 0, u_best[0], u_best[1], width=0.2, color='r',
+          label='Best vector')
 plt.axis('equal')
-y_limits = np.array(plt.ylim())
-y_slope = u_best[0] / u_best[1]  # y rise over run.
-line_x, line_y = y_limits * y_slope, y_limits
-plt.plot(line_x, line_y, ':k', label='Best line')
-plt.title('Best unit vector')
+
+plot_vec_line(u_best, "Best line")
+
+plt.title('Data and line for best unit vector')
 plt.xlabel('Feature 1')
-plt.ylabel('Feature 2')
+plt.ylabel('Feature 2');
 ```
 
 Do the projections for this best line look better than before?
@@ -436,9 +448,11 @@ for i in range(len(X)):  # Iterate over rows.
     actual_pt = X[i, :]
     plt.plot([proj_pt[0], actual_pt[0]], [proj_pt[1], actual_pt[1]], 'k')
 plt.axis('equal')
-plt.plot(line_x, line_y, ':k', label='Best line')
+
+plot_vec_line(u_best, 'best vector')
+
 plt.legend(loc='upper left')
-plt.title("Actual and projected points for $\hat{u_{best}}$")
+plt.title("Actual and projected points for $\hat{u}_{best}$")
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2');
 ```
@@ -454,7 +468,7 @@ remaining = X - projected
 ```{python tags=c("hide-cell")}
 plt.scatter(remaining[:, 0], remaining[:, 1], label='remaining')
 plt.arrow(0, 0, u_best[0], u_best[1], width=0.01, color='r')
-plt.annotate('$\hat{u_{best}}$', u_best, xytext=(20, 20),
+plt.annotate('$\hat{u}_{best}$', u_best, xytext=(10, -5),
 textcoords='offset points', fontsize=20)
 plt.legend(loc='upper left')
 plt.axis('equal')
@@ -465,18 +479,18 @@ plt.ylabel('Feature 2');
 What is the next line we need to best explain the remaining sum of squares? We
 want another unit vector orthogonal to the first.  This is because we have
 already explained everything that can be explained along the direction of
-$\hat{u_{best}}$, and we only have two dimensions, so there is only one
+$\hat{u}_{best}$, and we only have two dimensions, so there is only one
 remaining direction along which the variation can occur.
 
-I get the new $\hat{u_{orth}}$ vector with a rotation by 90 degrees ($\pi /
+I get the new $\hat{u}_{orth}$ vector with a rotation by 90 degrees ($\pi /
 2$):
 
 ```{python}
 u_best_orth = np.array([np.cos(angle_best + np.pi / 2), np.sin(angle_best + np.pi / 2)])
 ```
 
-Within error due to the floating point calculations, $\hat{u_{orth}}$ is
-orthogonal to $\hat{u_{best}}$:
+Within error due to the floating point calculations, $\hat{u}_{orth}$ is
+orthogonal to $\hat{u}_{best}$:
 
 ```{python}
 np.allclose(u_best.dot(u_best_orth), 0)
@@ -486,32 +500,39 @@ np.allclose(u_best.dot(u_best_orth), 0)
 plt.scatter(remaining[:, 0], remaining[:, 1], label='remaining')
 plt.arrow(0, 0, u_best[0], u_best[1], width=0.01, color='r')
 plt.arrow(0, 0, u_best_orth[0], u_best_orth[1], width=0.01, color='g')
-plt.annotate('$\hat{u_{best}}$', u_best, xytext=(20, 20), textcoords='offset points', fontsize=20)
-plt.annotate('$\hat{u_{orth}}$', u_best_orth, xytext=(20, 20), textcoords='offset points', fontsize=20)
+plt.annotate('$\hat{u}_{best}$', u_best,
+             xytext=(10, -5),
+             textcoords='offset points',
+             fontsize=20)
+plt.annotate('$\hat{u}_{orth}$',
+             u_best_orth,
+             xytext=(10, 10),
+             textcoords='offset points',
+             fontsize=20)
 plt.axis('equal')
 plt.xlabel('Feature 1')
 plt.ylabel('Feature 2');
 ```
 
-The projections onto $\hat{u_{orth}}$ are the same as the remaining
+The projections onto $\hat{u}_{orth}$ are the same as the remaining
 points, because the remaining points already lie along the line defined by
-$\hat{u_{orth}}$.
+$\hat{u}_{orth}$.
 
 ```{python}
 projected_onto_orth = line_projection(u_best_orth, remaining)
 np.allclose(projected_onto_orth, remaining)
 ```
 
-If we have really found the line $\hat{u_{best}}$ that removes the most
+If we have really found the line $\hat{u}_{best}$ that removes the most
 sum of squares from the remaining points, then this is the *first principal
-component* of $\mathbf{X}$. $\hat{u_{orth}}$ will be the second
+component* of $\mathbf{X}$. $\hat{u}_{orth}$ will be the second
 principal component of $\mathbf{X}$.
 
 Now for a trick. Remember that the two principal components are orthogonal to
 one another. That means, that if I project the data onto the second principal
-component $\hat{u_{orth}}$, I will (by the definition of orthogonal)
+component $\hat{u}_{orth}$, I will (by the definition of orthogonal)
 pick up no component of the columns of $\mathbf{X}$ that is colinear
-(predictable via projection) with $\hat{u_{best}}$.
+(predictable via projection) with $\hat{u}_{best}$.
 
 This means that I can go straight to the projection onto the second component,
 from the original array $\mathbf{X}$.
@@ -642,12 +663,14 @@ np.allclose(projected_onto_1 + projected_onto_2, X)
 ```
 
 Doing the sum above is the same operation as matrix multiplication of the
-scalar projects $\C$ with the (transposed) components $\W$.  Seeing that this
+scalar projects $\C$ with the components $\W$.  Seeing that this
 is so involves writing out a few cells of the matrix multiplication in symbols
-and staring at it for a while.
+and staring at it for a while.  Alternatively, you might be able to see that
+$\W$ is an *orthogonal* matrix, and therefore, $\W$ is the inverse of $\W^T$.
+Above we have $\C = \X \W^T$ so $\C \W = \X$:
 
 ```{python}
-data_again = C.dot(W.T)
+data_again = C.dot(W)
 np.allclose(data_again, X)
 ```
 
