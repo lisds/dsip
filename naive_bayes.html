@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
@@ -35,12 +35,12 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -77,27 +77,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -119,8 +115,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -144,6 +145,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -165,7 +168,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -235,7 +238,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -244,14 +247,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -276,14 +279,14 @@
       
       <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/naive_bayes.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onBinder"
+   title="Launch on Binder"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_binder.svg">
+    <img alt="Binder logo" src="_static/images/logo_binder.svg">
   </span>
 <span class="btn__text-container">Binder</span>
 </a>
@@ -294,14 +297,14 @@
       
       <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/naive_bayes.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onJupyterHub"
+   title="Launch on JupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_jupyterhub.svg">
+    <img alt="JupyterHub logo" src="_static/images/logo_jupyterhub.svg">
   </span>
 <span class="btn__text-container">JupyterHub</span>
 </a>
@@ -460,10 +463,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -471,14 +474,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -706,10 +709,10 @@ Handbook</a>.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fc64cd83f90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f5ef1664910&gt;
 </pre></div>
 </div>
-<img alt="_images/b7536d36a65efda4eeea904b84c31dc433bf5dcc94e96137e3a32e5752e41dad.png" src="_images/b7536d36a65efda4eeea904b84c31dc433bf5dcc94e96137e3a32e5752e41dad.png" />
+<img alt="_images/befeef18ab9a004bca0630e09983e21ba2f2a08d5116a96c2c1a156df365bf4b.png" src="_images/befeef18ab9a004bca0630e09983e21ba2f2a08d5116a96c2c1a156df365bf4b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -835,7 +838,7 @@ Handbook</a>.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;body_mass_g&#39;, ylabel=&#39;Count&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/d50fd218f65c3ced22fd3e59d1652773d59155b50adfe5d065927103cc85f25d.png" src="_images/d50fd218f65c3ced22fd3e59d1652773d59155b50adfe5d065927103cc85f25d.png" />
+<img alt="_images/741040a2c7dab626396a3fcf793fb8571265d879b6324984459dc4456a0768db.png" src="_images/741040a2c7dab626396a3fcf793fb8571265d879b6324984459dc4456a0768db.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -860,7 +863,7 @@ Handbook</a>.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Gentoo&#39;)
 </pre></div>
 </div>
-<img alt="_images/9309ea08ffdb0a0001603a05d9f78c91b5a1543c25b9f06e8483bf1155f35130.png" src="_images/9309ea08ffdb0a0001603a05d9f78c91b5a1543c25b9f06e8483bf1155f35130.png" />
+<img alt="_images/2b675757c2656aa6ebdee3335c722c9d7923b2107f391f6fb5b274be766bc971.png" src="_images/2b675757c2656aa6ebdee3335c722c9d7923b2107f391f6fb5b274be766bc971.png" />
 </div>
 </div>
 <section id="enumerate">
@@ -912,7 +915,7 @@ Group 1 name is Gentoo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9309ea08ffdb0a0001603a05d9f78c91b5a1543c25b9f06e8483bf1155f35130.png" src="_images/9309ea08ffdb0a0001603a05d9f78c91b5a1543c25b9f06e8483bf1155f35130.png" />
+<img alt="_images/2b675757c2656aa6ebdee3335c722c9d7923b2107f391f6fb5b274be766bc971.png" src="_images/2b675757c2656aa6ebdee3335c722c9d7923b2107f391f6fb5b274be766bc971.png" />
 </div>
 </div>
 </section>
@@ -932,7 +935,7 @@ to sum to 1.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/dbed35ef645a19dcc665c26ac6ba835f681610f794e86cc6003cac23a4acfc17.png" src="_images/dbed35ef645a19dcc665c26ac6ba835f681610f794e86cc6003cac23a4acfc17.png" />
+<img alt="_images/5d094aa84a6cd81559d133b5e15999d6f76a8d5491078ecb1813fdd080df6209.png" src="_images/5d094aa84a6cd81559d133b5e15999d6f76a8d5491078ecb1813fdd080df6209.png" />
 </div>
 </div>
 <p>For the moment, let us model these two distributions as normal curves.</p>
@@ -1016,10 +1019,10 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc644b347d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f5ed9acd7d0&gt;]
 </pre></div>
 </div>
-<img alt="_images/4d8942034416cd1324af0eae0185f28456657993f9794d9b7318cd84669cfb0f.png" src="_images/4d8942034416cd1324af0eae0185f28456657993f9794d9b7318cd84669cfb0f.png" />
+<img alt="_images/8a9dacd785dc319fcd79c965edb2a9fb125ecc3c8cbeb6c9900e13ca8ad51174.png" src="_images/8a9dacd785dc319fcd79c965edb2a9fb125ecc3c8cbeb6c9900e13ca8ad51174.png" />
 </div>
 </div>
 <p>This is the plot along with the actual densities:</p>
@@ -1031,10 +1034,10 @@ the same mean and standard deviation.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc644c1c410&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f5ed8647fd0&gt;]
 </pre></div>
 </div>
-<img alt="_images/5d0454adb79262adf309c649a8ae90fb0c8f8b16289cfcb8e189cddd4437cc57.png" src="_images/5d0454adb79262adf309c649a8ae90fb0c8f8b16289cfcb8e189cddd4437cc57.png" />
+<img alt="_images/a6e49ea4412fde7ceb66326e4f5468d0fe30f1bb283adf5151bb3f0345aef53e.png" src="_images/a6e49ea4412fde7ceb66326e4f5468d0fe30f1bb283adf5151bb3f0345aef53e.png" />
 </div>
 </div>
 <p>The normal (Gaussian) probability density function gives our estimate of the
@@ -1046,7 +1049,7 @@ probability (density) of any given weight.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0008676740928442561
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.0008676740928442561)
 </pre></div>
 </div>
 </div>
@@ -1202,7 +1205,7 @@ P(m | G)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5bfc1317d8057c8377273acb95254c7d80d44580a6635338e0a0417e4fe87d39.png" src="_images/5bfc1317d8057c8377273acb95254c7d80d44580a6635338e0a0417e4fe87d39.png" />
+<img alt="_images/74da1cb30320a4e0af051142c84015a7f79e6ab38dde46a88dc48dc41a06a877.png" src="_images/74da1cb30320a4e0af051142c84015a7f79e6ab38dde46a88dc48dc41a06a877.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1350,7 +1353,7 @@ P(G)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.36363636363636365
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.36363636363636365)
 </pre></div>
 </div>
 </div>
@@ -1363,7 +1366,7 @@ P(G)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6363636363636364
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.6363636363636364)
 </pre></div>
 </div>
 </div>
@@ -2431,7 +2434,7 @@ P(G | m) = \frac{P(m | G) * P(G)}{P(m)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
 </pre></div>
 </div>
 </div>
@@ -2721,7 +2724,7 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.True_
 </pre></div>
 </div>
 </div>
@@ -2759,7 +2762,7 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.9358288770053476
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.9358288770053476)
 </pre></div>
 </div>
 </div>
@@ -2778,7 +2781,7 @@ Length: 187, dtype: float64
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;bill_depth_mm&#39;, ylabel=&#39;Count&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/06d5744232d3c6077ac5820906ee9f6dfa4e38684415c336f50309d09723ee1f.png" src="_images/06d5744232d3c6077ac5820906ee9f6dfa4e38684415c336f50309d09723ee1f.png" />
+<img alt="_images/82b2e5e2839b5018673f685bf5bd5754f71e0a6f31d4f4f7e39e175c508511f7.png" src="_images/82b2e5e2839b5018673f685bf5bd5754f71e0a6f31d4f4f7e39e175c508511f7.png" />
 </div>
 </div>
 <p>Make the distributions for bill depth:</p>
@@ -2798,8 +2801,8 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7fc63ef95110&gt;,
- &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7fc6445a1550&gt;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;Chinstrap&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f5ed1a22990&gt;,
+ &#39;Gentoo&#39;: &lt;scipy.stats._distn_infrastructure.rv_continuous_frozen at 0x7f5ed8674f90&gt;}
 </pre></div>
 </div>
 </div>
@@ -2819,7 +2822,7 @@ Length: 187, dtype: float64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/64939ecf2b8ffd297a28c903070e4626bea53159c681b10b092717bf2b035dc9.png" src="_images/64939ecf2b8ffd297a28c903070e4626bea53159c681b10b092717bf2b035dc9.png" />
+<img alt="_images/ecb99e23e7237b78380be961a71c25b3e0b9dd16141f1830a4aada0aad1c131b.png" src="_images/ecb99e23e7237b78380be961a71c25b3e0b9dd16141f1830a4aada0aad1c131b.png" />
 </div>
 </div>
 <p>We can also think of these distributions in two dimensions, along with the
@@ -2835,7 +2838,7 @@ mass:</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;body_mass_g&#39;, ylabel=&#39;bill_depth_mm&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/a0f92ebb8ecaa29ee5b1a3e8333f4adaf3849cbc03f2032e4d2ad3782cb27c17.png" src="_images/a0f92ebb8ecaa29ee5b1a3e8333f4adaf3849cbc03f2032e4d2ad3782cb27c17.png" />
+<img alt="_images/3038979d9be847dbaa209ac5fc8cafaddc0eb9aa2107d7bb298d9344152d93b2.png" src="_images/3038979d9be847dbaa209ac5fc8cafaddc0eb9aa2107d7bb298d9344152d93b2.png" />
 </div>
 </div>
 <p>Question - is the bill depth <em>independent</em> (in the sense of probability) from
@@ -3408,7 +3411,7 @@ denominator, we can just divide it out, to give the following ratio:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.0)
 </pre></div>
 </div>
 </div>
@@ -3826,7 +3829,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianNB()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GaussianNB<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.naive_bayes.GaussianNB.html">?<span>Documentation for GaussianNB</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GaussianNB()</pre></div> </div></div></div></div></div></div>
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianNB()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GaussianNB<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.naive_bayes.GaussianNB.html">?<span>Documentation for GaussianNB</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GaussianNB()</pre></div> </div></div></div></div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -3877,29 +3880,29 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   </thead>
   <tbody>
     <tr>
-      <th>304</th>
-      <td>3700.0</td>
-      <td>17.8</td>
+      <th>210</th>
+      <td>4450.0</td>
+      <td>14.5</td>
     </tr>
     <tr>
-      <th>219</th>
-      <td>5800.0</td>
-      <td>16.2</td>
+      <th>310</th>
+      <td>3600.0</td>
+      <td>18.6</td>
     </tr>
     <tr>
-      <th>166</th>
-      <td>4200.0</td>
-      <td>14.6</td>
+      <th>241</th>
+      <td>5550.0</td>
+      <td>17.0</td>
     </tr>
     <tr>
-      <th>327</th>
-      <td>3950.0</td>
-      <td>19.0</td>
+      <th>208</th>
+      <td>4300.0</td>
+      <td>13.9</td>
     </tr>
     <tr>
-      <th>261</th>
-      <td>5500.0</td>
-      <td>15.1</td>
+      <th>295</th>
+      <td>4400.0</td>
+      <td>18.2</td>
     </tr>
     <tr>
       <th>...</th>
@@ -3907,29 +3910,29 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <td>...</td>
     </tr>
     <tr>
-      <th>255</th>
-      <td>5500.0</td>
-      <td>15.0</td>
+      <th>282</th>
+      <td>3250.0</td>
+      <td>18.2</td>
     </tr>
     <tr>
-      <th>311</th>
-      <td>3900.0</td>
-      <td>16.8</td>
+      <th>249</th>
+      <td>4875.0</td>
+      <td>14.6</td>
     </tr>
     <tr>
-      <th>330</th>
-      <td>3350.0</td>
-      <td>17.3</td>
+      <th>219</th>
+      <td>5800.0</td>
+      <td>16.2</td>
     </tr>
     <tr>
-      <th>342</th>
-      <td>4100.0</td>
-      <td>19.0</td>
+      <th>184</th>
+      <td>5050.0</td>
+      <td>14.5</td>
     </tr>
     <tr>
-      <th>221</th>
-      <td>5550.0</td>
-      <td>15.0</td>
+      <th>167</th>
+      <td>5850.0</td>
+      <td>15.7</td>
     </tr>
   </tbody>
 </table>
@@ -4349,7 +4352,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianNB()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GaussianNB<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.naive_bayes.GaussianNB.html">?<span>Documentation for GaussianNB</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GaussianNB()</pre></div> </div></div></div></div></div></div>
+</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianNB()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;GaussianNB<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.naive_bayes.GaussianNB.html">?<span>Documentation for GaussianNB</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>GaussianNB()</pre></div> </div></div></div></div></div></div>
 </div>
 <p>How does Scikit-learn do in classifying the test data (that it has not seen
 before):</p>
@@ -4400,7 +4403,7 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a1a5ffa5311fbc104ca7cea01fbfbf542dcd814e7021cb6b0eef58901be17ee5.png" src="_images/a1a5ffa5311fbc104ca7cea01fbfbf542dcd814e7021cb6b0eef58901be17ee5.png" />
+<img alt="_images/8bdd394ec9f538968bd98a6b3619fb0ead90bb1842c507a0c223a50f7250a1c9.png" src="_images/8bdd394ec9f538968bd98a6b3619fb0ead90bb1842c507a0c223a50f7250a1c9.png" />
 </div>
 </div>
 </section>
@@ -4433,7 +4436,7 @@ Chinstrap and Gentoo penguins, as it moves through the 2D space of parameters
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -4521,8 +4524,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

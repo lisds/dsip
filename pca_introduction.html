@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
@@ -35,12 +35,12 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -77,27 +77,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -119,8 +115,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -144,6 +145,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -165,7 +168,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -235,7 +238,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -244,14 +247,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -276,14 +279,14 @@
       
       <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/pca_introduction.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onBinder"
+   title="Launch on Binder"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_binder.svg">
+    <img alt="Binder logo" src="_static/images/logo_binder.svg">
   </span>
 <span class="btn__text-container">Binder</span>
 </a>
@@ -294,14 +297,14 @@
       
       <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/pca_introduction.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onJupyterHub"
+   title="Launch on JupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_jupyterhub.svg">
+    <img alt="JupyterHub logo" src="_static/images/logo_jupyterhub.svg">
   </span>
 <span class="btn__text-container">JupyterHub</span>
 </a>
@@ -460,10 +463,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -471,14 +474,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -842,7 +845,7 @@ correlated:</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Forward (feature 2)&#39;)
 </pre></div>
 </div>
-<img alt="_images/f2308f1cc6e65db573733fa69a86a1c065879e53fffb0bbafffc68a8158fb173.png" src="_images/f2308f1cc6e65db573733fa69a86a1c065879e53fffb0bbafffc68a8158fb173.png" />
+<img alt="_images/a374c1441504fa06960b88e706b4b7f9bfbb1935b637a613630e488be9fb1b54.png" src="_images/a374c1441504fa06960b88e706b4b7f9bfbb1935b637a613630e488be9fb1b54.png" />
 </div>
 </div>
 <p>We want to explain the variation in these data.</p>
@@ -928,7 +931,7 @@ as <span class="math notranslate nohighlight">\(\|\vec{v_j}\|^2\)</span></p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/225ae77d51402dd9cf1a29a7ac1612f4c4d21aead54d7a853908ab8a9cf6e2df.png" src="_images/225ae77d51402dd9cf1a29a7ac1612f4c4d21aead54d7a853908ab8a9cf6e2df.png" />
+<img alt="_images/673cb69e3e5183ab612337c04ea6427e4fc2c66d34a07ec50321d48e144c90e9.png" src="_images/673cb69e3e5183ab612337c04ea6427e4fc2c66d34a07ec50321d48e144c90e9.png" />
 </div>
 </details>
 </div>
@@ -955,7 +958,7 @@ of the squared distance of each point from the origin, where the points
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/28097e33a288c6260b3e77af14c3641fd9eab4599c5d5c48c4e6b28d44c5059c.png" src="_images/28097e33a288c6260b3e77af14c3641fd9eab4599c5d5c48c4e6b28d44c5059c.png" />
+<img alt="_images/816217507170624c75eba379e503f89e30e2cc596c88eb163be5b422d30ca28f.png" src="_images/816217507170624c75eba379e503f89e30e2cc596c88eb163be5b422d30ca28f.png" />
 </div>
 </details>
 </div>
@@ -1018,7 +1021,7 @@ degrees angle to the x axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(1.0)
 </pre></div>
 </div>
 </div>
@@ -1054,7 +1057,7 @@ degrees angle to the x axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/0a250a8de8cd3fa3931473023d2e8dba8693b841d3992bd6b99ec131f14ae951.png" src="_images/0a250a8de8cd3fa3931473023d2e8dba8693b841d3992bd6b99ec131f14ae951.png" />
+<img alt="_images/c00382ddde7460a23b779e2254e0bbcec0882618681635e28c3b3629a7d033ab.png" src="_images/c00382ddde7460a23b779e2254e0bbcec0882618681635e28c3b3629a7d033ab.png" />
 </div>
 </details>
 </div>
@@ -1122,7 +1125,7 @@ degrees angle to the x axis:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ac0e1836977cf43371dcc02593af5e9a9483e8732e890a0cf611bce1999c36df.png" src="_images/ac0e1836977cf43371dcc02593af5e9a9483e8732e890a0cf611bce1999c36df.png" />
+<img alt="_images/aedc62823289b593e4ca3f8e9c7632a317495a971e30a67a4506fef3e2028fbf.png" src="_images/aedc62823289b593e4ca3f8e9c7632a317495a971e30a67a4506fef3e2028fbf.png" />
 </div>
 </details>
 </div>
@@ -1270,7 +1273,7 @@ projections:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/fdf61719022c6124e0944a4eb3cb1765cb34d11d8fd21a56360408fc348df56d.png" src="_images/fdf61719022c6124e0944a4eb3cb1765cb34d11d8fd21a56360408fc348df56d.png" />
+<img alt="_images/90cc4523f2b9e6615b862d54bdb64bd33d3e457d4ae547547ab4f19d6396ed37.png" src="_images/90cc4523f2b9e6615b862d54bdb64bd33d3e457d4ae547547ab4f19d6396ed37.png" />
 </div>
 </div>
 <p>I then get the remaining sum of squares after projecting onto each of these
@@ -1289,7 +1292,7 @@ unit vectors:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4a8c01f52e807e79e530df0f89174260ae801d5c2fe97cc4a43a8499e28aa953.png" src="_images/4a8c01f52e807e79e530df0f89174260ae801d5c2fe97cc4a43a8499e28aa953.png" />
+<img alt="_images/7ec15d24bf64bb785190a744604a0ef4a60b2f6323195e5d19b83f6b2347abf9.png" src="_images/7ec15d24bf64bb785190a744604a0ef4a60b2f6323195e5d19b83f6b2347abf9.png" />
 </div>
 </div>
 <p>It looks like the minimum value is for a unit vector at around angle 0.5
@@ -1343,7 +1346,7 @@ radians:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/759ef3b7f82886afdc182d43758889e73b3431e9520afb996d60bd0060234fbd.png" src="_images/759ef3b7f82886afdc182d43758889e73b3431e9520afb996d60bd0060234fbd.png" />
+<img alt="_images/28bbe3cca0003de6a600f410ae0adeed39d83a5bac9d2b600d6ed3055c20c5c2.png" src="_images/28bbe3cca0003de6a600f410ae0adeed39d83a5bac9d2b600d6ed3055c20c5c2.png" />
 </div>
 </details>
 </div>
@@ -1382,7 +1385,7 @@ radians:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b7f4244a5b4d42f6650e0a5be2cb48bda31e5156fc82e01dade7f79bcbb8104f.png" src="_images/b7f4244a5b4d42f6650e0a5be2cb48bda31e5156fc82e01dade7f79bcbb8104f.png" />
+<img alt="_images/1934676cb49610d72cd72157e90a28ec2a43a52f4e50558558a16f3bb9bb8000.png" src="_images/1934676cb49610d72cd72157e90a28ec2a43a52f4e50558558a16f3bb9bb8000.png" />
 </div>
 </details>
 </div>
@@ -1415,7 +1418,7 @@ between the projected and actual points.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/8a74f995d8497b71d9bd28663343121259aa4203569cd9848835b4f202e6c3c7.png" src="_images/8a74f995d8497b71d9bd28663343121259aa4203569cd9848835b4f202e6c3c7.png" />
+<img alt="_images/eaf7ae2601c07128d9850ea9fd05a787e59d2387c72e0c5b3831b467b7a0cecf.png" src="_images/eaf7ae2601c07128d9850ea9fd05a787e59d2387c72e0c5b3831b467b7a0cecf.png" />
 </div>
 </details>
 </div>
@@ -1473,7 +1476,7 @@ orthogonal to <span class="math notranslate nohighlight">\(\hat{u}_{best}\)</spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/e0c50f07a4fe534505a4cc60e45b7184bb3b82c89c14738396e925845b0c07be.png" src="_images/e0c50f07a4fe534505a4cc60e45b7184bb3b82c89c14738396e925845b0c07be.png" />
+<img alt="_images/5e442edb1731b880b928304aa60ea0bd37ac75e185f9d35ef8be0f921094ada3.png" src="_images/5e442edb1731b880b928304aa60ea0bd37ac75e185f9d35ef8be0f921094ada3.png" />
 </div>
 </details>
 </div>
@@ -1685,7 +1688,7 @@ the projections onto the principal component axes:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5852b50fdeea8edec78f1d7130fed288218b6c0aeb6204594a8877298162d942.png" src="_images/5852b50fdeea8edec78f1d7130fed288218b6c0aeb6204594a8877298162d942.png" />
+<img alt="_images/5a6bc7d2a2b15fea60d37ce38d05050b6479ba22aada4e069f0ae93842ad3fe2.png" src="_images/5a6bc7d2a2b15fea60d37ce38d05050b6479ba22aada4e069f0ae93842ad3fe2.png" />
 </div>
 </details>
 </div>
@@ -1758,7 +1761,7 @@ explained by the second:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(171.19843249503052, 5.535027082469528, 176.73345957750004)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(171.19843249503052), np.float64(5.535027082469528), np.float64(176.73345957750004))
 </pre></div>
 </div>
 </div>
@@ -2299,7 +2302,7 @@ these two is the scaling of the <code class="docutils literal notranslate"><span
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -2392,8 +2395,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>

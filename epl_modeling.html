@@ -15,19 +15,19 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
@@ -35,12 +35,12 @@
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -77,27 +77,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -119,8 +115,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -144,6 +145,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="intro.html">
   
@@ -165,7 +168,7 @@
 
  <script>
  document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
     <span class="search-button__default-text">Search</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
@@ -235,7 +238,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -244,14 +247,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -276,14 +279,14 @@
       
       <li><a href="https://mybinder.org/v2/gh/lisds/dsip/main?urlpath=lab/tree/epl_modeling.Rmd" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onBinder"
+   title="Launch on Binder"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_binder.svg">
+    <img alt="Binder logo" src="_static/images/logo_binder.svg">
   </span>
 <span class="btn__text-container">Binder</span>
 </a>
@@ -294,14 +297,14 @@
       
       <li><a href="https://ds.lis.2i2c.cloud/hub/user-redirect/git-pull?repo=https%3A//github.com/lisds/dsip&urlpath=lab/tree/dsip/epl_modeling.Rmd&branch=main" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch onJupyterHub"
+   title="Launch on JupyterHub"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img src="_static/images/logo_jupyterhub.svg">
+    <img alt="JupyterHub logo" src="_static/images/logo_jupyterhub.svg">
   </span>
 <span class="btn__text-container">JupyterHub</span>
 </a>
@@ -460,10 +463,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
   </button>
 `);
 </script>
@@ -471,14 +474,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -523,6 +526,11 @@ document.write(`
 
 <span class="c1"># Show arrays without exponential notation, 6 digits of precision.</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Token var=&lt;ContextVar name=&#39;format_options&#39; default={&#39;edgeitems&#39;: 3, &#39;threshold&#39;: 1000, &#39;floatmode&#39;: &#39;maxprec&#39;, &#39;precision&#39;: 8, &#39;suppress&#39;: False, &#39;linewidth&#39;: 75, &#39;nanstr&#39;: &#39;nan&#39;, &#39;infstr&#39;: &#39;inf&#39;, &#39;sign&#39;: &#39;-&#39;, &#39;formatter&#39;: None, &#39;legacy&#39;: 9223372036854775807, &#39;override_repr&#39;: None} at 0x7fa3d06db330&gt; at 0x7fa3d6585d40&gt;
 </pre></div>
 </div>
 </div>
@@ -910,7 +918,7 @@ Maybe if you pay more, you score more goals and keep more goals out.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 300000.0)
 </pre></div>
 </div>
-<img alt="_images/c1755e57df86b132a2eec1fa1c0fe089c46394588b2ce9458b48a31f902cf6ec.png" src="_images/c1755e57df86b132a2eec1fa1c0fe089c46394588b2ce9458b48a31f902cf6ec.png" />
+<img alt="_images/5f7d2d346696f1e6a468f9dc4430d6d943cef6da0391608e33cf02dcfc039c6b.png" src="_images/5f7d2d346696f1e6a468f9dc4430d6d943cef6da0391608e33cf02dcfc039c6b.png" />
 </div>
 </div>
 <p>We want a best-fit line to these data.</p>
@@ -993,7 +1001,7 @@ minimizing slope and intercept.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=0.00039689691255513594, intercept=-36.197653304934114, rvalue=0.6683490305377195, pvalue=0.0012767215478024995, stderr=0.0001041171418862387, intercept_stderr=11.11698541165042)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LinregressResult(slope=np.float64(0.00039689691255513594), intercept=np.float64(-36.197653304934114), rvalue=np.float64(0.6683490305377195), pvalue=np.float64(0.0012767215478024995), stderr=np.float64(0.0001041171418862387), intercept_stderr=np.float64(11.11698541165042))
 </pre></div>
 </div>
 </div>
@@ -1009,7 +1017,7 @@ slope when it has got very close.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12070.170784478678
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12070.170784478678)
 </pre></div>
 </div>
 </div>
@@ -1022,7 +1030,7 @@ slope when it has got very close.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12031.163363559293
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(12031.163363559293)
 </pre></div>
 </div>
 </div>
@@ -1038,7 +1046,7 @@ we’re investigating, along with the data.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7fdd13d9e7d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.OLS at 0x7fa39854b710&gt;
 </pre></div>
 </div>
 </div>
@@ -1053,7 +1061,7 @@ model to calculate the least-squares parameters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7fdd10cac850&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;statsmodels.regression.linear_model.RegressionResultsWrapper at 0x7fa37f780b90&gt;
 </pre></div>
 </div>
 </div>
@@ -1079,10 +1087,10 @@ display of the parameters and other calculations from the fit.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   14.53</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 25 Mar 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00128</td>
+  <th>Date:</th>             <td>Tue, 03 Sep 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00128</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:31:10</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
+  <th>Time:</th>                 <td>10:05:32</td>     <th>  Log-Likelihood:    </th> <td> -92.374</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   188.7</td>
@@ -1275,7 +1283,7 @@ display of the parameters and other calculations from the fit.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;defense&#39;, ylabel=&#39;goal_difference&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/0a6469f5e2f0358274d41e9f775fb41d6d9599b84a35132c0c2c2bc4c2882c4a.png" src="_images/0a6469f5e2f0358274d41e9f775fb41d6d9599b84a35132c0c2c2bc4c2882c4a.png" />
+<img alt="_images/a20d72e9051c4a81e83f0f269e87702dc0e46a4a4ed2cca38e5aa21673c7ce0b.png" src="_images/a20d72e9051c4a81e83f0f269e87702dc0e46a4a4ed2cca38e5aa21673c7ce0b.png" />
 </div>
 </div>
 <p>And the relationship of <code class="docutils literal notranslate"><span class="pre">forward</span></code> spending and goal difference.</p>
@@ -1289,7 +1297,7 @@ display of the parameters and other calculations from the fit.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;forward&#39;, ylabel=&#39;goal_difference&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/11e950f1de0e9823d0a31f27494835b6e4265e18951e3ddcc248495029a3814c.png" src="_images/11e950f1de0e9823d0a31f27494835b6e4265e18951e3ddcc248495029a3814c.png" />
+<img alt="_images/08df6c99498c58a9887397db055e940ccb8701cfd279579b47db85ff7920fc81.png" src="_images/08df6c99498c58a9887397db055e940ccb8701cfd279579b47db85ff7920fc81.png" />
 </div>
 </div>
 <p>Notice that both, on their own, have strongly positive relationships.</p>
@@ -1303,10 +1311,10 @@ display of the parameters and other calculations from the fit.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdd0e7bba90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa37d6432d0&gt;
 </pre></div>
 </div>
-<img alt="_images/12d79b00ef96273e64fd68bf224ea586ca385c61f0f474897144a5de5f20444f.png" src="_images/12d79b00ef96273e64fd68bf224ea586ca385c61f0f474897144a5de5f20444f.png" />
+<img alt="_images/3e722dd2f03c4e6f295001bec4e7bccb13cc4951235b433d2437b107120782cf.png" src="_images/3e722dd2f03c4e6f295001bec4e7bccb13cc4951235b433d2437b107120782cf.png" />
 </div>
 </div>
 <p>Here we calculate the simple regression models for each.  Notice the chained
@@ -1330,10 +1338,10 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   21.94</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 25 Mar 2024</td> <th>  Prob (F-statistic):</th> <td>0.000185</td>
+  <th>Date:</th>             <td>Tue, 03 Sep 2024</td> <th>  Prob (F-statistic):</th> <td>0.000185</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:31:10</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
+  <th>Time:</th>                 <td>10:05:32</td>     <th>  Log-Likelihood:    </th> <td> -90.322</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   184.6</td>
@@ -1393,10 +1401,10 @@ execution for calculating the model, then the fit, and then the summary.</p>
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   8.934</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 25 Mar 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00787</td>
+  <th>Date:</th>             <td>Tue, 03 Sep 2024</td> <th>  Prob (F-statistic):</th>  <td>0.00787</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:31:10</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
+  <th>Time:</th>                 <td>10:05:32</td>     <th>  Log-Likelihood:    </th> <td> -94.262</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   192.5</td>
@@ -1570,10 +1578,10 @@ function.  We found that both <code class="docutils literal notranslate"><span c
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   13.85</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 25 Mar 2024</td> <th>  Prob (F-statistic):</th> <td>0.000270</td>
+  <th>Date:</th>             <td>Tue, 03 Sep 2024</td> <th>  Prob (F-statistic):</th> <td>0.000270</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:31:11</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
+  <th>Time:</th>                 <td>10:05:32</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   183.3</td>
@@ -2168,10 +2176,10 @@ dtype: float64
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   0.000</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 25 Mar 2024</td> <th>  Prob (F-statistic):</th>  <td>  1.00</td> 
+  <th>Date:</th>             <td>Tue, 03 Sep 2024</td> <th>  Prob (F-statistic):</th>  <td>  1.00</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>16:31:11</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
+  <th>Time:</th>                 <td>10:05:32</td>     <th>  Log-Likelihood:    </th> <td> -88.626</td>
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>    20</td>      <th>  AIC:               </th> <td>   181.3</td>
@@ -2245,7 +2253,7 @@ forwards is no longer important, in these models.</p>
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -2331,8 +2339,8 @@ By Matthew Brett and Peter Rush
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
